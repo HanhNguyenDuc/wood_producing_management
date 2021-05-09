@@ -124,7 +124,7 @@ class Order(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     customer = models.IntegerField(db_column='Customer', blank=True, null=True)  # Field name made lowercase.
     customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerID')  # Field name made lowercase.
-
+    name = models.CharField(db_column='Name', max_length=255, default="")
 
 class OrderListproduct(models.Model):
     orderid = models.OneToOneField(Order, models.DO_NOTHING, db_column='OrderID', primary_key=True)  # Field name made lowercase.

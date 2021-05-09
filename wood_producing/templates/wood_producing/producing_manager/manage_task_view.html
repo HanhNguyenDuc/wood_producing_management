@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Main Producing Manager</title>
+  </head>
+  <body>
+    <a href="{{direct_url.change_password}}">Change Password</a>
+    <a href="{{direct_url.logout}}">Logout </a>
+    <p>User: {{user.firstname}} {{user.lastname}}</p>
+    <p>Role: {{user.role}}
+
+    <table style="width:100%">
+        <tr>
+            <th>Mã đơn hàng</th>
+            <th>Tên đơn hàng</th>
+            <th>Số lượng task</th>
+            <th>Số lượng task hoàn thành</th>
+            <th>Chọn</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{order.id}}</td>
+            <td>{{order.name}}</td>
+            <td>0</td>
+            <td>0</td>
+            <td><a href="producing_manager/task/{{order.id}}">Chọn</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{direct_url.main_producing_manager}}">Back</a>
+    <a href="{{direct_url.add_task}}">Add task</a>
+
+  </body>
+</html>
