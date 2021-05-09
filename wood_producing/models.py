@@ -3,10 +3,11 @@
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
+from .enums import *
 
 
 class Company(models.Model):
@@ -15,9 +16,6 @@ class Company(models.Model):
     address = models.CharField(db_column='Address', max_length=255, blank=True, null=True)  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'company'
 
 
 class Customer(models.Model):
@@ -26,9 +24,6 @@ class Customer(models.Model):
     phone = models.CharField(db_column='Phone', max_length=255, blank=True, null=True)  # Field name made lowercase.
     address = models.CharField(db_column='Address', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'customer'
 
 
 class Exportbill(models.Model):
@@ -40,9 +35,6 @@ class Exportbill(models.Model):
     discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
     customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'exportbill'
 
 
 class ExportbillListproduct(models.Model):
@@ -50,10 +42,6 @@ class ExportbillListproduct(models.Model):
     exportbillindex = models.IntegerField(db_column='ExportBillIndex')  # Field name made lowercase.
     listproduct = models.IntegerField(db_column='ListProduct', blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'exportbill_listproduct'
-        unique_together = (('exportbillid', 'exportbillindex'),)
 
 
 class Importbill(models.Model):
@@ -63,9 +51,6 @@ class Importbill(models.Model):
     provider = models.IntegerField(db_column='Provider', blank=True, null=True)  # Field name made lowercase.
     providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'importbill'
 
 
 class ImportbillListmaterial(models.Model):
@@ -73,10 +58,6 @@ class ImportbillListmaterial(models.Model):
     importbillindex = models.IntegerField(db_column='ImportBillIndex')  # Field name made lowercase.
     listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'importbill_listmaterial'
-        unique_together = (('importbillid', 'importbillindex'),)
 
 
 class Importedmaterial(models.Model):
@@ -85,9 +66,6 @@ class Importedmaterial(models.Model):
     price = models.FloatField(db_column='Price')  # Field name made lowercase.
     importbillid = models.ForeignKey(Importbill, models.DO_NOTHING, db_column='ImportBillID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'importedmaterial'
 
 
 class Material(models.Model):
@@ -98,9 +76,6 @@ class Material(models.Model):
     quantity = models.FloatField(db_column='Quantity', blank=True, null=True)  # Field name made lowercase.
     discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'material'
 
 
 class Materialinproduct(models.Model):
@@ -108,9 +83,6 @@ class Materialinproduct(models.Model):
     materialid = models.ForeignKey(Material, models.DO_NOTHING, db_column='MaterialID')  # Field name made lowercase.
     productid = models.ForeignKey('Product', models.DO_NOTHING, db_column='ProductID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'materialinproduct'
 
 
 class Materialofprovider(models.Model):
@@ -122,9 +94,6 @@ class Materialofprovider(models.Model):
     providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
     materialid = models.ForeignKey(Material, models.DO_NOTHING, db_column='MaterialID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'materialofprovider'
 
 
 class Materialofproviderinstorage(models.Model):
@@ -135,9 +104,6 @@ class Materialofproviderinstorage(models.Model):
     storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID')  # Field name made lowercase.
     materialofproviderid = models.ForeignKey(Materialofprovider, models.DO_NOTHING, db_column='MaterialOfProviderID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'materialofproviderinstorage'
 
 
 class Materialrequest(models.Model):
@@ -145,9 +111,6 @@ class Materialrequest(models.Model):
     taskid = models.ForeignKey('Task', models.DO_NOTHING, db_column='TaskID')  # Field name made lowercase.
     storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'materialrequest'
 
 
 class MaterialrequestListmaterial(models.Model):
@@ -155,10 +118,6 @@ class MaterialrequestListmaterial(models.Model):
     materialrequestindex = models.IntegerField(db_column='MaterialRequestIndex')  # Field name made lowercase.
     listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'materialrequest_listmaterial'
-        unique_together = (('materialrequestid', 'materialrequestindex'),)
 
 
 class Order(models.Model):
@@ -166,20 +125,11 @@ class Order(models.Model):
     customer = models.IntegerField(db_column='Customer', blank=True, null=True)  # Field name made lowercase.
     customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'order'
-
 
 class OrderListproduct(models.Model):
     orderid = models.OneToOneField(Order, models.DO_NOTHING, db_column='OrderID', primary_key=True)  # Field name made lowercase.
     orderindex = models.IntegerField(db_column='OrderIndex')  # Field name made lowercase.
     listproduct = models.IntegerField(db_column='ListProduct', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'order_listproduct'
-        unique_together = (('orderid', 'orderindex'),)
 
 
 class Orderedproduct(models.Model):
@@ -189,10 +139,6 @@ class Orderedproduct(models.Model):
     product = models.IntegerField(db_column='Product', blank=True, null=True)  # Field name made lowercase.
     quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
     productexportedid = models.ForeignKey('Productexported', models.DO_NOTHING, db_column='ProductExportedID')  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'orderedproduct'
 
 
 class Product(models.Model):
@@ -205,9 +151,6 @@ class Product(models.Model):
     quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)  # Field name made lowercase.
     discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'product'
 
 
 class ProductListmaterial(models.Model):
@@ -215,10 +158,6 @@ class ProductListmaterial(models.Model):
     productindex = models.IntegerField(db_column='ProductIndex')  # Field name made lowercase.
     listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'product_listmaterial'
-        unique_together = (('productid', 'productindex'),)
 
 
 class Productexported(models.Model):
@@ -229,9 +168,6 @@ class Productexported(models.Model):
     exportbillid = models.ForeignKey(Exportbill, models.DO_NOTHING, db_column='ExportBillID')  # Field name made lowercase.
     productid = models.IntegerField(db_column='ProductID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'productexported'
 
 
 class Progress(models.Model):
@@ -239,9 +175,6 @@ class Progress(models.Model):
     name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'progress'
 
 
 class Provider(models.Model):
@@ -251,9 +184,6 @@ class Provider(models.Model):
     phone = models.CharField(db_column='Phone', max_length=255, blank=True, null=True)  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'provider'
 
 
 class Requestedmaterial(models.Model):
@@ -262,9 +192,6 @@ class Requestedmaterial(models.Model):
     quantity = models.FloatField(db_column='Quantity')  # Field name made lowercase.
     materialrequestid = models.ForeignKey(Materialrequest, models.DO_NOTHING, db_column='MaterialRequestID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'requestedmaterial'
 
 
 class Storage(models.Model):
@@ -275,9 +202,6 @@ class Storage(models.Model):
     manager = models.IntegerField(db_column='Manager', blank=True, null=True)  # Field name made lowercase.
     companyid = models.ForeignKey(Company, models.DO_NOTHING, db_column='CompanyID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'storage'
 
 
 class StorageListmaterial(models.Model):
@@ -285,10 +209,6 @@ class StorageListmaterial(models.Model):
     storageindex = models.IntegerField(db_column='StorageIndex')  # Field name made lowercase.
     listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'storage_listmaterial'
-        unique_together = (('storageid', 'storageindex'),)
 
 
 class Task(models.Model):
@@ -297,9 +217,6 @@ class Task(models.Model):
     product = models.IntegerField(db_column='Product', blank=True, null=True)  # Field name made lowercase.
     userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'task'
 
 
 class TaskListprogress(models.Model):
@@ -307,10 +224,6 @@ class TaskListprogress(models.Model):
     taskindex = models.IntegerField(db_column='TaskIndex')  # Field name made lowercase.
     listprogress = models.IntegerField(db_column='ListProgress', blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'task_listprogress'
-        unique_together = (('taskid', 'taskindex'),)
 
 
 class TaskListrequest(models.Model):
@@ -318,10 +231,6 @@ class TaskListrequest(models.Model):
     taskindex = models.IntegerField(db_column='TaskIndex')  # Field name made lowercase.
     listrequest = models.IntegerField(db_column='ListRequest', blank=True, null=True)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'task_listrequest'
-        unique_together = (('taskid', 'taskindex'),)
 
 
 class Taskprogress(models.Model):
@@ -333,18 +242,22 @@ class Taskprogress(models.Model):
     taskid = models.ForeignKey(Task, models.DO_NOTHING, db_column='TaskID')  # Field name made lowercase.
     progressid = models.ForeignKey(Progress, models.DO_NOTHING, db_column='ProgressID')  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'taskprogress'
 
 
 class User(AbstractUser):
     discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
-    companyid = models.ForeignKey(Company, models.DO_NOTHING, db_column='CompanyID')  # Field name made lowercase.
+    role = models.SmallIntegerField(
+        null=False,
+        blank=False,
+        default=UserRole.FOREMAN.value,
+        choices=[
+            (UserRole.FOREMAN.value, UserRole.FOREMAN.name),
+            (UserRole.PRODUCING_MANAGER, UserRole.PRODUCING_MANAGER.name),
+            (UserRole.STORAGE_MANAGER.value, UserRole.STORAGE_MANAGER.name),
+            (UserRole.DIRECTOR.value, UserRole.DIRECTOR.name),
+        ]
+    )
 
-    class Meta:
-        managed = False
-        db_table = 'user'
 
 
 class Workshop(models.Model):
@@ -353,7 +266,3 @@ class Workshop(models.Model):
     address = models.CharField(db_column='Address', max_length=255, blank=True, null=True)  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
     companyid = models.ForeignKey(Company, models.DO_NOTHING, db_column='CompanyID')  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'workshop'
