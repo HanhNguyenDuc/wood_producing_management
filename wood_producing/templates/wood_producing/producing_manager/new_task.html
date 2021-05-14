@@ -11,6 +11,7 @@
     <link href="/static/css/base.css" rel="stylesheet">
     <link href="/static/css/detail.css" rel="stylesheet">
     <link href="/static/css/new_task.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-datepicker3.css" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -32,6 +33,9 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+    integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" 
+    crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
   </head>
@@ -165,7 +169,7 @@
                   </label>
                   <input
                     autofocus="autofocus"
-                    class="field_input"
+                    class="field_input datepicker"
                     id="email-login"
                     type="text"
                     value=""
@@ -272,6 +276,10 @@
     </div>
   </body>
   <script>
+  $(".datepicker").datepicker({
+    orientation: "bottom left",
+    autoclose: true
+  });
   $('.dropdown-custoggle').click(function () {
     $('.cusdropdown').toggle();
   });
@@ -331,7 +339,6 @@
       }
     })
   }
-
   function selectForeman(elem) {
     $(".checkbox").prop("checked", false);
     $(elem).prop("checked",  true)
