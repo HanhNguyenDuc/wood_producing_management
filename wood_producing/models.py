@@ -10,6 +10,22 @@ from django.contrib.auth.models import User, AbstractUser
 from .enums import *
 
 
+class User(AbstractUser):
+    discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
+    role = models.SmallIntegerField(
+        null=False,
+        blank=False,
+        default=UserRole.FOREMAN.value,
+        choices=[
+            (UserRole.FOREMAN.value, UserRole.FOREMAN.name),
+            (UserRole.PRODUCING_MANAGER, UserRole.PRODUCING_MANAGER.name),
+            (UserRole.STORAGE_MANAGER.value, UserRole.STORAGE_MANAGER.name),
+            (UserRole.DIRECTOR.value, UserRole.DIRECTOR.name),
+        ]
+    )
+
+
+
 class Company(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
@@ -122,24 +138,14 @@ class MaterialrequestListmaterial(models.Model):
 
 class Order(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    customer = models.IntegerField(db_column='Customer', blank=True, null=True)  # Field name made lowercase.
     customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerID')  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=255, default="")
+    duedate = models.DateTimeField(db_column='duedate', max_length=255)
 
 class OrderListproduct(models.Model):
     orderid = models.OneToOneField(Order, models.DO_NOTHING, db_column='OrderID', primary_key=True)  # Field name made lowercase.
     orderindex = models.IntegerField(db_column='OrderIndex')  # Field name made lowercase.
     listproduct = models.IntegerField(db_column='ListProduct', blank=True, null=True)  # Field name made lowercase.
-
-
-class Orderedproduct(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID')  # Field name made lowercase.
-    price = models.FloatField(db_column='Price')  # Field name made lowercase.
-    product = models.IntegerField(db_column='Product', blank=True, null=True)  # Field name made lowercase.
-    quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
-    productexportedid = models.ForeignKey('Productexported', models.DO_NOTHING, db_column='ProductExportedID')  # Field name made lowercase.
-
 
 class Product(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -151,6 +157,14 @@ class Product(models.Model):
     quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)  # Field name made lowercase.
     discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
 
+class Orderedproduct(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID')  # Field name made lowercase.
+    price = models.FloatField(db_column='Price')  # Field name made lowercase.
+    product = models.ForeignKey(Product, db_column='Product', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
+    quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
+    productexportedid = models.ForeignKey('Productexported', models.CASCADE, db_column='ProductExportedID', null=True)  # Field name made lowercase.
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
 
 
 class ProductListmaterial(models.Model):
@@ -199,7 +213,7 @@ class Storage(models.Model):
     name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
     address = models.CharField(db_column='Address', max_length=255, blank=True, null=True)  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    manager = models.IntegerField(db_column='Manager', blank=True, null=True)  # Field name made lowercase.
+    manager = models.ForeignKey(User, db_column='Manager', null=True, on_delete=models.CASCADE)  # Field name made lowercase.
     companyid = models.ForeignKey(Company, models.DO_NOTHING, db_column='CompanyID')  # Field name made lowercase.
 
 
@@ -213,11 +227,14 @@ class StorageListmaterial(models.Model):
 
 class Task(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    name = models.CharField(db_column='name', max_length=255)
     orderedproductid = models.ForeignKey(Orderedproduct, models.DO_NOTHING, db_column='OrderedProductID')  # Field name made lowercase.
     product = models.IntegerField(db_column='Product', blank=True, null=True)  # Field name made lowercase.
     userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID')  # Field name made lowercase.
-
-
+    progress = models.ForeignKey('Progress', models.CASCADE, db_column='progress', null=True)
+    priority = models.IntegerField(db_column='priority', default=0)
+    quantity = models.IntegerField(db_column='quantity', default=0)
+    estimated = models.DateTimeField(db_column='estimated')
 
 class TaskListprogress(models.Model):
     taskid = models.OneToOneField(Task, models.DO_NOTHING, db_column='TaskID', primary_key=True)  # Field name made lowercase.
@@ -241,23 +258,6 @@ class Taskprogress(models.Model):
     enddate = models.DateField(db_column='EndDate', blank=True, null=True)  # Field name made lowercase.
     taskid = models.ForeignKey(Task, models.DO_NOTHING, db_column='TaskID')  # Field name made lowercase.
     progressid = models.ForeignKey(Progress, models.DO_NOTHING, db_column='ProgressID')  # Field name made lowercase.
-
-
-
-class User(AbstractUser):
-    discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
-    role = models.SmallIntegerField(
-        null=False,
-        blank=False,
-        default=UserRole.FOREMAN.value,
-        choices=[
-            (UserRole.FOREMAN.value, UserRole.FOREMAN.name),
-            (UserRole.PRODUCING_MANAGER, UserRole.PRODUCING_MANAGER.name),
-            (UserRole.STORAGE_MANAGER.value, UserRole.STORAGE_MANAGER.name),
-            (UserRole.DIRECTOR.value, UserRole.DIRECTOR.name),
-        ]
-    )
-
 
 
 class Workshop(models.Model):

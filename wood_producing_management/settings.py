@@ -174,3 +174,5 @@ STATICFILES_DIRS = [
 
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/user/login'
+
+PAGE_SIZE = 10

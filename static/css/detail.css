@@ -1,0 +1,113 @@
+.order_list{
+  overflow: auto;
+}
+.order_id{
+  margin-left: 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+.order_name{
+  margin-left: 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+.detail.line{
+  display: flex;
+}
+.detail_task_table_row{
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 64px;
+}
+.task_column{
+  flex-basis: 10%;
+  background-color: #f5f5f5;
+  border: solid 1px #fff;
+  height: 48px;
+  font-size: 16px;
+  text-align: center;
+  padding-top: 16px;
+}
+.name{
+  flex-basis: 25%;
+}
+.foreman{
+  flex-basis: 15%;
+}
+.detail_task_table_row.header{
+  display: flex;
+  flex-wrap: wrap;
+}
+.detail_task_table{
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+.detail_task_table_row.header .task_column{
+  background-color: #fff;
+  font-size: 18px;
+  font-weight: 400;
+}
+.detail_task_table_row.header .task_column.name{
+  color: purple;
+}
+.detail_task_table_row.header .task_column.priority{
+  background-color: #f5f5f5;
+  border-top-left-radius: 10px;
+}
+.detail_task_table_row.header .task_column.status{
+  background-color: #f5f5f5;
+}
+.detail_task_table_row.header .task_column.current_progress{
+  background-color: #f5f5f5;
+  border-top-right-radius: 10px;
+  color:black;
+}
+.detail_task_table_row .task_column.current_progress{
+  background-color: #669cf5;
+  color: white;
+}
+.detail_task_table_row .task_column.status.doing{
+  background-color: #f2ad53;
+  color: white
+}
+.detail_task_table_row .task_column.priority.urgent{
+  background-color: #333333;
+  color: white
+}
+.detail_task_table_row .task_column.priority.low{
+  background-color: #5ac47d;
+  color: white
+}
+.detail_task_table_row .task_column.status.done{
+  background-color: #5ac47d;
+  color: white
+}
+.detail_task_table_row .task_column.current_progress.completed{
+  background-color: #5ac47d;
+  color: white
+}
+.detail_task_table_row .add{
+  flex-basis: 90%;
+  display: flex;
+  height: 64px;
+  border: solid 1px #CCC;
+  border-radius: 10px;
+  border-style: dashed;
+  border-width: thick;
+  justify-content: center;
+  align-items: center;
+}
+.detail_task_table_row .add i{
+  font-size: 24px;
+  color: #669cf5;
+}
+.detail_head{
+  display: flex;
+  flex-wrap: wrap;
+}
+.left{
+  flex-basis: 50%;
+}
+.right{
+  flex-basis: 50%;
+}

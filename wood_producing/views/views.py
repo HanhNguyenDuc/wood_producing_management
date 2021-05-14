@@ -4,6 +4,8 @@ from django.utils.decorators import method_decorator
 from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseForbidden, HttpResponseRedirect
 from django.views import View
 from django import forms
+from django.conf import settings
+from django.core.paginator import Paginator
 
 from ..models import *
 
@@ -63,6 +65,7 @@ class RoleRequiredView(View):
         self.context = {}
         self.context["user"] = request.user
         self.context["direct_url"] = self.direct_url
+        self.context["request"] = self.request
 
     @method_decorator(login_required)
     @role_required_decorator
@@ -72,8 +75,8 @@ class RoleRequiredView(View):
         """
         self.prepare_context(request)
         if self.form is None:
+            self.update_get_context(request, *args, **kwargs)
             return render(request, self.template_path, self.context)
-        
         form = self.form()
         self.context["form"] = form
         self.update_get_context(request, *args, **kwargs)
@@ -93,7 +96,7 @@ class RoleRequiredView(View):
 
         if form.is_valid():
             self.update_post_context(request, *args, **kwargs)
-            return render(request, self.template_path, self.context)
+        return render(request, self.template_path, self.context)
 
 
 def get_user_role_root_path(user):
