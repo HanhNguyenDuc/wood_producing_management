@@ -193,7 +193,7 @@
                     <a href="#">
                       <i class="fas fa-edit"></i>
                     </a>
-                    <a href="#">
+                    <a href="#" onclick="deleteTask(this)">
                       <i class="far fa-trash-alt"></i>
                     </a>
                   </div>
@@ -277,8 +277,8 @@
       $(element).toggle();
     }
   }
-  function addNewTask() {
-    
+  function deleteTask(elem) {
+    $(elem).parent().parent().parent().remove();
   }
   </script>
 </html>
