@@ -20,6 +20,7 @@ class RoleRequiredView(View):
     }
 
     direct_url = {}
+    post_redirect = None
     """
         View for Role Required
     """
@@ -95,6 +96,7 @@ class RoleRequiredView(View):
         self.context["form"] = form
 
         if form.is_valid():
+            self.cleaned_data = form.cleaned_data
             self.update_post_context(request, *args, **kwargs)
         return render(request, self.template_path, self.context)
 

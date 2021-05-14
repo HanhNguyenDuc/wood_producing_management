@@ -1,3 +1,4 @@
+from wood_producing.views.api import delete_task
 from wood_producing.views.storage_manager import ImportMaterialFromProvider, MaterialManagement, ProductManagement
 from wood_producing.views.statistic import MaterialStatistic, ProductionStatistic
 from wood_producing.views.seller import CreateOrder, PublishOrder
@@ -12,7 +13,7 @@ urlpatterns = [
     path('user/logout', auth_views.LogoutView.as_view(next_page='/user/login'), name='logout'),
     path('producing_manager', views.MainProducingManagerView.as_view(), name='main_product'),
     path('producing_manager/order_detail/<int:order_id>', views.ManageTaskView.as_view()),
-    path('producing_manager/add_task', views.AddTaskView.as_view(), name='ask_task'),
+    path('producing_manager/order_detail/add_task/<int:ordered_product_id>', views.AddTaskView.as_view(), name='ask_task'),
     path('seller/create_order', views.CreateOrder.as_view(), name='create_order'),
     path('seller/publish_order', views.PublishOrder.as_view(), name='publish_order'),
     path('statistic/production', views.ProductionStatistic.as_view(), name='production_statistic'),
@@ -21,5 +22,6 @@ urlpatterns = [
     path('storage_manager/import_material', views.ImportMaterialFromProvider.as_view(), name='import_material'),
     path('storage_manager/material_manage', views.MaterialManagement.as_view(), name='material_manage'),
     path('storage_manager/product_manage', views.ProductManagement.as_view(), name='product_manage'),
+    path('api/task/delete_task', views.delete_task, name='delete_task'),
     path('', views.Index.as_view(), name='index')
 ]

@@ -23,6 +23,7 @@ class User(AbstractUser):
             (UserRole.DIRECTOR.value, UserRole.DIRECTOR.name),
         ]
     )
+    status = models.CharField(db_column='status', max_length=100, default="Available")
 
 
 
@@ -230,9 +231,9 @@ class Task(models.Model):
     name = models.CharField(db_column='name', max_length=255)
     orderedproductid = models.ForeignKey(Orderedproduct, models.DO_NOTHING, db_column='OrderedProductID')  # Field name made lowercase.
     product = models.IntegerField(db_column='Product', blank=True, null=True)  # Field name made lowercase.
-    userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID')  # Field name made lowercase.
+    userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID', null=True)  # Field name made lowercase.
     progress = models.ForeignKey('Progress', models.CASCADE, db_column='progress', null=True)
-    priority = models.IntegerField(db_column='priority', default=0)
+    priority = models.CharField(db_column='priority', max_length=10, default="low")
     quantity = models.IntegerField(db_column='quantity', default=0)
     estimated = models.DateTimeField(db_column='estimated')
 
