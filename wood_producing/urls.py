@@ -12,6 +12,7 @@ urlpatterns = [
     path('user/logout', auth_views.LogoutView.as_view(next_page='/user/login'), name='logout'),
     path('producing_manager', views.MainProducingManagerView.as_view(), name='main_product'),
     path('producing_manager/order_detail/<int:order_id>', views.ManageTaskView.as_view()),
+    path('producing_manager/add_task', views.AddTaskView.as_view(), name='ask_task'),
     path('seller/create_order', views.CreateOrder.as_view(), name='create_order'),
     path('seller/publish_order', views.PublishOrder.as_view(), name='publish_order'),
     path('statistic/production', views.ProductionStatistic.as_view(), name='production_statistic'),

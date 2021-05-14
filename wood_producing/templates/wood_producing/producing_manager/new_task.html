@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 <html lang="en">
   <head>
     <title>ALT F4</title>
@@ -150,27 +153,13 @@
                   <label>
                     Quantity:
                   </label>
-                  <input
-                    autofocus="autofocus"
-                    class="field_input"
-                    id="email-login"
-                    type="number"
-                    value=""
-                    name="quantity"
-                  />
+                  {{form.quantity|attr:"autofocus:autofocus"|attr:"class:field_input"|attr:"id:email-login"|attr:"type:number"}}
                 </div>
                 <div class="detail_info">
                   <label>
                     Due Date:
                   </label>
-                  <input
-                    autofocus="autofocus"
-                    class="field_input"
-                    id="email-login"
-                    type="text"
-                    value=""
-                    name="quantity"
-                  />
+                  {{form.due_date}}
                 </div>
                 <div class="detail_info">
                   <label>

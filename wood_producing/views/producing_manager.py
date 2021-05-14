@@ -1,5 +1,17 @@
 from .views import *
 
+class AddTaskForm(forms.Form):
+    CHOICES= (
+        ('ME', '1'),
+        ('YOU', '2'),
+        ('WE', '3'),
+    )
+    quantity = forms.IntegerField()
+    due_date = forms.DateTimeField(widget=forms.SplitDateTimeWidget)
+    priority = forms.ChoiceField(widget=forms.Select(choices=CHOICES))
+    foreman_id = forms.IntegerField()
+
+
 class MainProducingManagerView(RoleRequiredView):
     user_role = 1
     form = None
@@ -76,3 +88,16 @@ class ManageTaskView(RoleRequiredView):
     
     def update_post_context(self, request, *args, **kwargs):
         return None
+
+class AddTaskView(RoleRequiredView):
+    user_role = 1
+    form = AddTaskForm
+    template_path = "wood_producing/producing_manager/new_task.html"
+
+    direct_url = {
+    }
+
+    def update_get_context(self, request, *args, **kwargs):
+        return super().update_get_context(request, *args, **kwargs)
+    
+    # def update_post_context(self, request, *args, **kwargs):
