@@ -96,6 +96,8 @@
   border-width: thick;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  text-decoration: none;
 }
 .detail_task_table_row .add i{
   font-size: 24px;
@@ -110,4 +112,20 @@
 }
 .right{
   flex-basis: 50%;
+}
+.name{
+  display: flex;
+  justify-content: space-between;
+}
+.name_half{
+  width: 80%;
+}
+.icon_half{
+  width: 20%;
+}
+
+.icon_half a{
+  text-decoration: none;
+  margin-right: 4px;
+
 }

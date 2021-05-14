@@ -186,7 +186,17 @@
               {% for task in ordered_product.tasks %}
               <div class="detail_task_table_row">
                 <div class = "task_column name">
-                  {{task.name}}
+                  <div class="name_half">
+                    {{task.name}}
+                  </div>
+                  <div class="icon_half">
+                    <a href="#">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="#">
+                      <i class="far fa-trash-alt"></i>
+                    </a>
+                  </div>
                 </div>
                 <div class = "task_column foreman">
                   {{task.user_id.first_name}} {{task.user_id.last_name}}
@@ -227,9 +237,9 @@
               </div>
               {% endfor %}
               <div class="detail_task_table_row">
-                <div class="add">
-                  <a> <i class="fas fa-plus"></i></a>
-                </div>
+                <a href="#" class="add">
+                  <i class="fas fa-plus"></i>
+                </a>
               </div>
               <div class="detail_task_table_row">
                 <div class = "task_column name">
@@ -266,6 +276,9 @@
       const element = array[index];
       $(element).toggle();
     }
+  }
+  function addNewTask() {
+    
   }
   </script>
 </html>
