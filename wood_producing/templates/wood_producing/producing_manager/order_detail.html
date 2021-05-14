@@ -198,18 +198,13 @@
                     </a>
                   </div>
                 </div>
+                <input type="hidden" class="task_id" value="{{task.id}}"/>
                 <div class = "task_column foreman">
                   {{task.user_id.first_name}} {{task.user_id.last_name}}
                 </div>
-                {% if task.priority == 1 %}
-                <div class = "task_column priority urgent">
-                  Urgent
+                <div class = "task_column priority {{task.priority}}">
+                  {{task.priority}}
                 </div>
-                {% elif task.priority == 0 %}
-                <div class = "task_column priority urgent">
-                  Medium
-                </div>
-                {% endif %}
                 {% if task.userid is not None %}
                 <div class = "task_column status doing">
                   Doing
@@ -237,7 +232,7 @@
               </div>
               {% endfor %}
               <div class="detail_task_table_row">
-                <a href="#" class="add">
+                <a href="add_task/{{ordered_product.id}}" class="add">
                   <i class="fas fa-plus"></i>
                 </a>
               </div>

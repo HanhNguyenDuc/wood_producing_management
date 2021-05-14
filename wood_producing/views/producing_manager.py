@@ -1,15 +1,18 @@
 from .views import *
 
+
+CHOICES= (
+    ('low', 'Low'),
+    ('normal', 'Normal'),
+    ('high', 'High'),
+    ('urgent', 'Urgent'),
+)
 class AddTaskForm(forms.Form):
-    CHOICES= (
-        ('ME', '1'),
-        ('YOU', '2'),
-        ('WE', '3'),
-    )
+    name = forms.CharField()
     quantity = forms.IntegerField()
-    due_date = forms.DateTimeField(widget=forms.SplitDateTimeWidget)
-    priority = forms.ChoiceField(widget=forms.Select(choices=CHOICES))
-    foreman_id = forms.IntegerField()
+    due_date = forms.DateTimeField()
+    priority = forms.ChoiceField(widget=forms.Select, choices=CHOICES)
+    foreman_id = forms.IntegerField(required=False)
 
 
 class MainProducingManagerView(RoleRequiredView):
@@ -98,6 +101,29 @@ class AddTaskView(RoleRequiredView):
     }
 
     def update_get_context(self, request, *args, **kwargs):
-        return super().update_get_context(request, *args, **kwargs)
+        foremen = User.objects.filter(role=3)
+        for foreman in foremen:
+            task_num = Task.objects.filter(userid=foreman).count()
+            setattr(foreman, 'task_num', task_num)
+
+        self.context['foremen'] = foremen
+        return None
     
-    # def update_post_context(self, request, *args, **kwargs):
+    def update_post_context(self, request, *args, **kwargs):
+        task = Task.objects.create(
+            name=self.cleaned_data.get('name'),
+            quantity=self.cleaned_data.get("quantity"), 
+            estimated=self.cleaned_data.get("due_date"), 
+            priority=self.cleaned_data.get("priority"),
+            orderedproductid_id=kwargs.get('ordered_product_id'),
+            progress_id=2,
+        )
+        if self.cleaned_data.get("foreman_id") is not None:
+            task.userid_id=self.cleaned_data.get("foreman_id")
+        task.save()
+        foremen = User.objects.filter(role=3)
+        for foreman in foremen:
+            task_num = Task.objects.filter(userid=foreman).count()
+            setattr(foreman, 'task_num', task_num)
+
+        self.context['foremen'] = foremen

@@ -132,12 +132,12 @@
               Add New Task
             </h3>
             <div>
-              <button class="btn btn-success">Create</button>
               <button class="btn btn-danger">Cancel</button>
             </div>
           </div>
           <div class = "new_task_body">
-            <form action="" accept-charset="UTF-8" data-remote="true" method="get">
+            <form action="" accept-charset="UTF-8" data-remote="true" method="post">
+              {% csrf_token %}
               <div class="detail line">
                 <h4>
                   Order ID: 
@@ -155,6 +155,12 @@
               <div class="detail block">
                 <div class="detail_info">
                   <label>
+                    Name:
+                  </label>
+                  {{form.name|attr:"autofocus:autofocus"|attr:"class:field_input"|attr:"id:email-login"|attr:"type:text"}}
+                </div>
+                <div class="detail_info">
+                  <label>
                     Quantity:
                   </label>
                   {{form.quantity|attr:"autofocus:autofocus"|attr:"class:field_input"|attr:"id:email-login"|attr:"type:number"}}
@@ -163,26 +169,13 @@
                   <label>
                     Due Date:
                   </label>
-                  {{form.due_date|attr:"autofocus:autofocus"|attr:"class:field_input"}}
-                  <input
-                    autofocus="autofocus"
-                    class="field_input datepicker"
-                    id="email-login"
-                    type="text"
-                    value=""
-                    name="quantity"
-                  />
+                  {{form.due_date|attr:"autofocus:autofocus"|attr:"class:field_input datepicker"|attr:"id:email-login"|attr:"type:text"}}
                 </div>
                 <div class="detail_info">
                   <label>
                     Priority:
                   </label>
-                  <select class="field_input">
-                    <option>Low</option>
-                    <option>Normal</option>
-                    <option>High</option>
-                    <option>Urgent</option>
-                  </select>
+                  {{form.priority|attr:"class:field_input"}}
                 </div>
               </div>
               <div class="detail line">
@@ -212,48 +205,22 @@
                   <div class = "task_column">
                   </div>
                 </div>
+                {% for foreman in foremen %}
                 <div class="detail_task_table_row">
-                  <div class = "task_column name" id="1">
-                    Hung pro
+                  <div class = "task_column name" id="{{foreman.id}}">
+                    {{foreman.first_name}} {{foreman.last_name}}
                   </div>
-                  <div class = "task_column foreman_status available">
-                    Available
+                  <div class = "task_column foreman_status {{foreman.status}}">
+                    {{foreman.status}}
                   </div>
                   <div class = "task_column foreman_task low">
-                    5
+                    {{foreman.task_num}}
                   </div>
                   <div class = "task_column">
                     <input type="checkbox" class="checkbox" onchange="selectForeman(this)">
                   </div>
                 </div>
-                <div class="detail_task_table_row">
-                  <div class = "task_column name" id="2">
-                    Hung pro 2
-                  </div>
-                  <div class = "task_column foreman_status available">
-                    Available
-                  </div>
-                  <div class = "task_column foreman_task high">
-                    12
-                  </div>
-                  <div class = "task_column">
-                    <input type="checkbox" class="checkbox" onchange="selectForeman(this)">
-                  </div>
-                </div>
-                <div class="detail_task_table_row">
-                  <div class = "task_column name" id="3">
-                    Hung pro 2
-                  </div>
-                  <div class = "task_column foreman_status unavailable">
-                    Busy
-                  </div>
-                  <div class = "task_column foreman_task busy">
-                    23
-                  </div>
-                  <div class = "task_column">
-                    <input type="checkbox" class="checkbox" onchange="selectForeman(this)" >
-                  </div>
-                </div>
+                {% endfor %}
                 <div class = "list_footer new_task">
                   <nav aria-label="Page navigation example">
                     <ul class="pagination">
@@ -266,7 +233,9 @@
                   </nav>
                 </div>
               </div>
-              <input type="hidden" id="foreman_id">
+              {{form.foreman_id|attr:"type:hidden"|attr:"id:foreman_id"}}
+
+              <button class="btn btn-success" type="submit">Create</button>
             </form>
           </div>
       </div>
