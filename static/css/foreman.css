@@ -1,0 +1,57 @@
+.filter{
+  display: flex;
+}
+.detail_head{
+  width: 100%;
+}
+.filter_wrapper{
+  width: 100%;
+}
+.filter_wrapper .line{
+  width: 100%;
+  padding-left: 24px;
+  padding-bottom: 8px;
+}
+.filter_wrapper form{
+  width: 100%;
+}
+.filter_wrapper .right{
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 24px;
+}
+.filter_wrapper .line h4{
+  width: 84px;
+}
+.left label{
+  width: 80px;
+}
+.filter_wrapper .detail.line label {
+  align-self: center;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.filter_wrapper .left {
+  display: flex;
+}
+.filter_wrapper .left .search-form {
+  width: 49%;
+}
+.filter_wrapper .right button {
+  margin-bottom: 15px;
+  margin-right: 8px;
+}
+.filter{
+  display: none;
+}
+#foreman_table .detail_task_table_row {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+#foreman_table{
+  max-height: 40vh;
+  overflow: auto;
+}
