@@ -180,7 +180,7 @@
                 <label>
                   Progress:
                 </label>
-                <select class="field_input" name="priority">
+                <select class="field_input" name="priority" onchange="toggleStorage(this)">
                   <option>Phase 1</option>
                   <option>Phase 2</option>
                   <option>Phase 3</option>
@@ -251,6 +251,19 @@
                 value="80"
                 name="done"
               />
+              </div>
+            </div>
+            <div class="detail line" id="select_storage">
+              <div class = "left">
+                <label>
+                  Storage:
+                </label>
+                <select class="field_input" name="storage" style="width: 25%;">
+                  <option value="1">Kho 1</option>
+                  <option value="2">Kho 2</option>
+                  <option value="3">Kho 3</option>
+                  <option value="4">Kho 4</option>
+                </select>
               </div>
             </div>
             <div class="detail line">
@@ -392,6 +405,11 @@
       }
     })
   }
-
+  function toggleStorage(elem) {
+    var value =  $(elem).val();
+    if(value == "Completed"){
+      $("#select_storage").toggle();
+    }
+  }
   </script>
 </html>
