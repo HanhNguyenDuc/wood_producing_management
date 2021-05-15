@@ -30,3 +30,14 @@
 #select_storage{
   display: none;
 }
+#request_material .detail_task_table_row{
+  padding-left: 24px;
+}
+#request_material .detail_task_table_row .add{
+  flex-basis: 50%;
+}
+#request_material .detail_task_table_row .quantity{
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
