@@ -21,11 +21,11 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" 
+      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" 
+      crossorigin="anonymous">
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -60,30 +60,6 @@
                   <span><i class="fa fa-user center"></i></span> Task
                 </a>
               </li>
-              <li>
-                <a href="#">
-                  <span><i class="fas fa-chart-line center"></i></span>ユーザー分析
-                </a>
-              </li>
-            <li>
-              <a href="#">
-                <span><i class="fas fa-file-csv center"></i></span>CSV分析
-              </a>
-            </li>
-              <li class="general-export-csv">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16.002" height="16" viewBox="0 0 16.002 16">
-                    <path id="Union_1" data-name="Union 1" d="M.938,16a3.272,3.272,0,0,1-.394-.17,1.2,1.2,0,0,1-.544-.8V.941A1.148,1.148,0,0,1,.6.149a1.452,1.452,0,0,1,.551-.14C2.287,0,3.422,0,4.557,0a1.141,1.141,0,1,1,.007,2.282c-.7.008-1.4,0-2.093,0H2.293V13.705H13.714v-.17q0-1.048,0-2.093a1.139,1.139,0,0,1,2.277-.049c.015,1.177.013,2.353,0,3.53a1.119,1.119,0,0,1-.877,1.048c-.03.007-.058.021-.086.031Zm12.79-8.213a1.706,1.706,0,0,1-.014-.28v-3.6c-.068.065-.109.1-.148.141q-1.76,1.763-3.522,3.526a1.112,1.112,0,0,1-1.258.292A1.134,1.134,0,0,1,8.39,6c.7-.716,1.42-1.422,2.131-2.133l1.447-1.446c.033-.032.064-.067.123-.13H11.9c-1.156,0-2.312,0-3.468,0A1.141,1.141,0,1,1,8.351.005c.255-.009.51,0,.765,0h5.718A1.139,1.139,0,0,1,16,1.143Q16,4.376,16,7.61a1.139,1.139,0,0,1-1.053,1.137q-.046,0-.092,0A1.149,1.149,0,0,1,13.728,7.788Z" transform="translate(0 0)" />
-                  </svg>
-                  エクスポート
-                 </a>
-              </li>
-      
-            <li class="rdb-settings">
-              <a href="#">
-                <span><i class="fas fa-cog"></i></span>設定
-              </a>
-            </li>
           </ul>
         </div>
       </div>
@@ -142,9 +118,7 @@
                 <div>
                   <button class="btn btn-success">Create</button>
                   <button type ="button" class="btn btn-danger" onclick="deleteTask(this)">Delete</button>
-                  <a href="/request_material?task_id=">
-                    <button type ="button" class="btn btn-info"> Request Material</button>
-                  </a>
+                  <button type ="button" class="btn btn-info" data-toggle="modal" data-target="#add_material_modal"> Request Material</button>
                 </div>
               </div>
             </div>
@@ -192,7 +166,6 @@
                   Due Date:
                 </label>
                 <input
-                autofocus="autofocus"
                 class="field_input datepicker"
                 id="email-login"
                 type="text"
@@ -207,7 +180,6 @@
                   Foreman:
                 </label>
                 <input
-                autofocus="autofocus"
                 class="field_input"
                 id="email-login"
                 type="text"
@@ -221,7 +193,6 @@
                   Estimate Date:
                 </label>
                 <input
-                autofocus="autofocus"
                 class="field_input esimatepicker"
                 id="email-login"
                 type="text"
@@ -244,7 +215,6 @@
                   Done(%):
                 </label>
                 <input
-                autofocus="autofocus"
                 class="field_input"
                 id="email-login"
                 type="number"
@@ -321,7 +291,7 @@
                   Quantity
                 </div>
                 <div class = "task_column current_progress">
-                  Unit
+                  Approved
                 </div>
               </div>
               <div class="detail_task_table_row">
@@ -335,7 +305,7 @@
                   20
                 </div>
                 <div class = "task_column status">
-                  Tấm
+                  Approved
                 </div>
               </div>
             </div>
@@ -372,6 +342,85 @@
       </div>
     </div>
   </body>
+  <div class="modal" tabindex="-1" role="dialog" id="add_material_modal">
+    <div class="modal-dialog" role="document" style="width: 70%; max-width: 70%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Choose Material</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="search-form" style="width: 100%;">
+            <div class="form-group">
+              <input class="search-field-project" type="search" name="order_name" id="search_material_name"  />
+              <button type="button" onclick="searchMaterial(this)">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <div class="detail line">
+              <div class="left">
+                <h3>Material List</h3>
+              </div>
+              <div class="right">
+                <label> Quantity </label>
+                <input
+                class="field_input"
+                id="material_input"
+                type="number"
+                value=""
+                name=""
+              />
+              </div>
+            </div>
+            <div class="detail_task_table" id="request_material_table">
+              <div class="detail_task_table_row header">
+                <div class = "task_column stt">
+                  Id
+                </div>
+                <div class = "task_column name">
+                  Name
+                </div>
+                <div class = "task_column priority">
+                  Type
+                </div>
+                <div class = "task_column current_progress">
+                  Desc
+                </div>
+              </div>
+              <div class="detail_task_table_row">
+                <div class = "task_column stt">
+                  1
+                </div>
+                <div class = "task_column name">
+                  Gỗ Lim
+                </div>
+                <div class = "task_column quantity">
+                  Gỗ
+                </div>
+                <div class = "task_column unit">
+                  Gỗ Lim Trắng
+                </div>
+                <div class = "task_column">
+                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="createMaterialRequest(this)">Save changes</button>
+        </div>
+        <form action="/create_material">
+          <input type="hidden" name="material_id" id ="material_id">
+          <input type="hidden" name="material_quantity"  id ="material_quantity">
+          <input type="submit" id ="submit_request" style="display: none;">
+        </form>
+      </div>
+    </div>
+  </div>
   <script>
   $(".datepicker").datepicker({
     orientation: "bottom left",
@@ -410,6 +459,55 @@
     if(value == "Completed"){
       $("#select_storage").toggle();
     }
+  }
+  function createMaterialRequest(elem) {
+    $("#submit_request").click();
+  }
+  function selectMaterial(elem) {
+    $(".material_checkbox").prop("checked", false);
+    $(elem).prop("checked",  true)
+    var id = $(elem).parent().parent().find(".stt").text().trim();
+    var quantity = $("#material_input").val();
+    $("#material_id").val(id)
+    $("#material_quantity").val(quantity);
+  }
+  function searchMaterial(elem) {
+    var search = $(elem).parent().find(".search_material_name").val();
+    $.ajax({
+      type: "POST",
+      data: {search_data: search},
+      url: "/search",
+      success: function (data) {
+        var array =  $("#request_material_table").find(".detail_task_table_row");
+        for (let index = 1; index < array.length; index++) {
+          const element = array[index];
+          $(element).remove();
+        }
+        // Gia su data gom: ten foreman, status, so task dang lam
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+
+            var item = '<div class="detail_task_table_row">'+
+        '                <div class = "task_column stt">'+
+        `                  ${element.id}`+
+        '                </div>'+
+        '                <div class = "task_column name">'+
+        `                  ${element.name}`+
+        '                </div>'+
+        '                <div class = "task_column quantity">'+
+        `                  ${element.type}`+
+        '                </div>'+
+        '                <div class = "task_column current_progress">'+
+        `                  ${element.desc}`+
+        '                </div>'+
+        '                <div class = "task_column">'+
+        '                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">'+
+        '                </div>'+
+        '              </div>';
+          $("#request_material_table").append(item)
+        }
+      }
+    })
   }
   </script>
 </html>
