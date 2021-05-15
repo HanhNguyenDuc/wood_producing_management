@@ -22,6 +22,8 @@ urlpatterns = [
     path('storage_manager/import_material', views.ImportMaterialFromProvider.as_view(), name='import_material'),
     path('storage_manager/material_manage', views.MaterialManagement.as_view(), name='material_manage'),
     path('storage_manager/product_manage', views.ProductManagement.as_view(), name='product_manage'),
+    path('foreman', views.ForemanMainView.as_view(), name="foreman_main_view"),
+    path('foreman/edit_task/<int:task_id>', views.EditTaskView.as_view()),
     path('api/task/delete_task', views.delete_task, name='delete_task'),
     path('', views.Index.as_view(), name='index')
 ]

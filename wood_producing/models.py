@@ -125,14 +125,14 @@ class Materialofproviderinstorage(models.Model):
 
 class Materialrequest(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    material = models.ForeignKey('Material', models.CASCADE, db_column='material')
     taskid = models.ForeignKey('Task', models.DO_NOTHING, db_column='TaskID')  # Field name made lowercase.
     storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID')  # Field name made lowercase.
-
+    is_approved = models.BooleanField(db_column='is_approve', default=False)
 
 
 class MaterialrequestListmaterial(models.Model):
     materialrequestid = models.OneToOneField(Materialrequest, models.DO_NOTHING, db_column='MaterialRequestID', primary_key=True)  # Field name made lowercase.
-    materialrequestindex = models.IntegerField(db_column='MaterialRequestIndex')  # Field name made lowercase.
     listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
 
 
@@ -203,7 +203,6 @@ class Provider(models.Model):
 
 class Requestedmaterial(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    material = models.IntegerField(db_column='Material', blank=True, null=True)  # Field name made lowercase.
     quantity = models.FloatField(db_column='Quantity')  # Field name made lowercase.
     materialrequestid = models.ForeignKey(Materialrequest, models.DO_NOTHING, db_column='MaterialRequestID')  # Field name made lowercase.
 
@@ -236,6 +235,7 @@ class Task(models.Model):
     priority = models.CharField(db_column='priority', max_length=10, default="low")
     quantity = models.IntegerField(db_column='quantity', default=0)
     estimated = models.DateTimeField(db_column='estimated')
+    status = models.CharField(db_column='status', default="doing", max_length=100)
 
 class TaskListprogress(models.Model):
     taskid = models.OneToOneField(Task, models.DO_NOTHING, db_column='TaskID', primary_key=True)  # Field name made lowercase.

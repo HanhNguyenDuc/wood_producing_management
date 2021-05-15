@@ -187,11 +187,10 @@
                         <label>
                           Progress:
                         </label>
-                        <select class="field_input" name="priority">
-                          <option>Phase 1</option>
-                          <option>Phase 2</option>
-                          <option>Phase 3</option>
-                          <option>Completed</option>
+                        <select class="field_input" name="progress">
+                          {% for progress in progress_list %}
+                            <option value={{progress.id}}>{{progress.name}}</option>
+                          {% endfor %}
                         </select>
                       </div>
                       <div class = "right">
@@ -235,142 +234,39 @@
                 <div class = "task_column estimated">
                   Esimated
                 </div>
-                <div class = "task_column due">
-                  Due Date
-                </div>
               </div>
+              {% for task in tasks %}
               <div class="detail_task_table_row">
                 <div class = "task_column name">
                   <div class="name_half">
-                    20 Ghế gỗ 
+                    {{task.name}}
                   </div>
                   <div class="icon_half">
-                    <a href="#">
+                    <a href="foreman/edit_task/{{task.id}}">
                       <i class="fas fa-edit"></i>
                     </a>
                   </div>
                 </div>
                 <div class = "task_column foreman">
-                  Hưng Nguyễn
+                  {{task.userid.first_name}} {{task.userid.last_name}}
                 </div>
-                <div class = "task_column priority urgent">
-                  Urgent
+                <div class = "task_column priority {{task.priority}}">
+                  {{task.priority}}
                 </div>
-                <div class = "task_column status doing">
-                  Doing
+                <div class = "task_column status {{task.status}}">
+                  {{task.status}}
                 </div>
-                <div class = "task_column current_progress">
-                  Phase 2
-                </div>
-                <div class = "task_column quantity">
-                  20
-                </div>
-                <div class = "task_column estimated">
-                  2021-05-13
-                </div>
-                <div class = "task_column due">
-                  2021-05-13
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class = "task_column name">
-                  <div class="name_half">
-                    20 Ghế gỗ 
-                  </div>
-                  <div class="icon_half">
-                    <a href="#">
-                      <i class="fas fa-edit"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class = "task_column foreman">
-                  Hưng Nguyễn
-                </div>
-                <div class = "task_column priority low">
-                  Low
-                </div>
-                <div class = "task_column status done">
-                  Done
-                </div>
-                <div class = "task_column current_progress completed">
-                  Completed
+                <div class = "task_column {{task.progress.name}}">
+                  {{task.progress.name}}
                 </div>
                 <div class = "task_column quantity">
-                  40
+                  {{task.quantity}}
                 </div>
-                <div class = "task_column estimated">
-                  2021-05-13
-                </div>
-                <div class = "task_column due">
-                  2021-05-13
+                <div class = "task_column {{task.estimated}}">
+                  {{task.estimated}}
                 </div>
               </div>
-              <div class="detail_task_table_row">
-                <div class = "task_column name">
-                  <div class="name_half">
-                    20 Ghế gỗ 
-                  </div>
-                  <div class="icon_half">
-                    <a href="#">
-                      <i class="fas fa-edit"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class = "task_column foreman">
-                  Hưng Nguyễn
-                </div>
-                <div class = "task_column priority low">
-                  Low
-                </div>
-                <div class = "task_column status done">
-                  Done
-                </div>
-                <div class = "task_column current_progress completed">
-                  Completed
-                </div>
-                <div class = "task_column quantity">
-                  40
-                </div>
-                <div class = "task_column estimated">
-                  2021-05-13
-                </div>
-                <div class = "task_column due">
-                  2021-05-13
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class = "task_column name">
-                  <div class="name_half">
-                    20 Ghế gỗ 
-                  </div>
-                  <div class="icon_half">
-                    <a href="#">
-                      <i class="fas fa-edit"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class = "task_column foreman">
-                  Hưng Nguyễn
-                </div>
-                <div class = "task_column priority low">
-                  Low
-                </div>
-                <div class = "task_column status done">
-                  Done
-                </div>
-                <div class = "task_column current_progress completed">
-                  Completed
-                </div>
-                <div class = "task_column quantity">
-                  40
-                </div>
-                <div class = "task_column estimated">
-                  2021-05-13
-                </div>
-                <div class = "task_column due">
-                  2021-05-13
-                </div>
-              </div>
+              {% endfor %}
               
             </div>
             <div class = "list_footer new_task">
