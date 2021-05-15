@@ -23,5 +23,8 @@ urlpatterns = [
     path('storage_manager/material_manage', views.MaterialManagement.as_view(), name='material_manage'),
     path('storage_manager/product_manage', views.ProductManagement.as_view(), name='product_manage'),
     path('api/task/delete_task', views.delete_task, name='delete_task'),
+    path('api/statistic/statistic_profit', views.statistic_profit, name='statistic_profit'),
+    path('api/statistic/statistic_production', views.statistic_production, name='statistic_production'),
+    path('api/statistic/statistic_material', views.statistic_material, name='statistic_material'),
     path('', views.Index.as_view(), name='index')
 ]
