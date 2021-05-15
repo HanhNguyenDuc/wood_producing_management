@@ -1,0 +1,177 @@
+.container-unauthenticate {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  position: relative;
+}
+.container-unauthenticate .box-left, .container-unauthenticate .box-right {
+  width: 50%;
+}
+.container-unauthenticate .flash-notice {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: none;
+  border-color: #fff 0;
+  z-index: 9;
+}
+.container-unauthenticate .flash-notice span {
+  margin: 0;
+  padding: 12px 24px;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  border-radius: 5px;
+}
+.container-unauthenticate .js-success-reset {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: none;
+  border-color: #fff 0;
+  z-index: 9;
+}
+.container-unauthenticate .js-success-reset span {
+  margin: 0;
+  padding: 12px 24px;
+  color: #0093ee;
+  background-color: #ecf4f5 !important;
+  border-color: #ecf4f5 !important;
+  border-radius: 5px;
+}
+.container-unauthenticate .alert-info span {
+  color: #0093ee;
+  background-color: #ecf4f5 !important;
+  border-color: #ecf4f5 !important;
+}
+.container-unauthenticate .box-right {
+  display: flex;
+  justify-content: center;
+  margin-top: 23vh;
+  position: relative;
+}
+.container-unauthenticate .box-right footer.footer-unauthencate {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.container-unauthenticate .box-right .custom-signIn {
+  width: 300px;
+}
+.container-unauthenticate .box-right .custom-signIn .img-logo {
+  text-align: center;
+}
+.container-unauthenticate .box-right .custom-signIn .group-input {
+  margin-top: 42px;
+}
+.container-unauthenticate .box-right .custom-signIn .group-input .form-group {
+  margin-bottom: 0;
+  position: relative;
+}
+.container-unauthenticate .box-right .custom-signIn .group-input .form-group .has-error-msg {
+  color: #ec1115;
+  font-size: 11px;
+  display: block;
+  margin-top: 2px;
+}
+.container-unauthenticate .box-right .custom-signIn .group-input .form-group .msg-require-password {
+  position: absolute;
+}
+.container-unauthenticate .box-right .custom-signIn .group-input .form-group:first-child {
+  margin-bottom: 18px;
+}
+.container-unauthenticate .box-right .custom-signIn .group-input label {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.container-unauthenticate .box-right .custom-signIn .group-input input {
+  margin-bottom: 0;
+  padding-left: 12px;
+  font-family: "Hiragino-W4";
+  font-size: 14px;
+  width: 100%;
+  border-radius: 5px;
+  background: #f7e6e6;
+  height: 40px;
+  border: none;
+  border-bottom: 2px solid #ec1111;
+}
+.container-unauthenticate .box-right .custom-signIn .group-input .js-validation {
+  background: #ecf4f5;
+  border: none;
+}
+.container-unauthenticate .box-right .custom-signIn .password-action {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+.container-unauthenticate .box-right .custom-signIn .password-action span {
+  font-size: 12px;
+}
+.container-unauthenticate .box-right .custom-signIn .password-action .btn-reset-password::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f128";
+  font-weight: 900;
+  padding-right: 8px;
+  font-size: 16px;
+}
+.container-unauthenticate .box-right .custom-signIn .password-action .btn-reset-password {
+  cursor: pointer;
+}
+.container-unauthenticate .box-right .custom-signIn .password-action a {
+  font-size: 12px;
+  color: #333;
+}
+.container-unauthenticate .box-right .custom-signIn .password-action label.table-label {
+  color: #333;
+}
+.container-unauthenticate .box-right .custom-signIn button {
+  margin-top: 32px;
+  width: 100%;
+  padding: 0;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  background: #2fb7ed;
+  font-family: "Hiragino-W6";
+}
+.container-unauthenticate .box-right .custom-signIn .submit-resetpassword {
+  margin-top: 8px;
+}
+.container-unauthenticate .box-right .custom-signIn .redirect-back {
+  margin-top: 20px;
+  width: 100%;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  background: #e6e6e6;
+  text-align: center;
+  cursor: pointer;
+}
+.container-unauthenticate .box-right .custom-signIn p.text-bottom {
+  font-size: 10px;
+  text-align: center;
+  color: #666;
+}
+.container-unauthenticate .box-right .custom-signIn p.text-top {
+  font-size: 12px;
+  text-align: center;
+  color: #666;
+  margin-bottom: 0;
+  margin-top: 32px;
+}
+.container-unauthenticate .box-left {
+  background-image: url('bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
