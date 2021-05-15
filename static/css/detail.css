@@ -127,5 +127,7 @@
 .icon_half a{
   text-decoration: none;
   margin-right: 4px;
-
+}
+.icon_half i{
+  color: #007bff;
 }
