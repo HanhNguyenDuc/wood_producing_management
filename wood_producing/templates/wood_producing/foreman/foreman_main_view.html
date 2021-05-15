@@ -11,6 +11,9 @@
     <link href="/static/css/new.css" rel="stylesheet">
     <link href="/static/css/detail.css" rel="stylesheet">
     <link href="/static/css/new_task.css" rel="stylesheet">
+    <link href="/static/css/foreman.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-datepicker3.css" rel="stylesheet">
+
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -32,6 +35,9 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+    integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" 
+    crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
   </head>
@@ -122,45 +128,94 @@
         <div class="order_list">
           <div class = "list_header">
             <h3 class = "title">
-              Order Detail
+              Task List
             </h3>
           </div>
           <div class = "detail_body">
             <div class = "detail_head">
-              <div class = "left">
-                <div class="detail line">
-                  <h3>
-                    Order ID:
-                  </h3>
-                  <h3 class="order_id"> 1 </h3>
-                </div>
-                <div class="detail line">
-                  <h3>
-                    Order Name:
-                  </h3>
-                  <h3 class="order_name"> Đơn hàng công ty A </h3>
-                </div>
-              </div>
-              <div class = "right">
-                <div class="detail line">
-                  <h4>
-                    Due Date:
-                  </h4>
-                  <h4 class="due"> 2021-05-13 </h4>
-                </div>
-                <div class="detail line">
-                  <h4>
-                    Billing:
-                  </h4>
-                  <h4 class="order_name"> Xuan Duc, Yen Thuong, Gia Lam, Ha Noi </h4>
+              <div class="filter_wrapper">
+                <h5>
+                  Filter  <i class="fas fa-arrow-alt-circle-down" onclick="toggleFilter(this)"></i>
+                </h5>
+                <div class="filter">
+                  <form action="" accept-charset="UTF-8" data-remote="true" method="get">
+                    <div class="detail line">
+                      <div class="left">
+                        <h4 style="margin-right: 16px;">
+                          Name
+                        </h4>
+                        <div class="search-form">
+                          <div class="form-group">
+                            <input class="search-field-project" type="search" name="order_name" id="q_name_or_description_cont" />
+                            <button type="button" onclick="doSearch(this)">
+                              <i class="fas fa-search"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="right">
+                        <button class="btn btn-success"> Apply </button>
+                        <button class="btn btn-danger" type="button"> Cancel </button>
+                      </div>
+                    </div>
+                    <div class="detail line">
+                      <div class = "left">
+                        <label>
+                          Priority:
+                        </label>
+                        <select class="field_input" name="priority">
+                          <option>Low</option>
+                          <option>Normal</option>
+                          <option>High</option>
+                          <option>Urgent</option>
+                        </select>
+                      </div>
+                      <div class = "right">
+                        <label>
+                          Status:
+                        </label>
+                        <select class="field_input" name="status">
+                          <option>Pending</option>
+                          <option>Doing</option>
+                          <option>Hold</option>
+                          <option>Done</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="detail line">
+                      <div class = "left">
+                        <label>
+                          Progress:
+                        </label>
+                        <select class="field_input" name="priority">
+                          <option>Phase 1</option>
+                          <option>Phase 2</option>
+                          <option>Phase 3</option>
+                          <option>Completed</option>
+                        </select>
+                      </div>
+                      <div class = "right">
+                        <label>
+                          Due Date:
+                        </label>
+                        <input
+                        autofocus="autofocus"
+                        class="field_input datepicker"
+                        id="email-login"
+                        type="text"
+                        value=""
+                        name="due"
+                      />
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
-
-            <div class="detail_task_table">
+            <div class="detail_task_table" id="foreman_table">
               <div class="detail_task_table_row header">
                 <div class = "task_column name">
-                  Ghế gỗ lim 80 cái <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
+                  Task Name <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
                 </div>
                 <div class = "task_column foreman">
                   Foreman
@@ -180,6 +235,9 @@
                 <div class = "task_column estimated">
                   Esimated
                 </div>
+                <div class = "task_column due">
+                  Due Date
+                </div>
               </div>
               <div class="detail_task_table_row">
                 <div class = "task_column name">
@@ -189,9 +247,6 @@
                   <div class="icon_half">
                     <a href="#">
                       <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="#">
-                      <i class="far fa-trash-alt"></i>
                     </a>
                   </div>
                 </div>
@@ -213,6 +268,9 @@
                 <div class = "task_column estimated">
                   2021-05-13
                 </div>
+                <div class = "task_column due">
+                  2021-05-13
+                </div>
               </div>
               <div class="detail_task_table_row">
                 <div class = "task_column name">
@@ -222,9 +280,6 @@
                   <div class="icon_half">
                     <a href="#">
                       <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="#">
-                      <i class="far fa-trash-alt"></i>
                     </a>
                   </div>
                 </div>
@@ -246,238 +301,88 @@
                 <div class = "task_column estimated">
                   2021-05-13
                 </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class="add">
-                  <a> <i class="fas fa-plus"></i></a>
+                <div class = "task_column due">
+                  2021-05-13
                 </div>
               </div>
               <div class="detail_task_table_row">
                 <div class = "task_column name">
-                  Total
+                  <div class="name_half">
+                    20 Ghế gỗ 
+                  </div>
+                  <div class="icon_half">
+                    <a href="#">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                  </div>
                 </div>
                 <div class = "task_column foreman">
+                  Hưng Nguyễn
                 </div>
-                <div class = "task_column">
+                <div class = "task_column priority low">
+                  Low
                 </div>
-                <div class = "task_column">
+                <div class = "task_column status done">
+                  Done
                 </div>
-                <div class = "task_column">
+                <div class = "task_column current_progress completed">
+                  Completed
                 </div>
-                <div class = "task_column">
-                  60/80
+                <div class = "task_column quantity">
+                  40
                 </div>
-                <div class = "task_column">
+                <div class = "task_column estimated">
+                  2021-05-13
+                </div>
+                <div class = "task_column due">
+                  2021-05-13
                 </div>
               </div>
+              <div class="detail_task_table_row">
+                <div class = "task_column name">
+                  <div class="name_half">
+                    20 Ghế gỗ 
+                  </div>
+                  <div class="icon_half">
+                    <a href="#">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class = "task_column foreman">
+                  Hưng Nguyễn
+                </div>
+                <div class = "task_column priority low">
+                  Low
+                </div>
+                <div class = "task_column status done">
+                  Done
+                </div>
+                <div class = "task_column current_progress completed">
+                  Completed
+                </div>
+                <div class = "task_column quantity">
+                  40
+                </div>
+                <div class = "task_column estimated">
+                  2021-05-13
+                </div>
+                <div class = "task_column due">
+                  2021-05-13
+                </div>
+              </div>
+              
             </div>
-            <div class="detail_task_table">
-              <div class="detail_task_table_row header">
-                <div class = "task_column name">
-                  Ghế gỗ lim 80 cái <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
-                </div>
-                <div class = "task_column foreman">
-                  Foreman
-                </div>
-                <div class = "task_column priority">
-                  Priority
-                </div>
-                <div class = "task_column status">
-                  Status
-                </div>
-                <div class = "task_column current_progress">
-                  Progress
-                </div>
-                <div class = "task_column quantity">
-                  Quantity
-                </div>
-                <div class = "task_column estimated">
-                  Esimated
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class = "task_column name">
-                  <div class="name_half">
-                    20 Ghế gỗ 
-                  </div>
-                  <div class="icon_half">
-                    <a href="#">
-                      <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="#">
-                      <i class="far fa-trash-alt"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class = "task_column foreman">
-                  Hưng Nguyễn
-                </div>
-                <div class = "task_column priority urgent">
-                  Urgent
-                </div>
-                <div class = "task_column status doing">
-                  Doing
-                </div>
-                <div class = "task_column current_progress">
-                  Phase 2
-                </div>
-                <div class = "task_column quantity">
-                  20
-                </div>
-                <div class = "task_column estimated">
-                  2021-05-13
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class = "task_column name">
-                  <div class="name_half">
-                    20 Ghế gỗ 
-                  </div>
-                  <div class="icon_half">
-                    <a href="#">
-                      <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="#">
-                      <i class="far fa-trash-alt"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class = "task_column foreman">
-                  Hưng Nguyễn
-                </div>
-                <div class = "task_column priority low">
-                  Low
-                </div>
-                <div class = "task_column status done">
-                  Done
-                </div>
-                <div class = "task_column current_progress completed">
-                  Completed
-                </div>
-                <div class = "task_column quantity">
-                  40
-                </div>
-                <div class = "task_column estimated">
-                  2021-05-13
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class="add">
-                  <a> <i class="fas fa-plus"></i></a>
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class = "task_column name">
-                  Total
-                </div>
-                <div class = "task_column foreman">
-                </div>
-                <div class = "task_column">
-                </div>
-                <div class = "task_column">
-                </div>
-                <div class = "task_column">
-                </div>
-                <div class = "task_column">
-                  60/80
-                </div>
-                <div class = "task_column">
-                </div>
-              </div>
-            </div>
-            <div class="detail_task_table">
-              <div class="detail_task_table_row header">
-                <div class = "task_column name">
-                  Ghế gỗ lim 80 cái <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
-                </div>
-                <div class = "task_column foreman">
-                  Foreman
-                </div>
-                <div class = "task_column priority">
-                  Priority
-                </div>
-                <div class = "task_column status">
-                  Status
-                </div>
-                <div class = "task_column current_progress">
-                  Progress
-                </div>
-                <div class = "task_column quantity">
-                  Quantity
-                </div>
-                <div class = "task_column estimated">
-                  Esimated
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class = "task_column name">
-                  20 Ghế gỗ
-                </div>
-                <div class = "task_column foreman">
-                  Hưng Nguyễn
-                </div>
-                <div class = "task_column priority urgent">
-                  Urgent
-                </div>
-                <div class = "task_column status doing">
-                  Doing
-                </div>
-                <div class = "task_column current_progress">
-                  Phase 2
-                </div>
-                <div class = "task_column quantity">
-                  20
-                </div>
-                <div class = "task_column estimated">
-                  2021-05-13
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class = "task_column name">
-                  20 Ghế gỗ
-                </div>
-                <div class = "task_column foreman">
-                  Hưng Nguyễn
-                </div>
-                <div class = "task_column priority low">
-                  Low
-                </div>
-                <div class = "task_column status done">
-                  Done
-                </div>
-                <div class = "task_column current_progress completed">
-                  Completed
-                </div>
-                <div class = "task_column quantity">
-                  40
-                </div>
-                <div class = "task_column estimated">
-                  2021-05-13
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class="add">
-                  <a> <i class="fas fa-plus"></i></a>
-                </div>
-              </div>
-              <div class="detail_task_table_row">
-                <div class = "task_column name">
-                  Total
-                </div>
-                <div class = "task_column foreman">
-                </div>
-                <div class = "task_column">
-                </div>
-                <div class = "task_column">
-                </div>
-                <div class = "task_column">
-                </div>
-                <div class = "task_column">
-                  60/80
-                </div>
-                <div class = "task_column">
-                </div>
-              </div>
+            <div class = "list_footer new_task">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Previous</a></li>
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Next</a></li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
@@ -485,6 +390,10 @@
     </div>
   </body>
   <script>
+  $(".datepicker").datepicker({
+    orientation: "bottom left",
+    autoclose: true
+  });
   $('.dropdown-custoggle').click(function () {
     $('.cusdropdown').toggle();
   });
@@ -494,6 +403,9 @@
       const element = array[index];
       $(element).toggle();
     }
+  }
+  function toggleFilter(elem) {
+    $(".filter").toggle();
   }
   </script>
 </html>
