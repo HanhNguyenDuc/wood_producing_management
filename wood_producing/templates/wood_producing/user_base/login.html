@@ -3,22 +3,82 @@
 {% load widget_tweaks %}
 {% load crispy_forms_tags %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-</head>
-<body>
-    <form method="POST">
-        {% csrf_token %}
-        {% for key, value in form.errors.items %}
-            {{value}}
-        {% endfor %}
-        <p><label>Tài khoản:</label>{{form.username}}</p>
-        <p><label>Mật khẩu:</label>{{form.password}}</p>
-        <input type="hidden" name="next" value="/"/>
-        <input type="submit" value="Đăng nhập"/>
-    </form>
-</body>
+  <head>
+    <title>ALT F4</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="/static/css/base.css" rel="stylesheet">
+    <link href="/static/css/new.css" rel="stylesheet">
+    <link href="/static/css/detail.css" rel="stylesheet">
+    <link href="/static/css/new_task.css" rel="stylesheet">
+    <link href="/static/css/foreman.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-datepicker3.css" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  </head>
+  <body>
+    <div class="container-unauthenticate">
+
+      <div class="box-left" style="background-image: url('/static/images/bg.png');"></div>
+      <div class="box-right sessions">
+        <div class="custom-signIn" id="signIn-1">
+          <div class="img-logo">
+            <img width="200" height="120"
+              src="/static/images/manageiq-logo-inverse-vertical.png"
+            />
+          </div>
+          <form
+            class="new_account"
+            id="new_account"
+            accept-charset="UTF-8"
+            method="post"
+          >
+          {% csrf_token %}
+          {% for key, value in form.errors.items %}
+              {{value}}
+          {% endfor %}
+            <div class="group-input">
+              <div class="form-group">
+                <label>Username</label>
+                {{form.username|attr:"class:email validation-email js-validation"}}
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                {{form.password|attr:"class:password validation-password js-validation"}}
+              </div>
+            </div>
+            <button type="submit">Login</button>
+          </form>
+        </div>
+
+        <footer class="footer-unauthencate">
+          <p class="text-bottom">2020 © Alt+F4 Team. All Rights Reserved.</p>
+        </footer>
+      </div>
+    </div>
+  </body>
 </html>
