@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Production Statistic</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+        integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+        crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+    <h2 class="text-center" style="margin-top: 5%;"><span>Thống kê doanh thu</span></h2>
+    <div class="container">
+        <div class="row">
+            <div class="form-group row col-sm">
+                <label for="example-date-input" class="col-3 col-form-label">Ngày bắt đầu</label>
+                <div class="col-9">
+                    <input class="form-control" type="date" value="2021-04-01" id="date-input-1">
+                </div>
+            </div>
+            <div class="form-group row col-sm">
+                <label for="example-date-input" class="col-3 col-form-label">Ngày kết thúc</label>
+                <div class="col-9">
+                    <input class="form-control" type="date" value="2021-05-01" id="date-input-2">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button class="col-sm btn btn-light" id="btnBack"> Back </button>
+            <button class="col-sm btn btn-success" id="btnStatistic"> Statistic </button>
+        </div>
+        <div id="content" style="display: None;">
+            <div class="row">
+                <canvas id="TotalProfitChart" width="200" height="100"></canvas>
+            </div>
+            <div class="row">
+                <table class="table" style="margin-top:5.72%;">
+                    <thead>
+                        <tr>
+                            <th scope="col">TT</th>
+                            <th scope="col">Mốc thời gian</th>
+                            <th scope="col">Doanh thu</th>
+                            <th scope="col">Lợi nhuận</th>
+                            <th scope="col">Chi phí</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>04/2021 - 05/2021</td>
+                            <td>100 tỉ</td>
+                            <td>80 tỉ</td>
+                            <td>20 tỉ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <canvas id="ProductsChart" width="200" height="100"></canvas>
+                </div>
+
+                <div class="col-7">
+                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">TT</th>
+                                <th scope="col">Loại mặt hàng</th>
+                                <th scope="col">Mặt hàng</th>
+                                <th scope="col">Doanh thu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Đồ gỗ gia dụng</td>
+                                <td>Bàn gỗ</td>
+                                <td>8 tỉ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <canvas id="CostChart" width="100" height="100" style="box-sizing: border-box;"></canvas>
+                </div>
+                <div class="col-7">
+                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col" class="text-center">Giá trị</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th class="">Chi phí nhập hàng</th>
+                                <td class="text-center">10 tỉ</td>
+                            </tr>
+                            <tr>
+                                <th class="">Chi phí sản xuất</th>
+                                <td class="text-center">5 tỉ</td>
+                            </tr>
+                            <tr>
+                                <th class="">Chi phí vận chuyển</th>
+                                <td class="text-center">5 tỉ</td>
+                            </tr>
+                            <tr>
+                                <th class="">Tổng cộng</th>
+                                <td class="text-center">20 tỉ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var ctx_profit = document.getElementById('TotalProfitChart').getContext("2d");
+    var TotalProfitChart = new Chart(ctx_profit, {
+        type: 'bar',
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
+            datasets:
+                [{
+                    // barPercentage: 0.5,
+                    // barThickness: 6,
+                    // maxBarThickness: 8,
+                    // minBarLength: 2,
+                    label: 'Doanh thu',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 1,
+                },
+                {
+                    label: 'Lợi nhuận',
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    data: [50, 30, 50, 50, 10, 20],
+                }],
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ doanh thu tổng quát'
+                    }
+                }
+            }
+        },
+    });
+    var ctx_product = document.getElementById('ProductsChart');
+    var ProductsChart = new Chart(ctx_product, {
+        type: 'bar',
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
+            datasets: [{
+                label: 'Doanh thu',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            },
+            {
+                type: 'bar',
+                label: "Lợi nhuận",
+                data: [50, 30, 50, 50, 10, 20],
+            }]
+        },
+        options: {
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ doanh thu theo sản phẩm'
+                    }
+                }
+            }
+        }
+    });
+    var ctx_cost = document.getElementById('CostChart');
+    var CostChart = new Chart(ctx_cost, {
+        type: 'pie',
+        data: {
+            labels: [
+                'Chi phí nhập hàng',
+                'Chi phí sản xuất',
+                'Chi phí vận chuyển'
+            ],
+            datasets: [{
+                data: [10, 20, 30],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ chi phí'
+                    }
+                }
+            }
+    });
+
+    $('#btnStatistic').click(function () {
+        var x = document.getElementById("content");
+        x.style.display = "block";
+    })
+
+</script>
+<style>
+    .row {
+        margin-top: 5%;
+    }
+</style>
+
+</html>
