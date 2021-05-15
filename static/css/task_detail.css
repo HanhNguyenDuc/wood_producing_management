@@ -27,3 +27,6 @@
 #task_detail .right{
   display: flex;
 }
+#select_storage{
+  display: none;
+}
