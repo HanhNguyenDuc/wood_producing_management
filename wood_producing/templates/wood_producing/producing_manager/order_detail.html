@@ -17,11 +17,11 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" 
+      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" 
+      crossorigin="anonymous">
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -193,9 +193,7 @@
                     <a href="#">
                       <i class="fas fa-edit"></i>
                     </a>
-                    <a href="#" onclick="deleteTask(this)">
-                      <i class="far fa-trash-alt"></i>
-                    </a>
+                    <i class="far fa-trash-alt" onclick="deleteTask(this)" style="color: #007bff;cursor: pointer;"></i>
                   </div>
                 </div>
                 <input type="hidden" class="task_id" value="{{task.id}}"/>
@@ -273,7 +271,15 @@
     }
   }
   function deleteTask(elem) {
-    $(elem).parent().parent().parent().remove();
+    var id = $(elem).parent().parent().parent().find(".task_id").val();
+    $.ajax({
+      type: "POST",
+      data: {task_id: id},
+      url: "/api/task/delete_task",
+      success: function (data) {
+        $(elem).parent().parent().parent().remove();
+      }
+    })
   }
   </script>
 </html>
