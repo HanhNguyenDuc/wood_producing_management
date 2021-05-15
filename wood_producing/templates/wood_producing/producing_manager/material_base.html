@@ -131,7 +131,7 @@
                 </ul>
             </div>
             <div class="search-form">
-              <form action="material_base" accept-charset="UTF-8" data-remote="true" method="get">
+              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
                 <div class="form-group">
                   <input class="search-field-project" type="search" name="material_name" id="q_name_or_description_cont" />
                   <button name="button" type="submit">
@@ -172,7 +172,7 @@
               <div class="table_col edit">
                 <ul class="nav justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="material_edit.html">Edit</a>
+                        <a class="nav-link active" href="edit_material/{{material.id}}">Edit</a>
                     </li>
                 </ul>
               </div>
@@ -196,7 +196,12 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                <button type="button" class="btn btn-primary">Yes</button>
+                                <form action="" method="post">
+                                  {% csrf_token %}
+                                  <intput type="hidden" name="id" id="id" value="{{material.id}}">
+                                  <button type="submit" class="btn btn-primary" >Yes</button>
+                                </form>
+                                
                             </div>
                         </div>
                     </div>

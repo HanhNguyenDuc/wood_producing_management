@@ -27,7 +27,12 @@ class MaterialBase(RoleRequiredView):
         return None
 
     def update_post_context(self, request, *args, **kwargs):
-        return super().update_post_context(request, *args, **kwargs)
+        print("post request")
+        id = request.POST.get('id')
+        print(id)
+        material = Material.objects.get(pk=id)
+        material.delete()
+        return None
 
 class AddMaterialForm(forms.Form):
     material_name = forms.CharField()
@@ -57,18 +62,34 @@ class AddMaterial(RoleRequiredView):
         material.save()
         return None
 
+class EditMaterialForm(forms.Form):
+    name = forms.CharField()
+    type = forms.CharField()
+    desc = forms.CharField()
+
 class EditMaterial(RoleRequiredView):
     user_role = 2
-    form = None
+    form = EditMaterialForm
     template_path = "wood_producing/producing_manager/material_edit.html"
     direct_url={}
     
     def update_get_context(self, request, *args, **kwargs):
+        id = kwargs['material_id']
+        material = Material.objects.get(pk=id)
+        self.context['material']=material
         return None
 
     def update_post_context(self, request, *args, **kwargs):
+        id = kwargs['material_id']
+        material = Material.objects.get(pk=id)
+        material.name = self.cleaned_data.get('name')
+        material.type = self.cleaned_data.get('type')
+        material.desc = self.cleaned_data.get('desc')
+        material.save()
         return None
 
+class DeleteMaterial(RoleRequiredView):
+    user_role = 2
 
 class ProductManagement(RoleRequiredView):
     """ Get Management view

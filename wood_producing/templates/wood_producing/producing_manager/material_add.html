@@ -130,10 +130,6 @@
           <div class = "list_body">
             <form class ="add" action="" method="POST">
               {% csrf_token %}
-              <div class = "id">
-                <label for="id">ID:</label>
-                <input type="text" name = "id" id="id">
-              </div>
              <br>
               <div class = "material_name">
                 <label for="id">Material Name:</label>
@@ -144,11 +140,6 @@
                <label for="id">Type:</label>
                 {{form.type|attr:"type:text"}}
               </div>
-             <br>
-             <div class = "price">
-               <label for="id">Price:</label>
-               <input type="text" name="price" id="price" >
-             </div>
              <br>
              <div><input type="submit" value="Add"></div>
             </form>
