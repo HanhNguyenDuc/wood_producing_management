@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Production Statistic</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+        integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+        crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+    <h2 class="text-center" style="margin-top: 5%;"><span>Thống kê mặt hàng sản xuất</span></h2>
+    <div class="container">
+        <div class="row">
+            <div class="form-group row col-sm">
+                <label for="example-date-input" class="col-3 col-form-label">Ngày bắt đầu</label>
+                <div class="col-9">
+                    <input class="form-control" type="date" value="2021-04-01" id="date-input-1">
+                </div>
+            </div>
+            <div class="form-group row col-sm">
+                <label for="example-date-input" class="col-3 col-form-label">Ngày kết thúc</label>
+                <div class="col-9">
+                    <input class="form-control" type="date" value="2021-05-01" id="date-input-2">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button class="col-sm btn btn-light" id="btnBack"> Back </button>
+            <button class="col-sm btn btn-success" id="btnStatistic"> Statistic </button>
+        </div>
+        <div id="content" style="display: None;">
+            <div class="row">
+                <div class="col-5">
+                    <canvas id="TotalProfitChart" width="200" height="100"></canvas>
+                </div>
+                <div class="col-7">
+                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">TT</th>
+                                <th scope="col">Mốc thời gian</th>
+                                <th scope="col">Số lượng sản xuất</th>
+                                <th scope="col">Số lượng bán</th>
+                                <th scope="col">Chênh lệch</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>03/2021 - 04/2021</td>
+                                <td>100</td>
+                                <td>80</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>04/2021 - 05/2021</td>
+                                <td>100</td>
+                                <td>80</td>
+                                <td>20</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <canvas id="ProductsChart" width="200" height="100"></canvas>
+                </div>
+
+                <div class="col-7">
+                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">TT</th>
+                                <th scope="col">Loại mặt hàng</th>
+                                <th scope="col">Số lượng sản xuất</th>
+                                <th scope="col">Số lượng bán ra</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Đồ gỗ gia dụng</td>
+                                <td>Bàn gỗ</td>
+                                <td>8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <canvas id="CostChart" width="100" height="100" style="box-sizing: border-box;"></canvas>
+                </div>
+                <div class="col-7">
+                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">TT</th>
+                                <th scope="col">Xưởng</th>
+                                <th scope="col">Mặt hàng</th>
+                                <th scope="col">Số lượng sản xuất</th>
+                                <th scope="col">Số lượng bán ra</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Xưởng 1</td>
+                                <td>Bàn gỗ</td>
+                                <td>10</td>
+                                <td>8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var ctx_profit = document.getElementById('TotalProfitChart').getContext("2d");
+    var TotalProfitChart = new Chart(ctx_profit, {
+        type: 'line',
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
+            datasets: [{
+                label: 'Sản xuất',
+                data: [65, 59, 81, 56, 55],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            },
+            {
+                label: 'Bán',
+                borderColor: 'rgba(255, 206, 86, 0.2)',
+                data: [50, 30, 50, 10, 20],
+            }],
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ thống kê mặt hàng sản xuất'
+                    }
+                }
+            }
+        }
+    });
+    var ctx_product = document.getElementById('ProductsChart');
+    var ProductsChart = new Chart(ctx_product, {
+        type: 'bar',
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
+            datasets: [{
+                label: 'Sản xuất',
+                data: [50, 30, 50, 50, 10, 20],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            },
+            {
+                type: 'bar',
+                label: "Bán ra",
+                data: [12, 19, 3, 5, 2, 3],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Biểu đồ thống kê mặt hàng chi tiết'
+                }
+            }
+        }
+    });
+    var ctx_cost = document.getElementById('CostChart');
+    var CostChart = new Chart(ctx_cost, {
+        type: 'bar',
+        data: {
+            labels: ['Sản xuất', 'Bán ra'],
+            datasets: [{
+                label: 'Mặt hàng A',
+                data: [100, 110],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            },
+            {
+                type: 'bar',
+                label: "Mặt hàng B",
+                data: [50, 30],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Biểu đồ thống kê sản xuất theo xưởng'
+                }
+            }
+        }
+    });
+
+    $('#btnStatistic').click(function () {
+        var x = document.getElementById("content");
+        x.style.display = "block";
+    })
+
+</script>
+<style>
+    .row {
+        margin-top: 5%;
+    }
+</style>
+
+</html>
