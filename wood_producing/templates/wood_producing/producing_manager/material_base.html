@@ -131,7 +131,7 @@
                 </ul>
             </div>
             <div class="search-form">
-              <form action="/user_analytic_projects" accept-charset="UTF-8" data-remote="true" method="get">
+              <form action="material_base" accept-charset="UTF-8" data-remote="true" method="get">
                 <div class="form-group">
                   <input class="search-field-project" type="search" name="material_name" id="q_name_or_description_cont" />
                   <button name="button" type="submit">
@@ -149,36 +149,25 @@
               <div class="table_col material_name">
                 Material Name
               </div>
-              <div class="table_col provider_name">
-                Provider Name
-              </div>
               <div class="table_col type">
                 Type
               </div>
-              <div class="table_col price">
-                Price
-              </div>
+              
               <div class="table_col edit">
               </div>
               <div class="table_col delete">
               </div>
             </div>
-         
+            {%for material in materials%}
             <div class="table_row">
               <div class="table_col id">
-                
+                {{material.id}}
               </div>
               <div class="table_col material_name">
-               
-              </div>
-              <div class="table_col provider_name">
-                
+               {{material.name}}
               </div>
               <div class="table_col type">
-                
-              </div>
-              <div class="table_col price">
-                
+                {{material.type}}
               </div>
               <div class="table_col edit">
                 <ul class="nav justify-content-center">
@@ -214,6 +203,7 @@
                 </div>
                </div>
             </div>
+            {%endfor%}
           </div>
           <div class = "list_footer">
             <nav aria-label="Page navigation example">

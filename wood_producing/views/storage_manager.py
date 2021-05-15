@@ -18,8 +18,12 @@ class MaterialBase(RoleRequiredView):
     direct_url={}
     
     def update_get_context(self, request, *args, **kwargs):
-
-        
+        page_size = settings.PAGE_SIZE
+        kw = request.GET.get('material_name')
+        materials = Material.objects.all()
+        if kw is not None :
+            materials = materials.filter(name__contains=kw)
+        self.context['materials']=materials
         return None
 
     def update_post_context(self, request, *args, **kwargs):
