@@ -41,5 +41,9 @@ urlpatterns = [
     path('api/statistic/statistic_production', views.statistic_production, name='statistic_production'),
     path('api/statistic/statistic_material', views.statistic_material, name='statistic_material'),
     path('api/material/request_material', views.create_material_request, name='request_material'),
+    path('api/customer/add', views.add_user, name='add_user'),
+    path('api/product/searchProductbyName', views.search_product_by_name, name='search_product_by_name'),
+    path('api/customer/search_customer_by_name', views.search_customer_by_name, name='search_customer_by_name'),
+
     path('', views.Index.as_view(), name='index')
 ]
