@@ -31,6 +31,9 @@ urlpatterns = [
     path('foreman', views.ForemanMainView.as_view(), name="foreman_main_view"),
     path('foreman/edit_task/<int:task_id>', views.EditTaskView.as_view()),
     path('api/task/delete_task', views.delete_task, name='delete_task'),
+    path('api/statistic/statistic_profit', views.statistic_profit, name='statistic_profit'),
+    path('api/statistic/statistic_production', views.statistic_production, name='statistic_production'),
+    path('api/statistic/statistic_material', views.statistic_material, name='statistic_material'),
     path('api/material/request_material', views.create_material_request, name='request_material'),
     path('', views.Index.as_view(), name='index')
 ]
