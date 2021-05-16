@@ -25,6 +25,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
         integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+        crossorigin="anonymous"></script>
 </head>
 
 
@@ -53,7 +56,7 @@
             <div class="row">
                 <canvas id="TotalProfitChart" width="200" height="100"></canvas>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <table class="table" style="margin-top:5.72%;">
                     <thead>
                         <tr>
@@ -74,13 +77,13 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> -->
             <div class="row">
-                <div class="col-5">
-                    <canvas id="ProductsChart" width="200" height="200"></canvas>
+                <div class="col-sm">
+                    <canvas id="ProductsChart" width="200" height="100"></canvas>
                 </div>
 
-                <div class="col-7">
+                <!-- <div class="col-7">
                     <table class="table" style="margin-top:5.72%; font-size: 15px;">
                         <thead>
                             <tr>
@@ -99,102 +102,132 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 </body>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
     var ctx_profit = document.getElementById('TotalProfitChart').getContext("2d");
-    var TotalProfitChart = new Chart(ctx_profit, {
-        type: 'bar',
-        data: {
-            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
-            datasets:
-                [{
-                    label: 'Doanh thu',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderWidth: 1,
-                }],
-            options: {
-                scales: {
-                    y: {
-                        display: true,
-                        title: {
-                            text: "Giá trị"
-                        },
-                        beginAtZero: true
-                    },
-                    x: {
-                        display: true,
-                        title: {
-                            text: "Thời gian"
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Biểu đồ doanh thu tổng quát'
-                    }
-                }
-            }
-        }
-    });
     var ctx_product = document.getElementById('ProductsChart');
-    var ProductsChart = new Chart(ctx_product, {
-        type: 'bar',
-        data: {
-            labels: ['Mặt hàng 1', 'Mặt hàng 2', 'Mặt hàng 3', 'Mặt hàng 4', 'Mặt hàng 5', 'Mặt hàng 6'],
-            datasets: [{
-                label: 'Doanh thu',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Biểu đồ doanh thu theo sản phẩm'
-                    }
-                }
-            }
-        }
-    });
 
     $('#btnStatistic').click(function () {
+        var start_date = $("#date-input-1").val();
+        var end_date = $("#date-input-2").val();
+        var backgroundColor = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+        ];
+        $.ajax({
+            type: "POST",
+            data: {
+                start_date: start_date,
+                end_date: end_date,
+            },
+            url: "/api/statistic/statistic_profit",
+            success: function (data) {
+                console.log(data);
+                data = JSON.parse(JSON.stringify(data))
+                var TotalProfitChart = new Chart(ctx_profit, {
+                    type: 'bar',
+                    data: {
+                        labels: data["labels"],
+                        datasets:
+                            [{
+                                label: 'Doanh thu',
+                                data: data["income"],
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderWidth: 1
+                            }],
+                        options: {
+                            scales: {
+                                y: {
+                                    display: true,
+                                    title: {
+                                        text: "Giá trị"
+                                    },
+                                    beginAtZero: true
+                                },
+                                x: {
+                                    display: true,
+                                    title: {
+                                        text: "Thời gian"
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Biểu đồ doanh thu tổng quát'
+                                }
+                            }
+                        }
+                    }
+                });
+                var datasets = [];
+                for (let index = 0; index < data["product_income_detail"].length; index++) {
+                    datasets.push({
+                        type: 'bar',
+                        label: data["product_income_detail"][index]["label"],
+                        data: data["product_income_detail"][index]["income"],
+                        backgroundColor: backgroundColor[index % 7]
+                    })
+                }
+                var ProductsChart = new Chart(ctx_product, {
+                    type: 'bar',
+                    data: {
+                        labels: data["labels"],
+                        datasets: datasets
+                    },
+                    options: {
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            },
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Biểu đồ doanh thu theo sản phẩm'
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            errors: function (data) {
+                console.log(data);
+                alert("Có lỗi xảy ra, vui lòng thử lại");
+            }
+        });
+
         var x = document.getElementById("content");
         x.style.display = "block";
     });
