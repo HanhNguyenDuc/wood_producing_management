@@ -110,4 +110,6 @@ def get_user_role_root_path(user):
         return "/foreman"
     if user.role == 4:
         return "/director"
+    if user.role == 5:
+        return "/seller"        
     return None

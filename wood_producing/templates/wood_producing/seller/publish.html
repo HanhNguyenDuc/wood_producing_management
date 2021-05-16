@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base href="https://demos.telerik.com/kendo-ui/pdf-export/page-layout">
+    <style>
+        html {
+            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.511/styles/kendo.default-v2.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+
+    <script src="https://kendo.cdn.telerik.com/2021.2.511/js/jszip.min.js"></script>
+
+    <script src="https://kendo.cdn.telerik.com/2021.2.511/js/kendo.all.min.js"></script>
+
+
+
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.511/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.511/styles/kendo.rtl.min.css">
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.511/styles/kendo.default.min.css">
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.511/styles/kendo.mobile.all.min.css">
+    <script src="https://kendo.cdn.telerik.com/2021.2.511/js/angular.min.js"></script>
+</head>
+
+<body>
+    <div id="example">
+        <div class="box wide hidden-on-narrow">
+            <div class="box-col">
+                <h4>Select Page size</h4>
+                <select id="paper" style="width: 100px;">
+                    <option value="size-a4" selected>A4</option>
+                    <option value="size-letter">Letter</option>
+                    <option value="size-executive">Executive</option>
+                </select>
+            </div>
+            <div class="box-col">
+                <h4>Get PDF</h4>
+                <button class="export-pdf k-button" onclick="getPDF('.pdf-page')">Export</button>
+            </div>
+        </div>
+
+        <div class="page-container hidden-on-narrow">
+            <div class="pdf-page size-a4">
+                <div class="inner-page">
+                    <div class="pdf-header">
+                        <span class="company-logo">
+                            Hợp đồng mua bán
+                        </span>
+                        <span class="invoice-number">Mã hợp đồng #23543</span>
+                    </div>
+                    <div class="addresses">
+                        <div class="for">
+                            <h3>Bên mua</h3>
+                            <p>
+                                Tên<br />
+                                Số điện thoại<br />
+                                Địa chỉ
+                            </p>
+                        </div>
+
+                        <div class="from">
+                            <h3>Bên bán</h3>
+                            <p>
+                                Tên<br />
+                                Số điện thoại<br />
+                                Địa chỉ
+                            </p>
+                            <p>
+                                Mã đơn hàng: 23543<br />
+                                Thời gian: 12.03.2014<br />
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pdf-body">
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" style="font-size: smaller;">Tên mặt hàng</th>
+                                <th scope="col " style="font-size: smaller;">Mã đơn hàng</th>
+                                <th scope="col" style="font-size: smaller;">Số lượng</th>
+                                <th scope="col" style="font-size: smaller;">Đơn giá</th>
+                                <th scope="col" style="font-size: smaller;">Tổng tiền</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                  <th colspan="5"> Tổng </th>
+                                  <td>1234123423</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        <p class="signature">
+                            Signature: ________________ <br /><br />
+                            Date: 12.03.2014
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="responsive-message"></div>
+
+        <style>
+            /*
+			Use the DejaVu Sans font for display and embedding in the PDF file.
+			The standard PDF fonts have no support for Unicode characters.
+		*/
+            .pdf-page {
+                font-family: "DejaVu Sans", "Arial", sans-serif;
+            }
+        </style>
+
+        <script>
+            // Import DejaVu Sans font for embedding
+
+            // NOTE: Only required if the Kendo UI stylesheets are loaded
+            // from a different origin, e.g. cdn.kendostatic.com
+            kendo.pdf.defineFont({
+                "DejaVu Sans": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+                "DejaVu Sans|Bold": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+                "DejaVu Sans|Bold|Italic": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+                "DejaVu Sans|Italic": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+                "WebComponentsIcons": "https://kendo.cdn.telerik.com/2017.1.223/styles/fonts/glyphs/WebComponentsIcons.ttf"
+            });
+        </script>
+
+        <!-- Load Pako ZLIB library to enable PDF compression -->
+        <script src="../content/shared/js/pako.min.js"></script>
+
+        <script>
+            function getPDF(selector) {
+                kendo.drawing.drawDOM($(selector)).then(function (group) {
+                    kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
+                });
+            }
+
+            $(document).ready(function () {
+                $("#paper").kendoDropDownList({
+                    change: function () {
+                        $(".pdf-page")
+                            .removeClass("size-a4")
+                            .removeClass("size-letter")
+                            .removeClass("size-executive")
+                            .addClass(this.value());
+                    }
+                });
+            });
+        </script>
+        <style>
+            .pdf-page {
+                position: relative;
+                margin: 0 auto;
+                padding: .4in .3in;
+                color: #333;
+                background-color: #fff;
+                box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .3);
+                box-sizing: border-box;
+            }
+
+            .pdf-header {
+                padding-bottom: .2in;
+                margin-bottom: .3in;
+                border-bottom: 1px solid #e5e5e5;
+            }
+
+            .invoice-number {
+                padding-top: .1in;
+                float: right;
+            }
+
+            .pdf-footer {
+                position: absolute;
+                bottom: .25in;
+                left: .3in;
+                right: .3in;
+                padding-top: 0.05in;
+                border-top: 1px solid #e5e5e5;
+                font-size: 0.9em;
+                text-align: left;
+                color: #787878;
+            }
+
+            .addresses {
+                font-size: 12px;
+            }
+
+            .addresses:after {
+                display: block;
+                content: "";
+                clear: both;
+            }
+
+            .for {
+                float: left;
+            }
+
+            .from {
+                float: right;
+            }
+
+            .addresses p {
+                color: #787878;
+                padding: .05in 0;
+                border-top: 1px solid #e5e5e5;
+            }
+
+            .addresses p:first-of-type {
+                border-top: 0;
+            }
+
+            .pdf-body {
+                margin-top: .3in;
+            }
+
+            .company-logo {
+                font-size: 1.8em;
+                font-weight: bold;
+                color: #3aabf0;
+            }
+
+            .signature {
+                padding-top: .3in;
+            }
+
+            /* Dimensions other than px and em should be divided by 1.33 for the proper PDF output */
+            .size-a4 {
+                width: 6.2in;
+                height: 8.7in;
+            }
+
+            .size-letter {
+                width: 6.3in;
+                height: 8.2in;
+            }
+
+            .size-executive {
+                width: 5.4in;
+                height: 7.8in;
+                font-size: 12px;
+            }
+
+            .size-executive .pdf-header {
+                margin-bottom: .1in;
+            }
+        </style>
+
+    </div>
+
+
+
+
+</body>
+
+</html>
