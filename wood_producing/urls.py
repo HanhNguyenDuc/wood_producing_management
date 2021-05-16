@@ -1,5 +1,5 @@
 from wood_producing.views.api import delete_task
-from wood_producing.views.storage_manager import ImportMaterialFromProvider, MaterialManagement, ProductManagement
+from wood_producing.views.storage_manager import EditMaterial, ImportMaterialFromProvider, AddMaterial, MaterialBase, ProductManagement
 from wood_producing.views.statistic import MaterialStatistic, ProductionStatistic
 from wood_producing.views.seller import CreateOrder, PublishOrder
 from django.urls import path
@@ -19,8 +19,11 @@ urlpatterns = [
     path('statistic/production', views.ProductionStatistic.as_view(), name='production_statistic'),
     path('statistic/profit', views.ProfitStatistic.as_view(), name='profit_statistic'),
     path('statistic/material', views.MaterialStatistic.as_view(), name='material_statistic'),
+    path('storage_manager/manage_material',views.MaterialBase.as_view(), name="manage_material"),
     path('storage_manager/import_material', views.ImportMaterialFromProvider.as_view(), name='import_material'),
-    path('storage_manager/material_manage', views.MaterialManagement.as_view(), name='material_manage'),
+    path('storage_manager/add_material', views.AddMaterial.as_view(), name='add_material'),
+    path('storage_manager/edit_material/<int:material_id>', views.EditMaterial.as_view(), name='edit_material'),
+    path('storage_manager/delete_material/<int:material_id>', views.MaterialBase.as_view(), name='delete_material'),
     path('storage_manager/product_manage', views.ProductManagement.as_view(), name='product_manage'),
     path('foreman', views.ForemanMainView.as_view(), name="foreman_main_view"),
     path('foreman/edit_task/<int:task_id>', views.EditTaskView.as_view()),
