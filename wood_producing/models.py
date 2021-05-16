@@ -61,7 +61,6 @@ class Importbill(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     date = models.DateField(db_column='Date', blank=True, null=True)  # Field name made lowercase.
     manager = models.ForeignKey(Material, db_column='Manager', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
-    provider = models.IntegerField(db_column='Provider', blank=True, null=True)  # Field name made lowercase.
     providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
 
 class Materialinproduct(models.Model):
@@ -82,7 +81,8 @@ class Materialofprovider(models.Model):
 
 class Importedmaterial(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    materialofprovider = models.ForeignKey(Materialofprovider, db_column='Material', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
+    materialofprovider = models.ForeignKey(Materialofprovider, db_column='Materialofprovider', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
+    quantity = models.IntegerField(default=10)
     price = models.FloatField(db_column='Price')  # Field name made lowercase.
     importbillid = models.ForeignKey(Importbill, models.DO_NOTHING, db_column='ImportBillID')  # Field name made lowercase.
 
