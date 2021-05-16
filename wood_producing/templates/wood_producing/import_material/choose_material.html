@@ -292,14 +292,13 @@
     console.log(price)
     $.ajax({
       type: "POST",
-      data: {
-        id : id,
-        quantity : quantity,
-        price : price
+      data:{
+        quantity:quantity,
+        price:price
       },
-      url: "/api_duc/material/import_material",
+      url: "/api_duc/material/import_material/" + id,
       success: function (data) {
-        $('#close').click();
+        $('#close'+id).click();
       }
     })
   }
