@@ -45,3 +45,11 @@ def delete_material(request):
         "msg": "Success",
     })
         
+@csrf_exempt
+def delete_product(request):
+    id = int(request.POST.get('product_id'))
+    product = Product.objects.get(pk=id)
+    product.delete()
+    return JsonResponse({
+        "msg":"Sucess",
+    })

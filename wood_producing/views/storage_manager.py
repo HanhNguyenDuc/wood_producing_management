@@ -43,8 +43,6 @@ class AddMaterial(RoleRequiredView):
     user_role = 2
     form = AddMaterialForm
     template_path = "wood_producing/producing_manager/material_add.html"
-    direct_url = {
-    }
     
     """ Get Management view
         Delete, Add, Update be implemented in api.py
@@ -88,15 +86,77 @@ class EditMaterial(RoleRequiredView):
         material.save()
         return None
 
-class DeleteMaterial(RoleRequiredView):
-    user_role = 2
-
 class ProductManagement(RoleRequiredView):
+    user_role = 2 
+    form = None
+    template_path = "wood_producing/product_manager/product_base.html"
     """ Get Management view
         Delete, Add, Update be implemented in api.py
     """
     def update_get_context(self, request, *args, **kwargs):
+        page_size = settings.PAGE_SIZE
+        kw = request.GET.get('product_name')
+        products = Product.objects.all()
+        if kw is not None :
+            products = products.filter(name__contains=kw)
+        self.context['products']=products
         return None
     
     def update_post_context(self, request, *args, **kwargs):
+        return None
+
+class AddProductForm(forms.Form):
+    name = forms.CharField()
+    id = forms.CharField()
+    type = forms.CharField()
+    price = forms.CharField()
+    desc = forms.CharField()
+
+class AddProduct(RoleRequiredView):
+    user_role = 2
+    form = AddProductForm
+    template_path = "wood_producing/product_manager/product_add.html"
+
+    def update_get_context(self, request, *args, **kwargs):
+        return None
+
+    def update_post_context(self, request, *args, **kwargs):
+        product = Product.objects.create(
+            name = self.cleaned_data.get('name'),
+            id = self.cleaned_data.get('id'),
+            type = self.cleaned_data.get('type'),
+            price = self.cleaned_data.get('price'),
+            desc = self.cleaned_data.get('desc')
+        )
+        product.save()
+        return None
+
+
+class EditProductForm(forms.Form):
+    name = forms.CharField()
+    type = forms.CharField()
+    id = forms.CharField()
+    price = forms.CharField()
+    desc = forms.CharField()
+
+class EditProduct(RoleRequiredView):
+    user_role = 2
+    form = EditProductForm
+    template_path = "wood_producing/product_manager/product_edit.html"
+
+    def update_get_context(self, request, *args, **kwargs):
+        id = kwargs['product_id']
+        product = Product.objects.get(pk=id)
+        self.context['product']=product
+        return None
+
+    def update_post_context(self, request, *args, **kwargs):
+        id = kwargs['product_id']
+        product = Product.objects.get(pk=id)
+        product.name = self.cleaned_data.get('name')
+        product.type = self.cleaned_data.get("type")
+        product.id = self.cleaned_data.get('id')
+        product.price = self.cleaned_data.get('price')
+        product.desc = self.cleaned_data.get('desc')
+        product.save()
         return None
