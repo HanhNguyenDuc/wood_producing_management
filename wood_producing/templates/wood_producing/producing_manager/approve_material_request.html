@@ -105,14 +105,14 @@
         <div class="order_list">
           <div class = "list_header">
             <h3 class = "title">
-              Material Request #1
+              Material Request #{{material_request.id}}
             </h3>
             <input type="hidden" id="task_id" value="1">
           </div>
           <div class = "detail_body" id="task_detail">
             <div class = "detail line">
               <div class="left">
-                <h4>Material: Gỗ lim</h4>
+                <h4>Material: {{material_request.material.name}}</h4>
               </div>
               <div class="right">
                 <div>
@@ -122,10 +122,10 @@
               </div>
             </div>
             <div class = "detail line">
-              <h4> Quantity: 20</h4>
+              <h4> Quantity: {{material_request.quantity}}</h4>
             </div>
             <div class = "detail line">
-              <span>Created at 2021-05-11<span>
+              <span>Created at {{material_request.create_at}}<span>
             </div>
             <div class="detail line">
               <h3> Storage List</h3>

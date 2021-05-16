@@ -110,7 +110,7 @@
                 Request ID
               </div>
               <div class="table_col order_name">
-                Order name
+                Task name
               </div>
               <div class="table_col material">
                 Material
@@ -122,23 +122,25 @@
                 Created at
               </div>
             </div>
+            {% for material_request in material_requests %}
             <div class="table_row">
               <div class="table_col id">
-                1
+                {{material_request.id}}
               </div>
               <div class="table_col order_name">
-                <a href="approve?approve_id=1"> Đơn hàng cho công ty A <i class="far fa-check-circle"></i> </a>
+                <a href="/storage_manager/approve_material_request/{{material_request.id}}"> {{material_request.taskid.name}} <i class="far fa-check-circle"></i> </a>
               </div>
               <div class="table_col material">
-                Gỗ lim
+                {{material_request.material.name}}
               </div>
               <div class="table_col material_quantity">
-                20
+                {{material_request.quantity}}
               </div>
               <div class="table_col request_date">
-                2021/05/01
+                {{material_request.create_at}}
               </div>
             </div>
+            {% endfor %}
             </div>
           </div>
           <div class = "list_footer">

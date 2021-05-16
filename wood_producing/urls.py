@@ -1,3 +1,4 @@
+from wood_producing.views.approve_material_request import ApproveMaterialRequest
 from wood_producing.views.api import delete_product, delete_task
 from wood_producing.views.storage_manager import AddProduct, EditMaterial, EditProduct, ImportMaterialFromProvider, AddMaterial, MaterialBase, ProductManagement
 from wood_producing.views.statistic import MaterialStatistic, ProductionStatistic
@@ -28,6 +29,8 @@ urlpatterns = [
     path('storage_manager/product_manage', views.ProductManagement.as_view(), name='manage_product'),
     path('storage_manager/product_manage/add_product', views.AddProduct.as_view(), name='add_product'),
     path('storage_manager/product_manage/edit_product/<int:product_id>', views.EditProduct.as_view(), name='edit_product'),
+    path('storage_manager/list_material_request', views.ListMaterialRequest.as_view(), name="select_material_request"),
+    path('storage_manager/approve_material_request/<int:material_request_id>', views.ApproveMaterialRequest.as_view(), name="approve_material_request"),
     path('api/product/delete_product',views.delete_product, name='delete_product'),
     path('foreman', views.ForemanMainView.as_view(), name="foreman_main_view"),
     path('foreman/edit_task/<int:task_id>', views.EditTaskView.as_view()),
