@@ -169,11 +169,24 @@ class EditProduct(RoleRequiredView):
         return None
 
 
+class ImportChooseProvider(RoleRequiredView):
+    user_role = 2
+    form = None
+    template_path = "wood_producing/import_material/choose_provider.html"
+    def update_get_context(self, request, *args, **kwargs):
+        kw = request.GET.get('search')
+        providers = Provider.objects.all()
+        if kw is not None :
+            providers = providers.filter(name__contains=kw)
+        self.context['providers']=providers
+        return None
+    def update_post_context(self, request, *args, **kwargs):
+        return None
 class ImportChooseMaterial(RoleRequiredView):
     user_role = 2
     form = None
     template_path = "wood_producing/import_material/choose_material.html"
     def update_get_context(self, request, *args, **kwargs):
-        return super().update_get_context(request, *args, **kwargs)
+        return None
     def update_post_context(self, request, *args, **kwargs):
-        return super().update_post_context(request, *args, **kwargs)
+        return None

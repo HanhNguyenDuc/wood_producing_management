@@ -224,7 +224,7 @@
     $.ajax({
       type: "POST",
       data: {material_id: id},
-      url: "/api/material/delete_material",
+      url: "/api_duc/material/delete_material",
       success: function (data) {
         $(elem).parent().parent().remove();
       }

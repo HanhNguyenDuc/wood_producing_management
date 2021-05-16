@@ -145,7 +145,7 @@
                               <td></td>
                             </tr>
                               <td>Provider Name</td>
-                              <td><input type="text" id="provider" value="" ></td>
+                              <td><input type="text" id="name" value="" ></td>
                             </tr>
                             <tr>
                               <td>Phone</td>
@@ -163,17 +163,17 @@
                         </table>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="addProvider(this)">Save</button>
+                        <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
                 </div>
             </div>
             <div class="search-form">
-              <form action="/user_analytic_projects" accept-charset="UTF-8" data-remote="true" method="get">
+              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
                 <div class="form-group">
-                  <input class="search-field-project" type="search" name="q[name_or_description_cont]" id="q_name_or_description_cont" />
+                  <input class="search-field-project" type="search" name="search" id="search" />
                   <button name="button" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
@@ -201,26 +201,31 @@
               <div class="table_col select">
               </div>
             </div>
-            
+            {%for provider in providers%}
             <div class="table_row">
               <div class="table_col id">
+                {{provider.id}}
               </div>
               <div class="table_col provider_name">
+                {{provider.name}}
               </div>
               <div class="table_col phone">
+                {{provider.phone}}
               </div>
               <div class="table_col address">
+                {{provider.address}}
               </div>
               <div class="table_col desc">
+                {{provider.desc}}
               </div>
               <div class="table_col select">
                 <nav aria-label="Page navigation example"></nav>
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="choose_material.html">select</a></li>
+                        <li class="page-item"><a class="page-link" id="{{provider.id}}" href="choose_material" onclick="choose_provider(this)">select</a></li>
                 </nav>
               </div>
             </div>
-            
+            {%endfor%}
           </div>
           <div class = "list_footer">
             <nav aria-label="Page navigation example">
@@ -258,6 +263,35 @@
           const element = array[index];
           $(element).remove();
         }        
+      }
+    })
+  }
+  function addProvider(elem){
+    var name = $("#name").val();
+    var phone = $("#phone").val();
+    var address = $("#address").val();
+    var desc = $("#desc").val();
+    $.ajax({
+      type: "POST",
+      data: {
+        name: name,
+        phone: phone,
+        address: address,
+        desc:desc
+      },
+      url: "/api_duc/provider/add_provider",
+      success: function (data) {
+        $('#close').click();
+      }
+    })
+  }
+  function choose_provider(elem) {
+    var id = $(elem).attr("id");
+    $.ajax({
+      type: "POST",
+      data: {provider_id: id},
+      url: "/api_duc/provider/choose_provider",
+      success: function (data) {
       }
     })
   }
