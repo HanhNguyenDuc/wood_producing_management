@@ -3,6 +3,7 @@
 {% load widget_tweaks %}
 {% load crispy_forms_tags %}
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,6 +25,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
         integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+        crossorigin="anonymous"></script>
+
 </head>
 
 
@@ -132,113 +137,163 @@
 
 <script>
     var ctx_profit = document.getElementById('TotalProfitChart').getContext("2d");
-    var TotalProfitChart = new Chart(ctx_profit, {
-        type: 'line',
-        data: {
-            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
-            datasets: [{
-                label: 'Số lượng nhập',
-                data: [65, 59, 81, 56, 55],
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }],
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Biểu đồ thống kê nhập liệu'
-                    }
-                }
-            }
-        }
-    });
     var ctx_product = document.getElementById('ProductsChart');
-    var ProductsChart = new Chart(ctx_product, {
-        type: 'bar',
-        data: {
-            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
-            datasets: [{
-                label: 'Số lượng nhập',
-                data: [50, 30, 50, 50, 10, 20],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Biểu đồ thống kê nhập liệu chi tiết'
-                }
-            }
-        }
-    });
     var ctx_cost = document.getElementById('CostChart');
-    var CostChart = new Chart(ctx_cost, {
-        type: 'bar',
-        data: {
-            labels: ['Vinamilk', 'Cafein'],
-            datasets: [{
-                label: 'Mặt hàng A',
-                data: [100, 110],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                ],
-                borderWidth: 1
-            },
-            {
-                type: 'bar',
-                label: "Mặt hàng B",
-                data: [50, 30],
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Biểu đồ thống kê nhập liệu theo nhà cung cấp'
-                }
-            }
-        }
-    });
 
     $('#btnStatistic').click(function () {
+        var start_date = $("#date-input-1").val();
+        var end_date = $("#date-input-2").val();
+        $.ajax({
+            type: "POST",
+            data: {
+                start_date: start_date,
+                end_date: end_date,
+            },
+            url: "/api/statistic/statistic_production",
+            success: function (data) {
+                console.log(data);
+                data = JSON.parse(JSON.stringify(data))
+                var TotalProfitChart = new Chart(ctx_profit, {
+                    type: 'line',
+                    data: {
+                        labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
+                        datasets: [{
+                            label: 'Số lượng nhập',
+                            data: [65, 59, 81, 56, 55],
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }],
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Biểu đồ thống kê nhập liệu'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                var ProductsChart = new Chart(ctx_product, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
+                        datasets: [{
+                            label: 'Số lượng nhập',
+                            data: [50, 30, 50, 50, 10, 20],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Biểu đồ thống kê nhập liệu chi tiết'
+                            }
+                        }
+                    }
+                });
+
+                var CostChart = new Chart(ctx_cost, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Vinamilk', 'Cafein'],
+                        datasets: [{
+                            label: 'Mặt hàng A',
+                            data: [100, 110],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                            ],
+                            borderWidth: 1
+                        },
+                        {
+                            type: 'bar',
+                            label: "Mặt hàng B",
+                            data: [50, 30],
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Biểu đồ thống kê nhập liệu theo nhà cung cấp'
+                            }
+                        }
+                    }
+                });
+
+                // var array = $("#request_material_table").find(".detail_task_table_row");
+                // for (let index = 1; index < array.length; index++) {
+                //     const element = array[index];
+                //     $(element).remove();
+                // }
+                // // Gia su data gom: ten foreman, status, so task dang lam
+                // for (let index = 0; index < data.length; index++) {
+                //     const element = data[index];
+
+                //     var item = '<div class="detail_task_table_row">' +
+                //         '                <div class = "task_column stt">' +
+                //         `                  ${element.id}` +
+                //         '                </div>' +
+                //         '                <div class = "task_column name">' +
+                //         `                  ${element.name}` +
+                //         '                </div>' +
+                //         '                <div class = "task_column quantity">' +
+                //         `                  ${element.type}` +
+                //         '                </div>' +
+                //         '                <div class = "task_column current_progress">' +
+                //         `                  ${element.desc}` +
+                //         '                </div>' +
+                //         '                <div class = "task_column">' +
+                //         '                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">' +
+                //         '                </div>' +
+                //         '              </div>';
+                //     $("#request_material_table").append(item)
+                // }
+            },
+            errors: function (data) {
+                console.log(data);
+                alert("Có lỗi xảy ra, vui lòng thử lại");
+            }
+        });
+
         var x = document.getElementById("content");
         x.style.display = "block";
-    })
+    });
 
 </script>
 <style>
