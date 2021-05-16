@@ -91,8 +91,6 @@ class Material(models.Model):
     name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
     type = models.CharField(db_column='Type', max_length=255, blank=True, null=True)  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
-
 
 
 class Materialinproduct(models.Model):
