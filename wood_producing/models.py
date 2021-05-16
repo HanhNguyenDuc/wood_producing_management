@@ -50,19 +50,6 @@ class Customer(models.Model):
     phone = models.CharField(db_column='Phone', max_length=255, blank=True, null=True)  # Field name made lowercase.
     address = models.CharField(db_column='Address', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
-
-
-class Exportbill(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    date = models.DateField(db_column='Date', blank=True, null=True)  # Field name made lowercase.
-    manager = models.IntegerField(db_column='Manager', blank=True, null=True)  # Field name made lowercase.
-    customer = models.IntegerField(db_column='Customer', blank=True, null=True)  # Field name made lowercase.
-    totalincome = models.FloatField(db_column='TotalIncome', blank=True, null=True)  # Field name made lowercase.
-    discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
-    customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerID')  # Field name made lowercase.
-
-
-
 class Importbill(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     date = models.DateField(db_column='Date', blank=True, null=True)  # Field name made lowercase.
@@ -71,13 +58,6 @@ class Importbill(models.Model):
     providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
 
 
-
-
-class Importedmaterial(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    material = models.IntegerField(db_column='Material', blank=True, null=True)  # Field name made lowercase.
-    price = models.FloatField(db_column='Price')  # Field name made lowercase.
-    importbillid = models.ForeignKey(Importbill, models.DO_NOTHING, db_column='ImportBillID')  # Field name made lowercase.
 
 
 
@@ -95,15 +75,20 @@ class Materialinproduct(models.Model):
     quantity = models.IntegerField(default=2)
     description = models.CharField(max_length=300, default="is a main material")
 
-
 class Materialofprovider(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     # material = models.ForeignKey(Material, models.CASCADE, db_column='Material')  # Field name made lowercase.
     price = models.FloatField(db_column='Price')  # Field name made lowercase.
     # provider = models.ForeignKey(Provider, db_column='Provider', blank=True, null=True)  # Field name made lowercase.
-    importedmaterialid = models.ForeignKey(Importedmaterial, models.DO_NOTHING, db_column='ImportedMaterialID', null=True)  # Field name made lowercase.
     providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
     materialid = models.ForeignKey(Material, models.DO_NOTHING, db_column='MaterialID')  # Field name made lowercase.
+
+
+class Importedmaterial(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    materialofprovider = models.ForeignKey(Materialofprovider, db_column='Material', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
+    price = models.FloatField(db_column='Price')  # Field name made lowercase.
+    importbillid = models.ForeignKey(Importbill, models.DO_NOTHING, db_column='ImportBillID')  # Field name made lowercase.
 
 
 
@@ -140,29 +125,14 @@ class Product(models.Model):
     price = models.FloatField(db_column='Price')  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
     iddesign = models.CharField(db_column='IdDesign', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)  # Field name made lowercase.
-    discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
 
 class Orderedproduct(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID')  # Field name made lowercase.
+    storageid = models.ForeignKey('Storage', models.CASCADE, null=True, db_column='StorageID')  # Field name made lowercase.
     price = models.FloatField(db_column='Price')  # Field name made lowercase.
     product = models.ForeignKey(Product, db_column='Product', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
     quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
-    productexportedid = models.ForeignKey('Productexported', models.CASCADE, db_column='ProductExportedID', null=True)  # Field name made lowercase.
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
-
-
-
-class Productexported(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
-    price = models.FloatField(db_column='Price')  # Field name made lowercase.
-    product = models.IntegerField(db_column='Product', blank=True, null=True)  # Field name made lowercase.
-    exportbillid = models.ForeignKey(Exportbill, models.DO_NOTHING, db_column='ExportBillID')  # Field name made lowercase.
-    productid = models.IntegerField(db_column='ProductID')  # Field name made lowercase.
-
-
 
 class Progress(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -193,7 +163,6 @@ class Task(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     name = models.CharField(db_column='name', max_length=255)
     orderedproductid = models.ForeignKey(Orderedproduct, models.DO_NOTHING, db_column='OrderedProductID')  # Field name made lowercase.
-    product = models.IntegerField(db_column='Product', blank=True, null=True)  # Field name made lowercase.
     userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID', null=True)  # Field name made lowercase.
     progress = models.ForeignKey('Progress', models.CASCADE, db_column='progress', null=True)
     priority = models.CharField(db_column='priority', max_length=10, default="low")
