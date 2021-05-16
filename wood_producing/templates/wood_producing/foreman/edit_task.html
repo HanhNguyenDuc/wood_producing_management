@@ -105,36 +105,53 @@
         <div class="order_list">
           <div class = "list_header">
             <h3 class = "title">
-              Task #1
+              Task #{{task.id}}
             </h3>
             <input type="hidden" id="task_id" value="1">
           </div>
           <div class = "detail_body" id="task_detail">
             <div class = "detail line">
               <div class="left">
-                <h4>20 Bàn ghế gỗ</h4>
+                <h4>{{task.name}}</h4>
               </div>
               <div class="right">
-                <div>
-                  <button class="btn btn-success">Create</button>
+                <div>F
                   <button type ="button" class="btn btn-danger" onclick="deleteTask(this)">Delete</button>
                   <button type ="button" class="btn btn-info" data-toggle="modal" data-target="#add_material_modal"> Request Material</button>
                 </div>
               </div>
             </div>
             <div class = "detail line">
-              <span>Added 4 days ago - 2021-05-11. Updated 4 days ago.<span>
+              <span>{{add_at_str}} - {{task.create_at}}. {{update_at_str}}.<span>
             </div>
+            <form action="" method="POST">
+            {% csrf_token %}
             <div class="detail line">
               <div class = "left">
                 <label>
                   Priority:
                 </label>
                 <select class="field_input" name="priority">
-                  <option>Low</option>
-                  <option>Normal</option>
-                  <option>High</option>
-                  <option>Urgent</option>
+                  {% if task.priority == 'low' %}
+                  <option value="low" selected>Low</option>
+                  {% else %}
+                  <option value="low">Low</option>
+                  {% endif %}
+                  {% if task.priority == 'normal' %}
+                  <option value="normal" selected>Normal</option>
+                  {% else %}
+                  <option value="normal">Normal</option>
+                  {% endif %}
+                  {% if task.priority == 'high' %}
+                  <option value="high" selected>High</option>
+                  {% else %}
+                  <option value="high">High</option>
+                  {% endif %}
+                  {% if task.priority == 'urgent'%}
+                  <option value="urgent" selected>Urgent</option>
+                  {% else %}
+                  <option value="urgent">Urgent</option>
+                  {% endif %}
                 </select>
               </div>
               <div class = "right">
@@ -142,10 +159,26 @@
                   Status:
                 </label>
                 <select class="field_input" name="status">
-                  <option>Pending</option>
-                  <option>Doing</option>
-                  <option>Hold</option>
-                  <option>Done</option>
+                  {% if task.status == 'low' %}
+                  <option value="pending" selected>Pending</option>
+                  {% else %}
+                  <option value="pending">Pending</option>
+                  {% endif %}
+                  {% if task.status == 'normal' %}
+                  <option value="holding" selected>Holding</option>
+                  {% else %}
+                  <option value="holding">Holding</option>
+                  {% endif %}
+                  {% if task.status == 'high' %}
+                  <option value="hold" selected>Hold</option>
+                  {% else %}
+                  <option value="hold">Hold</option>
+                  {% endif %}
+                  {% if task.status == 'urgent'%}
+                  <option value="done" selected>Done</option>
+                  {% else %}
+                  <option value="done">Done</option>
+                  {% endif %}
                 </select>
               </div>
             </div>
@@ -154,11 +187,10 @@
                 <label>
                   Progress:
                 </label>
-                <select class="field_input" name="priority" onchange="toggleStorage(this)">
-                  <option>Phase 1</option>
-                  <option>Phase 2</option>
-                  <option>Phase 3</option>
-                  <option>Completed</option>
+                <select class="field_input" name="progress" onchange="toggleStorage(this)">
+                  {% for progress in progress_list %}
+                    <option value="{{progress.id}}">{{progress.name}}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class = "right">
@@ -169,7 +201,7 @@
                 class="field_input datepicker"
                 id="email-login"
                 type="text"
-                value=""
+                value="{{task.estimated}}"
                 name="due"
               />
               </div>
@@ -183,7 +215,7 @@
                 class="field_input"
                 id="email-login"
                 type="text"
-                value="Nguyen Duc Hung"
+                value="{{task.userid.first_name}} {{task.userid.last_name}}"
                 name="due"
                 disabled
               />
@@ -196,8 +228,8 @@
                 class="field_input esimatepicker"
                 id="email-login"
                 type="text"
-                value=""
-                name="due"
+                value="{{newest_progress.enddate}}"
+                name="estimate_date"
               />
               </div>
             </div>
@@ -207,20 +239,37 @@
                   Order:
                 </label>
                 <a href="#">
-                  Don hang cong ty A
+                  {{task.orderedproductid.order.name}}
                 </a>
               </div>
               <div class = "right">
                 <label>
-                  Done(%):
+                  Done(%)
                 </label>
                 <input
                 class="field_input"
                 id="email-login"
                 type="number"
-                value="80"
-                name="done"
+                {% if newest_progress.percentage %}
+                  value="{{newest_progress.percentage}}"
+                {% else %}
+                  value="0"
+                {% endif %}
+                name="done_percentage"
               />
+
+              <button class="btn btn-success" type="submit">Update</button>
+              </div>
+            </form>
+            </div>
+            <div class="detail line">
+              <div class = "left">
+                <label>
+                  Product:
+                </label>
+                <a href="#">
+                  {{task.orderedproductid.product.name}}
+                </a>
               </div>
             </div>
             <div class="detail line" id="select_storage">
@@ -237,43 +286,33 @@
               </div>
             </div>
             <div class="detail line">
-              <h3> Task Content</h3>
+              <h3> Material Must be used</h3>
             </div>
             <div class="detail_task_table">
               <div class="detail_task_table_row header">
                 <div class = "task_column name">
-                  Product <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
+                  Material <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
                 </div>
                 <div class = "task_column foreman">
                   Quantity
-                </div>
-                <div class = "task_column priority">
-                  Material
-                </div>
-                <div class = "task_column status">
-                  Design
                 </div>
                 <div class = "task_column description">
                   Description
                 </div>
               </div>
+              {% for material in material_in_product %}
               <div class="detail_task_table_row">
                 <div class = "task_column name">
-                  Ghế gỗ duy quang
+                  {{material.materialid.name}}
                 </div>
                 <div class = "task_column foreman">
-                  20
-                </div>
-                <div class = "task_column priority">
-                  Gỗ Lim
-                </div>
-                <div class = "task_column status">
-                  GG20P
+                  {{material.taken_material_ammount}}/{{material.quantity_total}}
                 </div>
                 <div class = "task_column description">
-                  Ghế Gỗ Duy Quang
+                  {{material.description}}
                 </div>
               </div>
+              {% endfor %}
             </div>
 
             <div class="detail line">
@@ -294,20 +333,28 @@
                   Approved
                 </div>
               </div>
+              {% for requested_material in requested_materials %}
               <div class="detail_task_table_row">
                 <div class = "task_column stt">
-                  1
+                  {{requested_material.id}}
                 </div>
                 <div class = "task_column name">
-                  Gỗ Lim
+                  {{requested_material.material.name}}
                 </div>
                 <div class = "task_column priority">
-                  20
+                  {{requested_material.quantity}}
                 </div>
+                {% if requested_material.is_approved %}
                 <div class = "task_column status">
                   Approved
                 </div>
+                {% else %}
+                <div class = "task_column status">
+                  Not be approved
+                </div>
+                {% endif %}
               </div>
+              {% endfor %}
             </div>
 
             <div class="detail line">
@@ -324,18 +371,27 @@
                 <div class = "task_column foreman">
                   Date
                 </div>
+                <div class = "task_column foreman">
+                  Percentage
+                </div>
               </div>
+
+              {% for task_progress in task_history %}
               <div class="detail_task_table_row">
                 <div class = "task_column stt">
-                  1
+                  {{loop.index}}
                 </div>
                 <div class = "task_column name">
-                  Phase 1
+                  {{task_progress.progressid.name}}
                 </div>
                 <div class = "task_column foreman">
-                  2021-05-11
+                  {{task_progress.enddate}}
+                </div>
+                <div class = "task_column foreman">
+                  {{task_progress.percentage}}
                 </div>
               </div>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -385,27 +441,23 @@
                 <div class = "task_column priority">
                   Type
                 </div>
-                <div class = "task_column current_progress">
-                  Desc
-                </div>
               </div>
+              {% for material in material_in_product %}
               <div class="detail_task_table_row">
                 <div class = "task_column stt">
-                  1
+                  {{material.materialid.id}}
                 </div>
                 <div class = "task_column name">
-                  Gỗ Lim
+                  {{material.materialid.name}}
                 </div>
                 <div class = "task_column quantity">
-                  Gỗ
-                </div>
-                <div class = "task_column unit">
-                  Gỗ Lim Trắng
+                  {{material.materialid.type}}
                 </div>
                 <div class = "task_column">
                   <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">
                 </div>
               </div>
+              {% endfor %}
             </div>
           </div>
         </div>
