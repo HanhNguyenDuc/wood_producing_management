@@ -19,11 +19,18 @@ class MaterialBase(RoleRequiredView):
     
     def update_get_context(self, request, *args, **kwargs):
         page_size = settings.PAGE_SIZE
+        page_num = request.GET.get("page_num")
         kw = request.GET.get('material_name')
         materials = Material.objects.all()
         if kw is not None :
             materials = materials.filter(name__contains=kw)
-        self.context['materials']=materials
+        p = Paginator(materials,page_size)
+        cur_page = p.page(1)
+        if page_num is not None :
+            cur_page = p.page(page_num)
+        self.context['num_page'] = p.num_pages
+        self.context['page'] = range(1,p.num_pages+1)
+        self.context['materials'] = cur_page.object_list
         return None
 
     def update_post_context(self, request, *args, **kwargs):
@@ -160,3 +167,13 @@ class EditProduct(RoleRequiredView):
         product.desc = self.cleaned_data.get('desc')
         product.save()
         return None
+
+
+class ImportChooseMaterial(RoleRequiredView):
+    user_role = 2
+    form = None
+    template_path = "wood_producing/import_material/choose_material.html"
+    def update_get_context(self, request, *args, **kwargs):
+        return super().update_get_context(request, *args, **kwargs)
+    def update_post_context(self, request, *args, **kwargs):
+        return super().update_post_context(request, *args, **kwargs)

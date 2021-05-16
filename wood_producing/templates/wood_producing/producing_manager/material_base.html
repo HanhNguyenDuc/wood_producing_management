@@ -152,7 +152,9 @@
               <div class="table_col type">
                 Type
               </div>
-              
+              <div class="table_col desc">
+                Desc
+              </div>
               <div class="table_col edit">
               </div>
               <div class="table_col delete">
@@ -168,6 +170,9 @@
               </div>
               <div class="table_col type" name="material_type">
                 {{material.type}}
+              </div>
+              <div class="table_col desc" name="material_desc">
+                {{material.desc}}
               </div>
               <div class="table_col edit">
                 <ul class="nav justify-content-center">
@@ -189,11 +194,20 @@
           <div class = "list_footer">
             <nav aria-label="Page navigation example">
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                {% if num_pages > 10 %}
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">{{num_pages}}</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Next</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  {% for i in pages %}
+                    <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">{{i}}</a></li>
+                  {% endfor %}
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                {% endif %}
               </ul>
             </nav>
           </div>

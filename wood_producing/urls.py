@@ -1,6 +1,6 @@
 from wood_producing.views.approve_material_request import ApproveMaterialRequest
 from wood_producing.views.api import delete_product, delete_task
-from wood_producing.views.storage_manager import AddProduct, EditMaterial, EditProduct, ImportMaterialFromProvider, AddMaterial, MaterialBase, ProductManagement
+from wood_producing.views.storage_manager import AddProduct, EditMaterial, EditProduct, ImportChooseMaterial, ImportMaterialFromProvider, AddMaterial, MaterialBase, ProductManagement
 from wood_producing.views.statistic import MaterialStatistic, ProductionStatistic
 from wood_producing.views.seller import CreateOrder, PublishOrder, ListOrder, OrderDetail
 from django.urls import path
@@ -36,6 +36,7 @@ urlpatterns = [
     path('foreman', views.ForemanMainView.as_view(), name="foreman_main_view"),
     path('foreman/edit_task/<int:task_id>', views.EditTaskView.as_view()),
     path('api/task/delete_task', views.delete_task, name='delete_task'),
+    path('storage_manager/import_material/choose_material', views.ImportChooseMaterial.as_view(), name='choose_material'),
     path('api/statistic/statistic_profit', views.statistic_profit, name='statistic_profit'),
     path('api/statistic/statistic_production', views.statistic_production, name='statistic_production'),
     path('api/statistic/statistic_material', views.statistic_material, name='statistic_material'),
