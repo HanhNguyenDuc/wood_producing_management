@@ -10,6 +10,7 @@
     <meta name="author" content="" />
     <link href="{% static 'css/new.css' %}" rel="stylesheet">
     <link href="{% static 'css/choose_material.css' %}" rel="stylesheet">
+    <!-- <link href="choose_material.css" rel="stylesheet"> -->
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -141,94 +142,142 @@
             </div>
           </div>
           <div class = "list_body">
-            <div class="table_row header">
-              <div class="table_col id">
-                ID
-              </div>
-              <div class="table_col material_name">
-                Material Name
-              </div>
-              <div class="table_col type">
-                Type
-              </div>
-              <div class="table_col price">
-                Price
-              </div>
-              <div class="table_col desc">
-                Descprition
-              </div>
-              <div class="table_col import">
-              </div>
+            <div class="detail line">
+              <h3> List Material</h3>
             </div>
-            <div class="table_row">
-              <div class="table_col id">
-                1
+            <div class="material_table">
+              <div class="material_table_row header">
+                <div class = "material_column id">
+                  ID
+                </div>
+                <div class = "material_column name">
+                  Material Name
+                </div>
+                <div class = "material_column type">
+                  Type
+                </div>
+                <div class = "material_column price">
+                  Price
+                </div>
+                <div class = "material_column description">
+                  Description
+                </div>
+                <div class = "material_column import">
+                  
+                </div>
               </div>
-              <div class="table_col material_name">
-              </div>
-              <div class="table_col type">
-              </div>
-              <div class="table_col price">
-              </div>
-              <div class="table_col desc">
-              </div>
-              <div class="table_col import">
-                <button id="import" class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themsp">Import </button>
-                <div class="modal fade" id="themsp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Import Material</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <table class="table">
-                          <tbody>
-                            <tr>
-                              <td>ID:</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>Material Name</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>Số lượng</td>
-                              <td><input type="number" name="quantity" min="0" value="0"></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              {% for material in materials %}
+              <div class="material_table_row">
+                <div class = "material_column id">
+                  {{material.id}}
+                </div>
+                <div class = "material_column name">
+                  {{material.name}}
+                </div>
+                <div class = "material_column type">
+                  {{material.type}}
+                </div>
+                <div class = "material_column price">
+                  {{material.price}}
+                </div>
+                <div class = "material_column description">
+                  {{material.description}}
+                </div>
+                <div class = "material_column import">
+                  <button id="import" class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themsp">Import </button>
+                  <div class="modal fade" id="themsp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Import Material</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <table class="table">
+                            <tbody>
+                              <tr>
+                                <td>ID:</td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td>Material Name</td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td>Số lượng</td>
+                                <td><input type="number" name="quantity" min="0" value="0"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-primary">Save</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div> 
+              </div>
+              {% endfor %}
             </div>
-
-              <!-- bảng các nguyên liệu xác nhận nhập -->
-            
+            <br>  
+            <div class="detail line">
+              <h3> Imported Material</h3>
+            </div>
+            <div class="material_table">
+              <div class="material_table_row header">
+                <div class = "material_column id">
+                  ID 
+                </div>
+                <div class = "material_column name">
+                  Material Name
+                </div>
+                <div class = "material_column type">
+                  Type
+                </div>
+                <div class = "material_column price">
+                  Price
+                </div>
+                <div class = "material_column quantity">
+                  Quantity
+                </div>
+                <div class = "material_column total">
+                  Total
+                </div>
+              </div>
+              {% for imported_material in imported_materials %}
+              <div class="material_table_row">
+                <div class = "material_column id">
+                  {{imported_material.id}}
+                </div>
+                <div class = "material_column name">
+                  {{imported_material.name}}
+                </div>
+                <div class = "material_column type">
+                  {{imported_material.type}}
+                </div>
+                <div class = "material_column price">
+                  {{imported_material.price}}
+                </div>
+                <div class = "material_column quantity">
+                  {{imported_material.quantity}}
+                </div>
+                <div class = "material_column total">
+                  
+                </div>
+              </div>
+              {% endfor %}
+            </div>
           </div>
           <div class = "list_footer">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Previous</a></li>
-                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Next</a></li>
-                  </ul>
-            </nav>
             <div class="bill">
                 <nav aria-label="Page navigation example"></nav>
                     <ul class="pagination">
                       <li class="page-item"><a class="page-link" href="choose_provider.html">Back</a></li>
-                      <li class="page-item"><a class="page-link" href="bill.html">Export Bill</a></li>
+                      <li class="page-item"><a class="page-link" href="bill.html">Next</a></li>
                 </nav>
             </div>
           </div>

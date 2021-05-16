@@ -199,45 +199,31 @@ body.authenticate {
   .add{
     margin-left: 500px;
   }
-  .table_row{
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .header .table_col{
-    padding: 24px 0px 24px 0px;
-    height: 64px;
-    font-weight: bold;
-    border-top-right-radius: 10px;
-  }
-  .list_body{
-    border: solid 1px #5f5f5f;
-    border-radius: 10px;
+  .list_body{    
     margin: 24px 24px 24px 24px;
-  }
-  .table_col{
-    flex-basis: 25%;
-    height: 48px;
-    padding: 12px 0px 12px 0px;
-    text-align: center;
-    border-right: solid 1px #5f5f5f;
-    border-bottom: solid 1px #5f5f5f;
-  }
-  .table_col.type{
-    flex-basis: 20%;
-  }
-  .table_col.material_name{
+  }  
+  .material_column.id{
+    flex-basis: 10%;
+  }  
+  .material_column.name{
     flex-basis: 25%;
   }  
-  .table_col.price{
-    flex-basis: 20%;
-  }
-  .table_col.id{
-    flex-basis: 10%;
-  }
-  .table_col.desc{
+  .material_column.type{
     flex-basis: 15%;
   }
-  .table_col.import{
+  .material_column.price{
+    flex-basis: 15%;
+  }
+  .material_column.quantity{
+    flex-basis: 10%;
+  }
+  .material_column.desc{
+    flex-basis: 10%;
+  }
+  .material_column.import{
+    flex-basis: 10%;
+  }
+.material_column.total{
     flex-basis: 10%;
   }
   .list_footer{
@@ -249,3 +235,34 @@ body.authenticate {
   .pagination{
     justify-content: center;
   }
+  .detail.line{
+    display: flex;
+  }
+  .material_table_row{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 64px;
+  }
+  .material_column{
+    flex-basis: 10%;
+    background-color: #f5f5f5;
+    border: solid 1px #fff;
+    height: 48px;
+    font-size: 16px;
+    text-align: center;
+    padding-top: 16px;
+  }
+  .material_table_row.header{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .material_table{
+    margin-top: 8px;
+    margin-bottom: 16px;
+  }
+  .material_table_row.header .material_column{
+    background-color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+  }  
+  
