@@ -23,7 +23,7 @@ urlpatterns = [
     path('storage_manager/import_material', views.ImportMaterialFromProvider.as_view(), name='import_material'),
     path('storage_manager/add_material', views.AddMaterial.as_view(), name='add_material'),
     path('storage_manager/edit_material/<int:material_id>', views.EditMaterial.as_view(), name='edit_material'),
-    path('storage_manager/delete_material/<int:material_id>', views.MaterialBase.as_view(), name='delete_material'),
+    path('api/material/delete_material', views.delete_material, name='delete_material'),
     path('storage_manager/product_manage', views.ProductManagement.as_view(), name='product_manage'),
     path('foreman', views.ForemanMainView.as_view(), name="foreman_main_view"),
     path('foreman/edit_task/<int:task_id>', views.EditTaskView.as_view()),

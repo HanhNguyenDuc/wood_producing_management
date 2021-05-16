@@ -160,13 +160,13 @@
             </div>
             {%for material in materials%}
             <div class="table_row">
-              <div class="table_col id">
+              <div class="table_col id" name="material_id">
                 {{material.id}}
               </div>
-              <div class="table_col material_name">
+              <div class="table_col material_name" name="material_name">
                {{material.name}}
               </div>
-              <div class="table_col type">
+              <div class="table_col type" name="material_type">
                 {{material.type}}
               </div>
               <div class="table_col edit">
@@ -178,35 +178,11 @@
               </div>
               <div class="table_col delete">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary" id = "{{material.id}}" onclick="deleteMaterial(this)">
                     Delete
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Delete Material</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                   <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                "Bạn có chắc chắn muốn xoá nguyên liệu này không?"
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                <form action="" method="post">
-                                  {% csrf_token %}
-                                  <intput type="hidden" name="id" id="id" value="{{material.id}}">
-                                  <button type="submit" class="btn btn-primary" >Yes</button>
-                                </form>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               </div>
+              </div>
             </div>
             {%endfor%}
           </div>
@@ -229,6 +205,16 @@
     $('.dropdown-custoggle').click(function () {
       $('.cusdropdown').toggle();
     });
-    
+    function deleteMaterial(elem) {
+    var id = $(elem).attr("id");
+    $.ajax({
+      type: "POST",
+      data: {material_id: id},
+      url: "/api/task/delete_material",
+      success: function (data) {
+        $(elem).parent().parent().remove();
+      }
+    })
+  }
     </script>
 </html>
