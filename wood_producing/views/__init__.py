@@ -7,3 +7,6 @@ from .storage_manager import *
 from .foreman import *
 from .api import *
 from .approve_material_request import *
+from .api_cuong import *
+from .api_duc import *
+from .api_hung import *
