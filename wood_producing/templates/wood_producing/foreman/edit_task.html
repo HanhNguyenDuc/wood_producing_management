@@ -512,9 +512,9 @@
     $.ajax({
       type: "POST",
       data: {task_id: task_id, material_id: material_id, quantity: quantity},
-      url: "/api/task/delete_task",
+      url: "/api/material/request_material",
       success: function (data) {
-        $(elem).parent().parent().parent().remove();
+        location.reload();
       }
     })
   }
