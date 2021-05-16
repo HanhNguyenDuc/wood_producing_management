@@ -138,6 +138,7 @@ class MaterialrequestListmaterial(models.Model):
 class Order(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerID')  # Field name made lowercase.
+    userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID', null=True)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=255, default="")
     duedate = models.DateTimeField(db_column='duedate', max_length=255)
 

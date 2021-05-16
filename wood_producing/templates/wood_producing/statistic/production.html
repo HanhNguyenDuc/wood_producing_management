@@ -1,4 +1,7 @@
 <!doctype html>
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
 <html>
 
 <head>
@@ -57,9 +60,7 @@
                             <tr>
                                 <th scope="col">TT</th>
                                 <th scope="col">Mốc thời gian</th>
-                                <th scope="col">Số lượng sản xuất</th>
                                 <th scope="col">Số lượng bán</th>
-                                <th scope="col">Chênh lệch</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,15 +68,11 @@
                                 <th scope="row">1</th>
                                 <td>03/2021 - 04/2021</td>
                                 <td>100</td>
-                                <td>80</td>
-                                <td>20</td>
                             </tr>
                             <tr>
                                 <th scope="row">2</th>
                                 <td>04/2021 - 05/2021</td>
-                                <td>100</td>
                                 <td>80</td>
-                                <td>20</td>
                             </tr>
                         </tbody>
                     </table>
@@ -92,7 +89,7 @@
                             <tr>
                                 <th scope="col">TT</th>
                                 <th scope="col">Loại mặt hàng</th>
-                                <th scope="col">Số lượng sản xuất</th>
+                                <th scope="col">Tên sản phẩm</th>
                                 <th scope="col">Số lượng bán ra</th>
                             </tr>
                         </thead>
@@ -117,17 +114,13 @@
                             <tr>
                                 <th scope="col">TT</th>
                                 <th scope="col">Xưởng</th>
-                                <th scope="col">Mặt hàng</th>
                                 <th scope="col">Số lượng sản xuất</th>
-                                <th scope="col">Số lượng bán ra</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th scope="row">1</th>
                                 <td>Xưởng 1</td>
-                                <td>Bàn gỗ</td>
-                                <td>10</td>
                                 <td>8</td>
                             </tr>
                         </tbody>
@@ -144,18 +137,13 @@
         type: 'line',
         data: {
             labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
-            datasets: [{
-                label: 'Sản xuất',
-                data: [65, 59, 81, 56, 55],
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            },
-            {
-                label: 'Bán',
-                borderColor: 'rgba(255, 206, 86, 0.2)',
-                data: [50, 30, 50, 10, 20],
-            }],
+            datasets: [
+                {
+                    label: 'Bán ra',
+                    backgroundColor: 'rgba(54, 162, 235, 1)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    data: [50, 30, 50, 10, 20],
+                }],
             options: {
                 responsive: true,
                 plugins: {
@@ -175,32 +163,13 @@
         type: 'bar',
         data: {
             labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
-            datasets: [{
-                label: 'Sản xuất',
-                data: [50, 30, 50, 50, 10, 20],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            },
-            {
-                type: 'bar',
-                label: "Bán ra",
-                data: [12, 19, 3, 5, 2, 3],
-            }]
+            datasets: [
+                {
+                    type: 'bar',
+                    label: "Bán ra",
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: 'rgba(54, 162, 235, 1)'
+                }]
         },
         options: {
             responsive: true,
@@ -219,25 +188,22 @@
     var CostChart = new Chart(ctx_cost, {
         type: 'bar',
         data: {
-            labels: ['Sản xuất', 'Bán ra'],
+            labels: ['Tháng 1', 'Tháng 2'],
             datasets: [{
-                label: 'Mặt hàng A',
-                data: [100, 110],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                ],
+                label: 'Xưởng 1',
+                data: [100, 60],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 0.2)',
                 borderWidth: 1
             },
             {
-                type: 'bar',
-                label: "Mặt hàng B",
-                data: [50, 30],
-            }]
+                label: 'Xưởng 2',
+                data: [50, 110],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 0.2)',
+                borderWidth: 1
+            }
+            ]
         },
         options: {
             responsive: true,

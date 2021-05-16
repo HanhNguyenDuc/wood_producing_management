@@ -9,18 +9,18 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link href="{% static 'css/new.css' %}" rel="stylesheet">
-    <link href="{% static 'css/material_base.css' %}" rel="stylesheet">
+    <link href="{% static 'css/choose_material.css' %}" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script 
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" 
-      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" 
-      crossorigin="anonymous">
-    </script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -44,7 +44,7 @@
           <ul>
               <li class= 'active' >
                 <a href="#">
-                  <span><i class="fa fa-key center"></i></span> Material List
+                  <span><i class="fa fa-key center"></i></span> Import Material
                 </a>
               </li>
               <li>
@@ -121,19 +121,18 @@
         <div class="material_list">
           <div class = "list_header">
             <h3 class = "title">
-              Material List
+              Choose Material
             </h3>
-            <div class="add_material">
-                <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="add_material">Add Material</a>
-                    </li>
-                </ul>
+            <div class = "add">
+                <nav aria-label="Page navigation example"></nav>
+                    <ul class="pagination">
+                      <li class="page-item"><a class="page-link" href="producing_manager/material_add.html">Add Material</a></li>
+                </nav>
             </div>
             <div class="search-form">
-              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
+              <form action="/user_analytic_projects" accept-charset="UTF-8" data-remote="true" method="get">
                 <div class="form-group">
-                  <input class="search-field-project" type="search" name="material_name" id="q_name_or_description_cont" />
+                  <input class="search-field-project" type="search" name="q[name_or_description_cont]" id="q_name_or_description_cont" />
                   <button name="button" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
@@ -152,69 +151,94 @@
               <div class="table_col type">
                 Type
               </div>
-              
-              <div class="table_col edit">
+              <div class="table_col price">
+                Price
               </div>
-              <div class="table_col delete">
+              <div class="table_col desc">
+                Descprition
+              </div>
+              <div class="table_col import">
               </div>
             </div>
-            {%for material in materials%}
             <div class="table_row">
-              <div class="table_col id" name="material_id">
-                {{material.id}}
+              <div class="table_col id">
+                1
               </div>
-              <div class="table_col material_name" name="material_name">
-               {{material.name}}
+              <div class="table_col material_name">
               </div>
-              <div class="table_col type" name="material_type">
-                {{material.type}}
+              <div class="table_col type">
               </div>
-              <div class="table_col edit">
-                <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="edit_material/{{material.id}}">Edit</a>
-                    </li>
-                </ul>
+              <div class="table_col price">
               </div>
-              <div class="table_col delete">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" id = "{{material.id}}" onclick="deleteMaterial(this)">
-                    Delete
-                </button>
-                <!-- Modal -->
+              <div class="table_col desc">
               </div>
+              <div class="table_col import">
+                <button id="import" class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themsp">Import </button>
+                <div class="modal fade" id="themsp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Import Material</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <td>ID:</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>Material Name</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>Số lượng</td>
+                              <td><input type="number" name="quantity" min="0" value="0"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
             </div>
-            {%endfor%}
+
+              <!-- bảng các nguyên liệu xác nhận nhập -->
+            
           </div>
           <div class = "list_footer">
             <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-              </ul>
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Previous</a></li>
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Next</a></li>
+                  </ul>
             </nav>
+            <div class="bill">
+                <nav aria-label="Page navigation example"></nav>
+                    <ul class="pagination">
+                      <li class="page-item"><a class="page-link" href="choose_provider.html">Back</a></li>
+                      <li class="page-item"><a class="page-link" href="bill.html">Export Bill</a></li>
+                </nav>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </body>
   <script>
-    $('.dropdown-custoggle').click(function () {
-      $('.cusdropdown').toggle();
-    });
-    function deleteMaterial(elem) {
-    var id = $(elem).attr("id");
-    $.ajax({
-      type: "POST",
-      data: {material_id: id},
-      url: "/api/material/delete_material",
-      success: function (data) {
-        $(elem).parent().parent().remove();
-      }
-    })
-  }
-    </script>
+  $('.dropdown-custoggle').click(function () {
+    $('.cusdropdown').toggle();
+  });
+  </script>
 </html>

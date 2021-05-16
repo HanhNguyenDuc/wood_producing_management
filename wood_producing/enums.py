@@ -6,3 +6,4 @@ class UserRole(Enum):
     STORAGE_MANAGER = 2
     FOREMAN = 3
     DIRECTOR = 4
+    SELLER = 5

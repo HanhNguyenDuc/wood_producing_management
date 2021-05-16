@@ -115,7 +115,8 @@
                 <h4>{{task.name}}</h4>
               </div>
               <div class="right">
-                <div>F
+                <div>
+                  <button type="button" class="btn btn-success" onclick="updateTask(this)">Update</button>
                   <button type ="button" class="btn btn-danger" onclick="deleteTask(this)">Delete</button>
                   <button type ="button" class="btn btn-info" data-toggle="modal" data-target="#add_material_modal"> Request Material</button>
                 </div>
@@ -258,7 +259,7 @@
                 name="done_percentage"
               />
 
-              <button class="btn btn-success" type="submit">Update</button>
+              <input type="submit" id="update_task" style="display:none"></input>
               </div>
             </form>
             </div>
@@ -286,7 +287,7 @@
               </div>
             </div>
             <div class="detail line">
-              <h3> Material Must be used</h3>
+              <h3> Material List</h3>
             </div>
             <div class="detail_task_table">
               <div class="detail_task_table_row header">
@@ -408,13 +409,6 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="search-form" style="width: 100%;">
-            <div class="form-group">
-              <input class="search-field-project" type="search" name="order_name" id="search_material_name"  />
-              <button type="button" onclick="searchMaterial(this)">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
             <div class="detail line">
               <div class="left">
                 <h3>Material List</h3>
@@ -468,7 +462,6 @@
         <form action="/create_material">
           <input type="hidden" name="material_id" id ="material_id">
           <input type="hidden" name="material_quantity"  id ="material_quantity">
-          <input type="submit" id ="submit_request" style="display: none;">
         </form>
       </div>
     </div>
@@ -513,7 +506,20 @@
     }
   }
   function createMaterialRequest(elem) {
-    $("#submit_request").click();
+    var material_id = $("#material_id").val()
+    var quantity = $("#material_quantity").val();
+    var task_id = $("#task_id").val();
+    $.ajax({
+      type: "POST",
+      data: {task_id: task_id, material_id: material_id, quantity: quantity},
+      url: "/api/material/request_material",
+      success: function (data) {
+        location.reload();
+      }
+    })
+  }
+  function updateTask(elem) {
+    $("#update_task").click();
   }
   function selectMaterial(elem) {
     $(".material_checkbox").prop("checked", false);

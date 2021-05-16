@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 {% load static %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
@@ -12,18 +11,18 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link href="{% static 'css/new.css' %}" rel="stylesheet">
-    <link href="{% static 'css/material_add.css' %}" rel="stylesheet">
+    <link href="{% static 'css/product_add.css' %}" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script 
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" 
-      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" 
-      crossorigin="anonymous">
-    </script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -47,7 +46,7 @@
           <ul>
               <li class= 'active' >
                 <a href="#">
-                  <span><i class="fa fa-key center"></i></span> Add Material
+                  <span><i class="fa fa-key center"></i></span> Manage Product
                 </a>
               </li>
               <li>
@@ -121,42 +120,56 @@
         </div>
       </header>
       <div class ="main">
-        <div class="add_material">
+        <div class="add_product">
           <div class = "list_header">
             <h3 class = "title">
-              Add Material
+              Edit Product
             </h3>
           </div>
           <div class = "list_body">
-            <form class ="add" action="" method="POST">
+            <form class="add" action="" method="POST">
               {% csrf_token %}
+              <div class = "product_id">
+                <label for="id">Product Id:</label>
+                {{product.id}}
+             </div>
              <br>
-              <div class = "material_name">
-                <label for="id">Material Name:</label>
-                {{form.material_name|attr:"type:text"}}
+             <div class = "product_name">
+                <label for="id">Product Name:</label>
+                {{form.name|attr:"type:text"}}
+             </div>
+             <br>
+             <div class = "iddesign">
+              <label for="id">ID Design:</label>
+              {{form.id|attr:"type:text"}}
              </div>
              <br>
              <div class = "type">
                <label for="id">Type:</label>
                 {{form.type|attr:"type:text"}}
-              </div>
+             </div>
+             <br>
+             <div class = "price">
+               <label for="id">Price:</label>
+               {{form.price|attr:"type:text"}}
+             </div>
              <br>
              <div class = "desc">
-               <label for="id">Desc:</label>
+                <label for="id">Descption:</label>
                 {{form.desc|attr:"type:text"}}
               </div>
-              <br>
-             <div><input type="submit" value="Add"></div>
-            </form>
-            
           </div>
           <div class = "list_footer">
-            <nav aria-label="Page navigation example">
+            <button class="btn btn-success" type="submit">Confirm</button>
+            <button class="btn btn-danger">Cancel</button>
+            <!-- <nav aria-label="Page navigation example">
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="material_base.html">Back</a></li>
+                <li class="page-item"><a class="page-link" onclick="addProduct()" href="product_base.html">Confirm</a></li>
+                <li class="page-item"><a class="page-link" href="product_base.html">Cancel</a></li>
               </ul>
-            </nav>
+            </nav> -->
           </div>
+          </form>
         </div>
       </div>
     </div>
@@ -165,5 +178,29 @@
   $('.dropdown-custoggle').click(function () {
     $('.cusdropdown').toggle();
   });
+  // function addProduct() {
+  //     product_name = document.getElementById('product_name').value
+  //     iddesign = document.getElementById('iddesgin').value
+  //     type = document.getElementById('type').value
+  //     price = document.getElementById('price').value
+  //     desc = document.getElementById('desc').value
+
+  //     product = {
+  //       'product_name': product_name,
+  //       'iddesgin': iddsign,
+  //       'type': type,
+  //       'price': price,
+  //       'desc': desc
+  //       }
+
+  //     if(currentIndex >= 0) {
+  //       //update
+  //       dataList[currentIndex] = product
+  //       currentIndex = -1
+  //     } else {
+  //         //them moi
+  //         dataList.push(product)
+  //     }
+  //   }
   </script>
 </html>

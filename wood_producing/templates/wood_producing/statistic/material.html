@@ -1,13 +1,15 @@
 <!doctype html>
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Production Statistic</title>
+    <title>Marterial Statistic</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -26,7 +28,7 @@
 
 
 <body>
-    <h2 class="text-center" style="margin-top: 5%;"><span>Thống kê doanh thu</span></h2>
+    <h2 class="text-center" style="margin-top: 5%;"><span>Thống kê nguyên liệu</span></h2>
     <div class="container">
         <div class="row">
             <div class="form-group row col-sm">
@@ -48,29 +50,32 @@
         </div>
         <div id="content" style="display: None;">
             <div class="row">
-                <canvas id="TotalProfitChart" width="200" height="100"></canvas>
-            </div>
-            <div class="row">
-                <table class="table" style="margin-top:5.72%;">
-                    <thead>
-                        <tr>
-                            <th scope="col">TT</th>
-                            <th scope="col">Mốc thời gian</th>
-                            <th scope="col">Doanh thu</th>
-                            <th scope="col">Lợi nhuận</th>
-                            <th scope="col">Chi phí</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>04/2021 - 05/2021</td>
-                            <td>100 tỉ</td>
-                            <td>80 tỉ</td>
-                            <td>20 tỉ</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="col-5">
+                    <canvas id="TotalProfitChart" width="200" height="100"></canvas>
+                </div>
+                <div class="col-7">
+                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">TT</th>
+                                <th scope="col">Mốc thời gian</th>
+                                <th scope="col">Số lượng hàng nhập</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>03/2021 - 04/2021</td>
+                                <td>80</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>04/2021 - 05/2021</td>
+                                <td>100</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="row">
                 <div class="col-5">
@@ -82,17 +87,15 @@
                         <thead>
                             <tr>
                                 <th scope="col">TT</th>
-                                <th scope="col">Loại mặt hàng</th>
-                                <th scope="col">Mặt hàng</th>
-                                <th scope="col">Doanh thu</th>
+                                <th scope="col">Loại nguyên liệu</th>
+                                <th scope="col">Số lượng hàng nhập</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th scope="row">1</th>
                                 <td>Đồ gỗ gia dụng</td>
-                                <td>Bàn gỗ</td>
-                                <td>8 tỉ</td>
+                                <td>8</td>
                             </tr>
                         </tbody>
                     </table>
@@ -106,26 +109,18 @@
                     <table class="table" style="margin-top:5.72%; font-size: 15px;">
                         <thead>
                             <tr>
-                                <th scope="col"></th>
-                                <th scope="col" class="text-center">Giá trị</th>
+                                <th scope="col">TT</th>
+                                <th scope="col">Nhà cung cấp</th>
+                                <th scope="col">Nguyên liệu</th>
+                                <th scope="col">Số lượng hàng nhập</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th class="">Chi phí nhập hàng</th>
-                                <td class="text-center">10 tỉ</td>
-                            </tr>
-                            <tr>
-                                <th class="">Chi phí sản xuất</th>
-                                <td class="text-center">5 tỉ</td>
-                            </tr>
-                            <tr>
-                                <th class="">Chi phí vận chuyển</th>
-                                <td class="text-center">5 tỉ</td>
-                            </tr>
-                            <tr>
-                                <th class="">Tổng cộng</th>
-                                <td class="text-center">20 tỉ</td>
+                                <th scope="row">1</th>
+                                <td>Vinamilk</td>
+                                <td>Bàn gỗ</td>
+                                <td>10</td>
                             </tr>
                         </tbody>
                     </table>
@@ -138,31 +133,17 @@
 <script>
     var ctx_profit = document.getElementById('TotalProfitChart').getContext("2d");
     var TotalProfitChart = new Chart(ctx_profit, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
-            datasets:
-                [{
-                    // barPercentage: 0.5,
-                    // barThickness: 6,
-                    // maxBarThickness: 8,
-                    // minBarLength: 2,
-                    label: 'Doanh thu',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderWidth: 1,
-                },
-                {
-                    label: 'Lợi nhuận',
-                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                    data: [50, 30, 50, 50, 10, 20],
-                }],
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
+            datasets: [{
+                label: 'Số lượng nhập',
+                data: [65, 59, 81, 56, 55],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }],
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
                 responsive: true,
                 plugins: {
                     legend: {
@@ -170,20 +151,20 @@
                     },
                     title: {
                         display: true,
-                        text: 'Biểu đồ doanh thu tổng quát'
+                        text: 'Biểu đồ thống kê nhập liệu'
                     }
                 }
             }
-        },
+        }
     });
     var ctx_product = document.getElementById('ProductsChart');
     var ProductsChart = new Chart(ctx_product, {
         type: 'bar',
         data: {
-            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
             datasets: [{
-                label: 'Doanh thu',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Số lượng nhập',
+                data: [50, 30, 50, 50, 10, 20],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -201,69 +182,57 @@
                     'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 1
-            },
-            {
-                type: 'bar',
-                label: "Lợi nhuận",
-                data: [50, 30, 50, 50, 10, 20],
             }]
         },
         options: {
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
                 },
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Biểu đồ doanh thu theo sản phẩm'
-                    }
+                title: {
+                    display: true,
+                    text: 'Biểu đồ thống kê nhập liệu chi tiết'
                 }
             }
         }
     });
     var ctx_cost = document.getElementById('CostChart');
     var CostChart = new Chart(ctx_cost, {
-        type: 'pie',
+        type: 'bar',
         data: {
-            labels: [
-                'Chi phí nhập hàng',
-                'Chi phí sản xuất',
-                'Chi phí vận chuyển'
-            ],
+            labels: ['Vinamilk', 'Cafein'],
             datasets: [{
-                data: [10, 20, 30],
+                label: 'Mặt hàng A',
+                data: [100, 110],
                 backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)'
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
                 ],
-                hoverOffset: 4
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            },
+            {
+                type: 'bar',
+                label: "Mặt hàng B",
+                data: [50, 30],
             }]
         },
         options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
                 },
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Biểu đồ chi phí'
-                    }
+                title: {
+                    display: true,
+                    text: 'Biểu đồ thống kê nhập liệu theo nhà cung cấp'
                 }
             }
+        }
     });
 
     $('#btnStatistic').click(function () {

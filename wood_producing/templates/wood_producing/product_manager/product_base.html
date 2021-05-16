@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-
 {% load static %}
-{% load crispy_forms_tags %}
-{% load widget_tweaks %}
 <html lang="en">
   <head>
     <title>ALT F4</title>
@@ -12,7 +9,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link href="{% static 'css/new.css' %}" rel="stylesheet">
-    <link href="{% static 'css/material_add.css' %}" rel="stylesheet">
+    <link href="{% static 'css/product_base.css' %}" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -47,7 +44,7 @@
           <ul>
               <li class= 'active' >
                 <a href="#">
-                  <span><i class="fa fa-key center"></i></span> Add Material
+                  <span><i class="fa fa-key center"></i></span> Manage Product
                 </a>
               </li>
               <li>
@@ -121,39 +118,92 @@
         </div>
       </header>
       <div class ="main">
-        <div class="add_material">
+        <div class="product_list">
           <div class = "list_header">
             <h3 class = "title">
-              Add Material
+              Product List
             </h3>
+            <div class="add_product">
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="product_manage/add_product">Add Product</a></li>
+                    </li>
+              </ul>
+            </div>
+            <div class="search-form">
+              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
+                <div class="form-group">
+                  <input class="search-field-project" type="search" name="product_name" id="q_name_or_description_cont" />
+                  <button name="button" type="submit" onclick="searchProduct(this)">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
           <div class = "list_body">
-            <form class ="add" action="" method="POST">
-              {% csrf_token %}
-             <br>
-              <div class = "material_name">
-                <label for="id">Material Name:</label>
-                {{form.material_name|attr:"type:text"}}
-             </div>
-             <br>
-             <div class = "type">
-               <label for="id">Type:</label>
-                {{form.type|attr:"type:text"}}
+            <div class="table_row header">
+              <div class="table_col id">
+                ID
               </div>
-             <br>
-             <div class = "desc">
-               <label for="id">Desc:</label>
-                {{form.desc|attr:"type:text"}}
+              <div class="table_col product_name">
+                Product Name
               </div>
-              <br>
-             <div><input type="submit" value="Add"></div>
-            </form>
-            
+              <div class="table_col iddesign">
+                ID Design
+              </div>
+              <div class="table_col type">
+                Type
+              </div>
+              <div class="table_col price">
+                Price
+              </div>
+              <div class="table_col desc">
+                Descption
+              </div>
+              <div class="table_col edit">
+              </div>
+              <div class="table_col delete">
+              </div>
+            </div>
+            {% for product in products %}
+            <div class="table_row">
+              <div class="table_col id">
+                {{product.id}}
+              </div>
+              <div class="table_col product_name">
+                {{product.name}}
+              </div>
+              <div class="table_col iddesign">
+                {{product.iddesign}}
+              </div>
+              <div class="table_col type">
+                {{product.type}}
+              </div>
+              <div class="table_col price">
+                {{product.price}}
+              </div>
+              <div class="table_col desc">
+                {{product.desc}}
+              </div>
+              <div class="table_col edit">
+                <a href="product_manage/edit_product/{{product.id}}">
+                  <i class="fas fa-edit"></i>
+                </a>
+              </div>
+              <div class="table_col delete">
+                <i class="far fa-trash-alt" id="{{product.id}}" onclick="deleteProduct(this)" style="color: #007bff;cursor: pointer;"></i>
+              </div>
+            </div>
+            {% endfor %}
           </div>
           <div class = "list_footer">
             <nav aria-label="Page navigation example">
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="material_base.html">Back</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Next</a></li>
               </ul>
             </nav>
           </div>
@@ -162,8 +212,39 @@
     </div>
   </body>
   <script>
-  $('.dropdown-custoggle').click(function () {
-    $('.cusdropdown').toggle();
-  });
-  </script>
+    $('.dropdown-custoggle').click(function () {
+      $('.cusdropdown').toggle();
+    });
+    function searchasd(elem) {
+      var number = $(elem).text();
+      var search = $(".search-field-project").val();
+      $(elem).attr("href", `/product_manager?search=${search}&number=${number}`);
+    }
+    {% comment %} function searchProduct(elem) {
+      var search = $(elem).parent().find(".search-field-project").val();
+      $.ajax({
+        type: "POST",
+        data: {search_data: search},
+        url: "/search",
+        success: function (data) {
+          var array =  $(".product_table").find(".table_row");
+          for (let index = 1; index < array.length; index++) {
+            const element = array[index];
+            $(element).remove();
+          }        
+        }
+      })
+    } {% endcomment %}
+    function deleteProduct(elem) {
+      var id = $(elem).attr('id')
+      $.ajax({
+        type: "POST",
+        data: {product_id: id},
+        url: "/api/product/delete_product",
+        success: function (data) {
+          $(elem).parent().parent().remove();
+        }
+      })
+    }
+    </script>
 </html>

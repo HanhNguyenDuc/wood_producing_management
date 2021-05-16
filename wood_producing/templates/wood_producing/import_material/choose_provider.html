@@ -9,7 +9,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link href="{% static 'css/new.css' %}" rel="stylesheet">
-    <link href="{% static 'css/material_base.css' %}" rel="stylesheet">
+    <link href="{% static 'css/choose_provider.css' %}" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -44,8 +44,7 @@
           <ul>
               <li class= 'active' >
                 <a href="#">
-                  <span><i class="fa fa-key center"></i></span> Material List
-                </a>
+                  <span><i class="fa fa-key center"></i></span> Import Material
               </li>
               <li>
                 <a href="#">
@@ -118,22 +117,63 @@
         </div>
       </header>
       <div class ="main">
-        <div class="material_list">
+        <div class="choose_provider">
           <div class = "list_header">
             <h3 class = "title">
-              Material List
+              Choose Provider
             </h3>
-            <div class="add_material">
-                <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="add_material">Add Material</a>
-                    </li>
-                </ul>
+            <div class = "add">
+                <!-- <nav aria-label="Page navigation example"></nav>
+                    <ul class="pagination">
+                      <li class="page-item"><a class="page-link" href="provider_add.html">Add Provider</a></li>
+                </nav> -->
+                <button id="add_material" class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themsp">Add Provider </button>
+                <div class="modal fade" id="themsp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add Provider</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <td>ID:</td>
+                              <td></td>
+                            </tr>
+                              <td>Provider Name</td>
+                              <td><input type="text" id="provider" value="" ></td>
+                            </tr>
+                            <tr>
+                              <td>Phone</td>
+                              <td><input type="text" id="phone" value="" ></td>
+                            </tr>
+                            <tr>
+                              <td>Address</td>
+                              <td><input type="text" id="addess" value="" ></td>
+                            </tr>
+                            <tr>
+                              <td>Description</td>
+                              <td><input type="text" id="desc" value="" ></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
             <div class="search-form">
-              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
+              <form action="/user_analytic_projects" accept-charset="UTF-8" data-remote="true" method="get">
                 <div class="form-group">
-                  <input class="search-field-project" type="search" name="material_name" id="q_name_or_description_cont" />
+                  <input class="search-field-project" type="search" name="q[name_or_description_cont]" id="q_name_or_description_cont" />
                   <button name="button" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
@@ -146,54 +186,50 @@
               <div class="table_col id">
                 ID
               </div>
-              <div class="table_col material_name">
-                Material Name
+              <div class="table_col provider_name">
+                Provider Name
               </div>
-              <div class="table_col type">
-                Type
+              <div class="table_col phone">
+                Phone
               </div>
-              
-              <div class="table_col edit">
+              <div class="table_col address">
+                Address
               </div>
-              <div class="table_col delete">
+              <div class="table_col desc">
+                Descpription
+              </div>
+              <div class="table_col select">
               </div>
             </div>
-            {%for material in materials%}
+            
             <div class="table_row">
-              <div class="table_col id" name="material_id">
-                {{material.id}}
+              <div class="table_col id">
               </div>
-              <div class="table_col material_name" name="material_name">
-               {{material.name}}
+              <div class="table_col provider_name">
               </div>
-              <div class="table_col type" name="material_type">
-                {{material.type}}
+              <div class="table_col phone">
               </div>
-              <div class="table_col edit">
-                <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="edit_material/{{material.id}}">Edit</a>
-                    </li>
-                </ul>
+              <div class="table_col address">
               </div>
-              <div class="table_col delete">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" id = "{{material.id}}" onclick="deleteMaterial(this)">
-                    Delete
-                </button>
-                <!-- Modal -->
+              <div class="table_col desc">
+              </div>
+              <div class="table_col select">
+                <nav aria-label="Page navigation example"></nav>
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="choose_material.html">select</a></li>
+                </nav>
               </div>
             </div>
-            {%endfor%}
+            
           </div>
           <div class = "list_footer">
             <nav aria-label="Page navigation example">
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Next</a></li>
               </ul>
             </nav>
           </div>
@@ -202,19 +238,29 @@
     </div>
   </body>
   <script>
-    $('.dropdown-custoggle').click(function () {
-      $('.cusdropdown').toggle();
-    });
-    function deleteMaterial(elem) {
-    var id = $(elem).attr("id");
+  $('.dropdown-custoggle').click(function () {
+    $('.cusdropdown').toggle();
+  });
+  function searchasd(elem) {
+    var number = $(elem).text();
+    var search = $(".search-field-project").val();
+    $(elem).attr("href", `/storage_manager?search=${search}&number=${number}`);
+  }
+  function searchProvider(elem) {
+    var search = $(elem).parent().find(".search-field-project").val();
     $.ajax({
       type: "POST",
-      data: {material_id: id},
-      url: "/api/material/delete_material",
+      data: {search_data: search},
+      url: "/search",
       success: function (data) {
-        $(elem).parent().parent().remove();
+        var array =  $(".provider_table").find(".table_row");
+        for (let index = 1; index < array.length; index++) {
+          const element = array[index];
+          $(element).remove();
+        }        
       }
     })
   }
-    </script>
+  
+  </script>
 </html>

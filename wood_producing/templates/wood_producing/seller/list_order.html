@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ALT F4</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="/static/css/base.css" rel="stylesheet">
+    <link href="/static/css/new.css" rel="stylesheet">
+    <link href="/static/css/detail.css" rel="stylesheet">
+    <link href="/static/css/new_task.css" rel="stylesheet">
+    <link href="/static/css/foreman.css" rel="stylesheet">
+    <link href="/static/css/task_detail.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-datepicker3.css" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  </head>
+  <body class="authenticate">
+    <div class = "section-left">
+      <div class="siderbar">
+        <div class="kizukai-logo">
+ 
+        </div>
+        <div class="menu-left text-left">
+          <ul>
+              <li class= 'active' >
+                <a href="#">
+                  <span><i class="fa fa-key center"></i></span> Order List
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span><i class="fa fa-user center"></i></span> Task
+                </a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class = "section-right">
+      <header>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="title-header">
+      
+            </div>
+
+            <div class="navbar-right">
+              <a href="#">
+                <i class="fa fa-list-ul"></i>
+              </a> 
+              <a href="#" class = "dropdown-custoggle">
+                <i class="far fa-user-circle"></i>
+              </a>
+              <ul class="cusdropdown">
+                <li>
+                  <a class="dropdown-item"  >
+                    <span><i class="far fa-user"></i></span> fasdfasd
+                  </a>
+                </li>
+                  <li>
+                    <a class="dropdown-item">
+                      <span><i class="far fa-address-book"></i></span> asd
+                    </a>
+                  </li>
+                <li>
+                  <a class="dropdown-item" href="/user/logout">
+                    <span><i class="fas fa-sign-out-alt" id="current-account"></i> Logout
+                    </span> 
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class ="main">
+        <div class="order_list">
+          <div class = "list_header">
+            <h3 class = "title">
+              Order List
+            </h3>
+            <div class="search-form">
+              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
+                <div class="form-group">
+                  <input class="search-field-project" type="search" name="order_name" id="q_name_or_description_cont" />
+                  <button name="button" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class = "list_body">
+            <div class="table_row header">
+              <div class="table_col id">
+                Order ID
+              </div>
+              <div class="table_col name">
+                Order Name
+              </div>
+              <div class="table_col total">
+                Total Task
+              </div>
+              <div class="table_col completed">
+                Completed Task
+              </div>
+              <div class="table_col due_date">
+                Due Date
+              </div>
+            </div>
+            {% for order in orders %}
+            <div class="table_row">
+              <div class="table_col id">
+                {{order.id}}
+              </div>
+              <div class="table_col name">
+                <a href="{{direct_url.order_detail}}/{{order.id}}">{{order.name}}</a>
+              </div>
+              <div class="table_col total">
+                <p> {{order.total_task_num}} </p>
+                <a href="#"><i class="fas fa-plus-circle"></i></a>
+              </div>
+              <div class="table_col completed">
+                {{order.done_task_num}}
+              </div>
+              <div class="table_col due_date">
+                {{order.duedate}}
+              </div>
+            </div>
+            {% endfor %}
+            </div>
+          </div>
+          <div class = "list_footer">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                {% if num_pages > 10 %}
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">{{num_pages}}</a></li>
+                <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">Next</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  {% for i in pages %}
+                    <li class="page-item"><a class="page-link" onclick="searchasd(this)" href="#">{{i}}</a></li>
+                  {% endfor %}
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+  $('.dropdown-custoggle').click(function () {
+    $('.cusdropdown').toggle();
+  });
+  function searchasd(elem) {
+      var number = $(elem).text();
+      var search = $(".search-field-project").val();
+      $(elem).attr("href", `/producing_manager?search=${search}&number=${number}`);
+    }
+  </script>
+</html>

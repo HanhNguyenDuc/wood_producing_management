@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-
 {% load static %}
-{% load crispy_forms_tags %}
-{% load widget_tweaks %}
 <html lang="en">
   <head>
     <title>ALT F4</title>
@@ -12,18 +9,18 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link href="{% static 'css/new.css' %}" rel="stylesheet">
-    <link href="{% static 'css/material_add.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bill.css' %}" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script 
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" 
-      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" 
-      crossorigin="anonymous">
-    </script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -47,7 +44,7 @@
           <ul>
               <li class= 'active' >
                 <a href="#">
-                  <span><i class="fa fa-key center"></i></span> Add Material
+                  <span><i class="fa fa-key center"></i></span> Import Material
                 </a>
               </li>
               <li>
@@ -121,41 +118,76 @@
         </div>
       </header>
       <div class ="main">
-        <div class="add_material">
+        <div class="bill">
           <div class = "list_header">
-            <h3 class = "title">
-              Add Material
-            </h3>
+            <h1>Bill</h1>
+  
+            <div class="page-tools">
+              <div class="action-buttons">
+                  <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
+                      <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
+                      Print
+                  </a>
+              </div>
+            </div>            
           </div>
           <div class = "list_body">
-            <form class ="add" action="" method="POST">
-              {% csrf_token %}
-             <br>
-              <div class = "material_name">
-                <label for="id">Material Name:</label>
-                {{form.material_name|attr:"type:text"}}
-             </div>
-             <br>
-             <div class = "type">
-               <label for="id">Type:</label>
-                {{form.type|attr:"type:text"}}
-              </div>
-             <br>
-             <div class = "desc">
-               <label for="id">Desc:</label>
-                {{form.desc|attr:"type:text"}}
+              <div class="bill_info">
+                  <hr class="d-sm-none" />
+                  <div class="text-grey-m2">
+                      <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span></div>
+                      <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Provider Name:</span></div>
+                      <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">List Material:</span></div>
+                  </div>
               </div>
               <br>
-             <div><input type="submit" value="Add"></div>
-            </form>
-            
+              <!-- /.col -->
+              <div class="mt-4">
+                <div class="table_row header">
+                  <div class="table_col id">
+                    ID
+                  </div>
+                  <div class="table_col material_name">
+                    Material Name
+                  </div>
+                  <div class="table_col type">
+                    Type
+                  </div>
+                  <div class="table_col quantity">
+                    Quantity
+                  </div>
+                  <div class="table_col price">
+                    Price
+                  </div>
+                  <div class="table_col desc">
+                    Descp
+                </div>
+              </div>
+              <div class="table_row">
+                <div class="table_col id">
+                  1
+                </div>
+                <div class="table_col material_name">
+                </div>
+                <div class="table_col type">
+                </div>
+                <div class="table_col quantity">
+                </div>
+                <div class="table_col price">
+                </div>
+                <div class="table_col desc">
+                </div>
+              </div>
+          </div>
           </div>
           <div class = "list_footer">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="material_base.html">Back</a></li>
-              </ul>
-            </nav>
+            <div class="export">
+                <nav aria-label="Page navigation example"></nav>
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="choose_material.html">Back</a></li>
+                        <li class="page-item"><a class="page-link" href="choose_provider.html">Export</a></li>
+                </nav>
+            </div>
           </div>
         </div>
       </div>
