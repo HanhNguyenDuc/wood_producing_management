@@ -348,7 +348,7 @@
   margin-top: 32px;
 }
 .container-unauthenticate .box-left {
-  background-image: url('bg.png');
+  background-image: url('/static/images/bg.png');
   background-repeat: no-repeat;
   background-size: cover;
 }
