@@ -10,6 +10,7 @@
     <meta name="author" content="" />
     <link href="{% static 'css/new.css' %}" rel="stylesheet">
     <link href="{% static 'css/bill.css' %}" rel="stylesheet">
+    <!-- <link href="bill.css" rel="stylesheet"> -->
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -120,65 +121,58 @@
       <div class ="main">
         <div class="bill">
           <div class = "list_header">
-            <h1>Bill</h1>
-  
-            <div class="page-tools">
+            <h1>Hoá Đơn Nhập Hàng</h1>
+            <!-- <div class="page-tools">
               <div class="action-buttons">
                   <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
                       <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
                       Print
                   </a>
               </div>
-            </div>            
+            </div>             -->
           </div>
           <div class = "list_body">
-              <div class="bill_info">
-                  <hr class="d-sm-none" />
-                  <div class="text-grey-m2">
-                      <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span></div>
-                      <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Provider Name:</span></div>
-                      <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">List Material:</span></div>
-                  </div>
-              </div>
-              <br>
-              <!-- /.col -->
-              <div class="mt-4">
-                <div class="table_row header">
-                  <div class="table_col id">
-                    ID
-                  </div>
-                  <div class="table_col material_name">
-                    Material Name
-                  </div>
-                  <div class="table_col type">
-                    Type
-                  </div>
-                  <div class="table_col quantity">
-                    Quantity
-                  </div>
-                  <div class="table_col price">
-                    Price
-                  </div>
-                  <div class="table_col desc">
-                    Descp
-                </div>
-              </div>
-              <div class="table_row">
-                <div class="table_col id">
-                  1
-                </div>
-                <div class="table_col material_name">
-                </div>
-                <div class="table_col type">
-                </div>
-                <div class="table_col quantity">
-                </div>
-                <div class="table_col price">
-                </div>
-                <div class="table_col desc">
-                </div>
-              </div>
-          </div>
+            <div class="bill_info">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Mã Hoá Đơn:</td>
+                  </tr>
+                  <tr>
+                    <td>Nhà Cung Cấp:</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Ngày Nhập:</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br>
+            <h5> Thông tin sản phẩm</h5>
+            <div class="modal-body">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th>STT</th>
+                  <th>Mã sản phẩm</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Số lượng</th>
+                  <th>Đơn giá</th>
+                  <th>Tổng tiền</th>
+                </tr>
+                <tr>
+                  <td> 1</td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
           </div>
           <div class = "list_footer">
             <div class="export">
