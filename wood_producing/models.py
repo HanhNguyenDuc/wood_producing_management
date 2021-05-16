@@ -5,6 +5,7 @@
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
 #   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
+from django import db
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
 from .enums import *
@@ -99,7 +100,8 @@ class Materialinproduct(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     materialid = models.ForeignKey(Material, models.DO_NOTHING, db_column='MaterialID')  # Field name made lowercase.
     productid = models.ForeignKey('Product', models.DO_NOTHING, db_column='ProductID')  # Field name made lowercase.
-
+    quantity = models.IntegerField(default=2)
+    description = models.CharField(max_length=300, default="is a main material")
 
 
 class Materialofprovider(models.Model):
@@ -126,16 +128,15 @@ class Materialofproviderinstorage(models.Model):
 class Materialrequest(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     material = models.ForeignKey('Material', models.CASCADE, db_column='material')
-    taskid = models.ForeignKey('Task', models.DO_NOTHING, db_column='TaskID')  # Field name made lowercase.
-    storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID')  # Field name made lowercase.
+    taskid = models.ForeignKey('Task', models.CASCADE, db_column='TaskID')  # Field name made lowercase.
+    storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID', null=True)  # Field name made lowercase.
     is_approved = models.BooleanField(db_column='is_approve', default=False)
+    quantity = models.IntegerField(default=10)
 
 
 class MaterialrequestListmaterial(models.Model):
     materialrequestid = models.OneToOneField(Materialrequest, models.DO_NOTHING, db_column='MaterialRequestID', primary_key=True)  # Field name made lowercase.
     listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
-
-
 
 class Order(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -235,6 +236,8 @@ class Task(models.Model):
     priority = models.CharField(db_column='priority', max_length=10, default="low")
     quantity = models.IntegerField(db_column='quantity', default=0)
     estimated = models.DateTimeField(db_column='estimated')
+    create_at = models.DateTimeField(db_column="create_at")
+    update_at = models.DateTimeField(db_column="update_at")
     status = models.CharField(db_column='status', default="doing", max_length=100)
 
 class TaskListprogress(models.Model):
@@ -253,12 +256,11 @@ class TaskListrequest(models.Model):
 
 class Taskprogress(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    progress = models.IntegerField(db_column='Progress', blank=True, null=True)  # Field name made lowercase.
-    task = models.IntegerField(db_column='Task', blank=True, null=True)  # Field name made lowercase.
-    startdate = models.DateField(db_column='StartDate', blank=True, null=True)  # Field name made lowercase.
-    enddate = models.DateField(db_column='EndDate', blank=True, null=True)  # Field name made lowercase.
-    taskid = models.ForeignKey(Task, models.DO_NOTHING, db_column='TaskID')  # Field name made lowercase.
-    progressid = models.ForeignKey(Progress, models.DO_NOTHING, db_column='ProgressID')  # Field name made lowercase.
+    startdate = models.DateTimeField(db_column='StartDate', blank=True, null=True)  # Field name made lowercase.
+    enddate = models.DateTimeField(db_column='EndDate', blank=True, null=True)  # Field name made lowercase.
+    taskid = models.ForeignKey(Task, models.CASCADE, db_column='TaskID')  # Field name made lowercase.
+    progressid = models.ForeignKey(Progress, models.CASCADE, db_column='ProgressID')  # Field name made lowercase.
+    percentage = models.IntegerField(default=0)
 
 
 class Workshop(models.Model):
