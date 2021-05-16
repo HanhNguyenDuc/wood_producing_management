@@ -105,7 +105,7 @@ def statistic_production(request):
     }
     temp_date = start_date
     while temp_date < end_date:
-        sql = "SELECT wood_producing_productexported.Quantity FROM wood_producing_exportbill, wood_producing_productexported WHERE wood_producing_productexported.ExportBillID = wood_producing_exportbill.ID AND NOT (wood_producing_exportbill.Date > \'2021-%s-30\' OR wood_producing_exportbill.Date < \'2021-%s-01\')"
+        sql = "SELECT wood_producing_orderedproduct.Quantity FROM wood_producing_order, wood_producing_orderedproduct WHERE wood_producing_orderedproduct.order_id = wood_producing_order.ID AND NOT (wood_producing_order.duedate > \'2021-%s-30\' OR wood_producing_order.duedate < \'2021-%s-01\')"
         with connection.cursor() as cursor:
             cursor.execute(sql,[temp_date, temp_date])
             result = dictfetchall(cursor)
@@ -131,7 +131,7 @@ def statistic_production(request):
 
     temp_date = start_date        
     while temp_date < end_date:
-        sql = "SELECT wood_producing_product.Name, wood_producing_product.Quantity FROM wood_producing_exportbill, wood_producing_product, wood_producing_productexported WHERE wood_producing_productexported.Product = wood_producing_product.ID AND wood_producing_productexported.ExportBillID = wood_producing_exportbill.ID AND NOT (wood_producing_exportbill.Date > \'2021-%s-30\' OR wood_producing_exportbill.Date < \'2021-%s-01\')"
+        sql = "SELECT wood_producing_product.Name, wood_producing_orderedproduct.Quantity FROM wood_producing_order, wood_producing_orderedproduct, wood_producing_product WHERE wood_producing_orderedproduct.Product = wood_producing_product.ID AND wood_producing_orderedproduct.order_id = wood_producing_order.ID AND NOT (wood_producing_order.duedate > \'2021-%s-30\' OR wood_producing_order.duedate < \'2021-%s-01\')"
         with connection.cursor() as cursor:
             cursor.execute(sql,[temp_date, temp_date])
             result = dictfetchall(cursor)
@@ -196,13 +196,16 @@ def statistic_material(request):
     }
 
     temp_date = start_date
-    while temp_date < end_date:
-        sql = "SELECT wood_producing_importbill.ID FROM wood_producing_importedmaterial, wood_producing_importbill WHERE wood_producing_importedmaterial.ImportBillID = wood_producing_importbill.ID AND NOT (wood_producing_importbill.Date > \'2021-%s-30\' OR wood_producing_importbill.Date < \'2021-%s-01\')"
+    while temp_date <= end_date:
+        sql = "SELECT wood_producing_importedmaterial.quantity FROM wood_producing_importedmaterial, wood_producing_importbill WHERE wood_producing_importedmaterial.ImportBillID = wood_producing_importbill.ID AND NOT (wood_producing_importbill.Date > \'2021-%s-30\' OR wood_producing_importbill.Date < \'2021-%s-01\')"
         with connection.cursor() as cursor:
             cursor.execute(sql,[temp_date, temp_date])
             result = dictfetchall(cursor)
         if len(result) > 0:
-            response["material_quantity_total"][temp_date] = len(result[0]["ID"])
+            temp = 0
+            for temp_result in result:
+                temp += temp_result["quantity"]
+            response["material_quantity_total"].append(temp)
             response["labels"].append("Tháng "+str(temp_date))
         temp_date += 1
 
@@ -213,37 +216,60 @@ def statistic_material(request):
         if len(result) > 0:
             for material_name in result:
                 response["material_labels"].append(material_name["Name"])
-                response["material_quantity"][material_name["Name"]] = 0
+                response["material_quantity_detail"].append({
+                    'label': material_name["Name"],
+                    'quantity': [],
+                    'temp': 0
+                })
 
     temp_date = start_date
-    while temp_date < end_date:
-        sql = "SELECT wood_producing_material.Name, wood_producing_material.Quantity FROM wood_producing_material, wood_producing_importedmaterial, wood_producing_importbill WHERE wood_producing_importedmaterial.ImportBillID = wood_producing_importbill.ID AND wood_producing_importedmaterial.Material = wood_producing_material.ID AND NOT (wood_producing_importbill.Date > \'2021-%s-30\' OR wood_producing_importbill.Date < \'2021-%s-01\')"
+    while temp_date <= end_date:
+        sql = "SELECT wood_producing_material.Name, wood_producing_importedmaterial.quantity FROM wood_producing_material, wood_producing_importedmaterial, wood_producing_importbill, wood_producing_materialofprovider \
+            WHERE wood_producing_importedmaterial.ImportBillID = wood_producing_importbill.ID AND wood_producing_importedmaterial.Materialofprovider = wood_producing_materialofprovider.ID \
+            AND wood_producing_materialofprovider.MaterialID = wood_producing_material.ID AND NOT (wood_producing_importbill.Date > \'2021-%s-30\' OR wood_producing_importbill.Date < \'2021-%s-01\')"
         with connection.cursor() as cursor:
             cursor.execute(sql,[temp_date, temp_date])
             result = dictfetchall(cursor)
             if len(result) > 0:
-                for material in result:
-                    response["material_quantity"][material["Name"]] += int(material["Quantity"])
+                for temp_result in result:
+                    for material in response["material_quantity_detail"]:
+                        if material["label"] == str(temp_result["Name"]):
+                            material["temp"] += int(temp_result["quantity"])
+        for material in response["material_quantity_detail"]:
+            material["quantity"].append(material["temp"])
+            material["temp"] = 0     
         temp_date += 1
 
     sql = "SELECT Name FROM wood_producing_provider"
     with connection.cursor() as cursor:
         cursor.execute(sql)
         result = dictfetchall(cursor)
-        for name in result:
-            response["provider"].append(name["Name"])
-            response["provider_material_quantity"][name["Name"]] = 0
+        for temp_result in result:
+            response["provider_labels"].append(temp_result["Name"])
+            response["provider_quantity_detail"].append({
+                'label' : temp_result["Name"],
+                'quantity': [],
+                'temp':0
+            })
 
     temp_date = start_date
-    while temp_date < end_date:
-        sql = "SELECT wood_producing_provider.Name, wood_producing_material.Quantity FROM wood_producing_material, wood_producing_provider, wood_producing_importedmaterial, wood_producing_importbill WHERE wood_producing_importbill.ProviderID = wood_producing_provider.ID AND wood_producing_importedmaterial.ImportBillID = wood_producing_importbill.ID AND wood_producing_importedmaterial.Material = wood_producing_material.ID AND NOT (wood_producing_importbill.Date > \'2021-%s-30\' OR wood_producing_importbill.Date < \'2021-%s-01\')"
+    while temp_date <= end_date:
+        sql = "SELECT wood_producing_provider.Name, wood_producing_importedmaterial.quantity FROM wood_producing_provider, wood_producing_importedmaterial, wood_producing_importbill, wood_producing_materialofprovider \
+            WHERE wood_producing_importedmaterial.ImportBillID = wood_producing_importbill.ID AND wood_producing_importedmaterial.Materialofprovider = wood_producing_materialofprovider.ID \
+            AND wood_producing_materialofprovider.ProviderID = wood_producing_provider.ID AND NOT (wood_producing_importbill.Date > \'2021-%s-30\' OR wood_producing_importbill.Date < \'2021-%s-01\')"
         with connection.cursor() as cursor:
             cursor.execute(sql,[temp_date, temp_date])
             result = dictfetchall(cursor)
             if len(result) > 0:
                 for temp_result in result:
-                    response["provider_material_quantity"][temp_result["Name"]] += int(temp_result["Quantity"])
+                    for provider in response["provider_quantity_detail"]:
+                        if provider["label"] == str(temp_result["Name"]):
+                            provider["temp"] += int(temp_result["quantity"])
+        for provider in response["provider_quantity_detail"]:
+            provider["quantity"].append(provider["temp"])
+            provider["temp"] = 0     
         temp_date += 1
+
     logging.info(response)
     return JsonResponse(merge({"msg": "Success"},response))
 

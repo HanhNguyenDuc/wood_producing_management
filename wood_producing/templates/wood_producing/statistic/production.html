@@ -54,91 +54,50 @@
         </div>
         <div id="content" style="display: None;">
             <div class="row">
-                <div class="col-5">
-                    <canvas id="TotalProfitChart" width="200" height="100"></canvas>
-                </div>
-                <div class="col-7">
-                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">TT</th>
-                                <th scope="col">Mốc thời gian</th>
-                                <th scope="col">Số lượng bán</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>03/2021 - 04/2021</td>
-                                <td>100</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>04/2021 - 05/2021</td>
-                                <td>80</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col-sm">
+                    <canvas id="TotalProfitChart" width="200" height="80"></canvas>
                 </div>
             </div>
             <div class="row">
-                <div class="col-5">
-                    <canvas id="ProductsChart" width="200" height="100"></canvas>
-                </div>
-
-                <div class="col-7">
-                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">TT</th>
-                                <th scope="col">Loại mặt hàng</th>
-                                <th scope="col">Tên sản phẩm</th>
-                                <th scope="col">Số lượng bán ra</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Đồ gỗ gia dụng</td>
-                                <td>Bàn gỗ</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col-sm">
+                    <canvas id="ProductsChart" width="200" height="80"></canvas>
                 </div>
             </div>
             <div class="row">
-                <div class="col-5">
-                    <canvas id="CostChart" width="100" height="100" style="box-sizing: border-box;"></canvas>
-                </div>
-                <div class="col-7">
-                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">TT</th>
-                                <th scope="col">Xưởng</th>
-                                <th scope="col">Số lượng sản xuất</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Xưởng 1</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col-sm">
+                    <canvas id="CostChart" width="200" height="80"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </body>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
     var ctx_profit = document.getElementById('TotalProfitChart').getContext("2d");
     var ctx_product = document.getElementById('ProductsChart');
     var ctx_cost = document.getElementById('CostChart');
-
+    var backgroundColor = [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(201, 203, 207, 0.2)'
+    ];
     $('#btnStatistic').click(function () {
         var start_date = $("#date-input-1").val();
         var end_date = $("#date-input-2").val();
@@ -170,6 +129,7 @@
                                     position: 'top',
                                 },
                                 title: {
+                                    position: 'top',
                                     display: true,
                                     text: 'Biểu đồ thống kê mặt hàng sản xuất'
                                 }
@@ -181,12 +141,11 @@
                 for (let index = 0; index < data["product_quantity_detail"].length; index++) {
                     datasets.push({
                         type: 'bar',
-                        label: data["product_quantity_detail"][index]["label"], 
+                        label: data["product_quantity_detail"][index]["label"],
                         data: data["product_quantity_detail"][index]["quantity"],
-                        backgroundColor: 'rgba(54, 162, 235, 1)'
+                        backgroundColor: backgroundColor[index % 7]
                     })
                 }
-                consonle.log(datasets)
                 var ProductsChart = new Chart(ctx_product, {
                     type: 'bar',
                     data: {
@@ -200,6 +159,7 @@
                                 position: 'top',
                             },
                             title: {
+                                position: 'top',
                                 display: true,
                                 text: 'Biểu đồ thống kê mặt hàng chi tiết'
                             }
@@ -209,21 +169,12 @@
                 var datasets = [];
                 var i = 0;
                 for (let index = 0; index < data["workshop_quantity_detail"].length; index++) {
-                    if (i == 0) {
-                        i = 1;
-                        var backgroundColor = 'rgba(255, 99, 132, 0.2)';
-                        var borderColor = 'rgba(255, 99, 132, 0.2)';
-                    }
-                    else{
-                        var backgroundColor = 'rgba(54, 162, 235, 0.2)';
-                        var borderColor = 'rgba(54, 162, 235, 0.2)';
-                    }
                     datasets.push({
                         type: 'bar',
-                        label: "Xưởng "+ data["workshop_quantity_detail"][index]["label"], 
+                        label: "Xưởng " + data["workshop_quantity_detail"][index]["label"],
                         data: data["workshop_quantity_detail"][index]["quantity"],
-                        backgroundColor: backgroundColor,
-                        borderColor: borderColor,
+                        backgroundColor: backgroundColor[index % 7],
+                        borderColor: backgroundColor[index % 7]
                     })
                 }
                 console.log(datasets)
@@ -246,36 +197,6 @@
                         }
                     }
                 });
-
-
-                // var array = $("#request_material_table").find(".detail_task_table_row");
-                // for (let index = 1; index < array.length; index++) {
-                //     const element = array[index];
-                //     $(element).remove();
-                // }
-                // // Gia su data gom: ten foreman, status, so task dang lam
-                // for (let index = 0; index < data.length; index++) {
-                //     const element = data[index];
-
-                //     var item = '<div class="detail_task_table_row">' +
-                //         '                <div class = "task_column stt">' +
-                //         `                  ${element.id}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column name">' +
-                //         `                  ${element.name}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column quantity">' +
-                //         `                  ${element.type}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column current_progress">' +
-                //         `                  ${element.desc}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column">' +
-                //         '                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">' +
-                //         '                </div>' +
-                //         '              </div>';
-                //     $("#request_material_table").append(item)
-                // }
             },
             errors: function (data) {
                 console.log(data);

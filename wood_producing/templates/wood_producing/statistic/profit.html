@@ -56,7 +56,7 @@
             <div class="row">
                 <canvas id="TotalProfitChart" width="200" height="100"></canvas>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <table class="table" style="margin-top:5.72%;">
                     <thead>
                         <tr>
@@ -77,13 +77,13 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> -->
             <div class="row">
-                <div class="col-5">
-                    <canvas id="ProductsChart" width="200" height="200"></canvas>
+                <div class="col-sm">
+                    <canvas id="ProductsChart" width="200" height="100"></canvas>
                 </div>
 
-                <div class="col-7">
+                <!-- <div class="col-7">
                     <table class="table" style="margin-top:5.72%; font-size: 15px;">
                         <thead>
                             <tr>
@@ -102,11 +102,24 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
     var ctx_profit = document.getElementById('TotalProfitChart').getContext("2d");
@@ -115,6 +128,15 @@
     $('#btnStatistic').click(function () {
         var start_date = $("#date-input-1").val();
         var end_date = $("#date-input-2").val();
+        var backgroundColor = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+        ];
         $.ajax({
             type: "POST",
             data: {
@@ -128,7 +150,7 @@
                 var TotalProfitChart = new Chart(ctx_profit, {
                     type: 'bar',
                     data: {
-                        labels: data["labels"], 
+                        labels: data["labels"],
                         datasets:
                             [{
                                 label: 'Doanh thu',
@@ -168,15 +190,15 @@
                 for (let index = 0; index < data["product_income_detail"].length; index++) {
                     datasets.push({
                         type: 'bar',
-                        label: data["product_income_detail"][index]["label"], 
+                        label: data["product_income_detail"][index]["label"],
                         data: data["product_income_detail"][index]["income"],
-                        backgroundColor: 'rgba(54, 162, 235, 1)'
+                        backgroundColor: backgroundColor[index % 7]
                     })
                 }
                 var ProductsChart = new Chart(ctx_product, {
                     type: 'bar',
                     data: {
-                        labels: data["labels"], 
+                        labels: data["labels"],
                         datasets: datasets
                     },
                     options: {
@@ -199,34 +221,6 @@
                         }
                     }
                 });
-                // var array = $("#request_material_table").find(".detail_task_table_row");
-                // for (let index = 1; index < array.length; index++) {
-                //     const element = array[index];
-                //     $(element).remove();
-                // }
-                // // Gia su data gom: ten foreman, status, so task dang lam
-                // for (let index = 0; index < data.length; index++) {
-                //     const element = data[index];
-
-                //     var item = '<div class="detail_task_table_row">' +
-                //         '                <div class = "task_column stt">' +
-                //         `                  ${element.id}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column name">' +
-                //         `                  ${element.name}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column quantity">' +
-                //         `                  ${element.type}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column current_progress">' +
-                //         `                  ${element.desc}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column">' +
-                //         '                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">' +
-                //         '                </div>' +
-                //         '              </div>';
-                //     $("#request_material_table").append(item)
-                // }
             },
             errors: function (data) {
                 console.log(data);

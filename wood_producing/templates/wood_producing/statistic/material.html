@@ -28,138 +28,92 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
         integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
         crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
 
 
 <body>
-    <h2 class="text-center" style="margin-top: 5%;"><span>Thống kê nguyên liệu</span></h2>
-    <div class="container">
-        <div class="row">
-            <div class="form-group row col-sm">
-                <label for="example-date-input" class="col-3 col-form-label">Ngày bắt đầu</label>
-                <div class="col-9">
-                    <input class="form-control" type="date" value="2021-04-01" id="date-input-1">
-                </div>
-            </div>
-            <div class="form-group row col-sm">
-                <label for="example-date-input" class="col-3 col-form-label">Ngày kết thúc</label>
-                <div class="col-9">
-                    <input class="form-control" type="date" value="2021-05-01" id="date-input-2">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <button class="col-sm btn btn-light" id="btnBack"> Back </button>
-            <button class="col-sm btn btn-success" id="btnStatistic"> Statistic </button>
-        </div>
-        <div id="content" style="display: None;">
-            <div class="row">
-                <div class="col-5">
-                    <canvas id="TotalProfitChart" width="200" height="100"></canvas>
-                </div>
-                <div class="col-7">
-                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">TT</th>
-                                <th scope="col">Mốc thời gian</th>
-                                <th scope="col">Số lượng hàng nhập</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>03/2021 - 04/2021</td>
-                                <td>80</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>04/2021 - 05/2021</td>
-                                <td>100</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-5">
-                    <canvas id="ProductsChart" width="200" height="100"></canvas>
-                </div>
 
-                <div class="col-7">
-                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">TT</th>
-                                <th scope="col">Loại nguyên liệu</th>
-                                <th scope="col">Số lượng hàng nhập</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Đồ gỗ gia dụng</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                    </table>
+    <div class="main">
+        <h2 class="text-center" style="margin-top: 5%;"><span>Thống kê nguyên liệu</span></h2>
+        <div class="container">
+            <div class="row">
+                <div class="form-group row col-sm">
+                    <label for="example-date-input" class="col-3 col-form-label">Ngày bắt đầu</label>
+                    <div class="col-9">
+                        <input class="form-control" type="date" value="2021-04-01" id="date-input-1">
+                    </div>
+                </div>
+                <div class="form-group row col-sm">
+                    <label for="example-date-input" class="col-3 col-form-label">Ngày kết thúc</label>
+                    <div class="col-9">
+                        <input class="form-control" type="date" value="2021-05-01" id="date-input-2">
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-5">
-                    <canvas id="CostChart" width="100" height="100" style="box-sizing: border-box;"></canvas>
+                <button class="col-sm btn btn-light" id="btnBack"> Back </button>
+                <button class="col-sm btn btn-success" id="btnStatistic"> Statistic </button>
+            </div>
+            <div id="content" style="display: None;">
+                <div class="row">
+                    <div class="col-sm">
+                        <canvas id="TotalProfitChart" width="200" height="100"></canvas>
+                    </div>
                 </div>
-                <div class="col-7">
-                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">TT</th>
-                                <th scope="col">Nhà cung cấp</th>
-                                <th scope="col">Nguyên liệu</th>
-                                <th scope="col">Số lượng hàng nhập</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Vinamilk</td>
-                                <td>Bàn gỗ</td>
-                                <td>10</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-sm">
+                        <canvas id="ProductsChart" width="200" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <canvas id="CostChart" width="200" height="100"></canvas>
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 
 <script>
     var ctx_profit = document.getElementById('TotalProfitChart').getContext("2d");
     var ctx_product = document.getElementById('ProductsChart');
     var ctx_cost = document.getElementById('CostChart');
-
+    $('#btnBack').click(function () {
+        window.location.href = 'index.html';
+    });
     $('#btnStatistic').click(function () {
         var start_date = $("#date-input-1").val();
         var end_date = $("#date-input-2").val();
+        var backgroundColor = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+        ];
         $.ajax({
             type: "POST",
             data: {
                 start_date: start_date,
                 end_date: end_date,
             },
-            url: "/api/statistic/statistic_production",
+            url: "/api/statistic/statistic_material",
             success: function (data) {
                 console.log(data);
                 data = JSON.parse(JSON.stringify(data))
                 var TotalProfitChart = new Chart(ctx_profit, {
                     type: 'line',
                     data: {
-                        labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
+                        labels: data["labels"],
                         datasets: [{
                             label: 'Số lượng nhập',
-                            data: [65, 59, 81, 56, 55],
+                            data: data["material_quantity_total"],
                             fill: false,
                             borderColor: 'rgb(75, 192, 192)',
                             tension: 0.1
@@ -178,32 +132,23 @@
                         }
                     }
                 });
-
+                var datasets = [];
+                for (let index = 0; index < data["material_quantity_detail"].length; index++) {
+                    console.log(data["material_quantity_detail"][index]["label"]);
+                    console.log(data["material_quantity_detail"][index]["quantity"]);
+                    datasets.push({
+                        type: 'bar',
+                        label: data["material_quantity_detail"][index]["label"],
+                        data: data["material_quantity_detail"][index]["quantity"],
+                        backgroundColor: backgroundColor[index % 7]
+                    })
+                }
+                console.log(datasets);
                 var ProductsChart = new Chart(ctx_product, {
                     type: 'bar',
                     data: {
-                        labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
-                        datasets: [{
-                            label: 'Số lượng nhập',
-                            data: [50, 30, 50, 50, 10, 20],
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
+                        labels: data["labels"],
+                        datasets: datasets
                     },
                     options: {
                         responsive: true,
@@ -218,29 +163,21 @@
                         }
                     }
                 });
-
+                var datasets = [];
+                for (let index = 0; index < data["provider_quantity_detail"].length; index++) {
+                    datasets.push({
+                        type: 'bar',
+                        label: data["provider_quantity_detail"][index]["label"],
+                        data: data["provider_quantity_detail"][index]["quantity"],
+                        backgroundColor: backgroundColor[index % 7]
+                    })
+                }
+                console.log(datasets);
                 var CostChart = new Chart(ctx_cost, {
                     type: 'bar',
                     data: {
-                        labels: ['Vinamilk', 'Cafein'],
-                        datasets: [{
-                            label: 'Mặt hàng A',
-                            data: [100, 110],
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                            ],
-                            borderWidth: 1
-                        },
-                        {
-                            type: 'bar',
-                            label: "Mặt hàng B",
-                            data: [50, 30],
-                        }]
+                        labels: data["provider_labels"],
+                        datasets: datasets
                     },
                     options: {
                         responsive: true,
@@ -256,34 +193,6 @@
                     }
                 });
 
-                // var array = $("#request_material_table").find(".detail_task_table_row");
-                // for (let index = 1; index < array.length; index++) {
-                //     const element = array[index];
-                //     $(element).remove();
-                // }
-                // // Gia su data gom: ten foreman, status, so task dang lam
-                // for (let index = 0; index < data.length; index++) {
-                //     const element = data[index];
-
-                //     var item = '<div class="detail_task_table_row">' +
-                //         '                <div class = "task_column stt">' +
-                //         `                  ${element.id}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column name">' +
-                //         `                  ${element.name}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column quantity">' +
-                //         `                  ${element.type}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column current_progress">' +
-                //         `                  ${element.desc}` +
-                //         '                </div>' +
-                //         '                <div class = "task_column">' +
-                //         '                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">' +
-                //         '                </div>' +
-                //         '              </div>';
-                //     $("#request_material_table").append(item)
-                // }
             },
             errors: function (data) {
                 console.log(data);
