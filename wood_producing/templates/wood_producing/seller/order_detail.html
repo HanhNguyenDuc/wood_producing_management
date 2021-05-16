@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <title>Tạo đơn hàng</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link href="/static/css/base.css" rel="stylesheet">
+  <link href="/static/css/new.css" rel="stylesheet">
+  <link href="/static/css/detail.css" rel="stylesheet">
+  <link href="/static/css/new_task.css" rel="stylesheet">
+  <link href="/static/css/foreman.css" rel="stylesheet">
+  <link href="/static/css/task_detail.css" rel="stylesheet">
+  <link href="/static/css/bootstrap-datepicker3.css" rel="stylesheet">
+  <link href="/static/css/tuananh.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type=”text/javascript” src=”dialog.js”></script>
+</head>
+
+<body class="authenticate">
+  <div class="section-left">
+    <div class="siderbar">
+      <div class="kizukai-logo">
+
+      </div>
+      <div class="menu-left text-left">
+        <ul>
+          <li class='active'>
+            <a href="/seller">
+              <span><i class="fa fa-key center"></i></span> Order List
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span><i class="fa fa-user center"></i></span> Create Order
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="section-right">
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="title-header">
+
+          </div>
+
+          <div class="navbar-right">
+            <a href="#">
+              <i class="fa fa-list-ul"></i>
+            </a>
+            <a href="#" class="dropdown-custoggle">
+              <i class="far fa-user-circle"></i>
+            </a>
+            <ul class="cusdropdown">
+              <li>
+                <a class="dropdown-item" href="user/logout">
+                  <span><i class="fas fa-sign-out-alt" id="current-account"></i>Log out
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="main">
+      <div class="order_list">
+        <h2 class="header">Order Detail</h2>
+        <h5> Thông tin khách hàng</h5>
+        <div class="modal-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>Tên khách hàng</td>
+                <td>
+                  <p>{{customer.name}}</p>
+                </td>
+              </tr>
+              <tr>
+                <td>Số điện thoại</td>
+                <td> {{customer.phone}}</td>
+              </tr>
+              <tr>
+                <td>Địa chỉ</td>
+                <td> {{customer.address}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h5> Thông tin sản phẩm</h5>
+        <div class="detail_task_table">
+          <div class="detail_task_table_row header">
+            <div class = "task_column name">
+              Name <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
+            </div>
+            <div class = "task_column foreman">
+              Design ID
+            </div>
+            <div class = "task_column priority">
+              Quantity
+            </div>
+            <div class = "task_column status">
+              Price
+            </div>
+            <div class = "task_column current_progress">
+              Total
+            </div>
+          </div>
+          {% for product in ordered_products %}
+          <div class="detail_task_table_row">
+            <div class = "task_column name">
+              {{product.product.name}} 
+            </div>
+            <div class = "task_column foreman">
+              {{product.design_id}}
+            </div>
+            <div class = "task_column priority">
+              {{product.quantity}}
+            </div>
+            <div class = "task_column status">
+              {{product.price}}
+            </div>
+            <div class = "task_column">
+              {{product.total_price}}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

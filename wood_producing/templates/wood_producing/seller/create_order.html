@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <title>Tạo đơn hàng</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link href="/static/css/base.css" rel="stylesheet">
+  <link href="/static/css/new.css" rel="stylesheet">
+  <link href="/static/css/detail.css" rel="stylesheet">
+  <link href="/static/css/new_task.css" rel="stylesheet">
+  <link href="/static/css/foreman.css" rel="stylesheet">
+  <link href="/static/css/task_detail.css" rel="stylesheet">
+  <link href="/static/css/create_order.css" rel="stylesheet">
+  <link href="/static/css/bootstrap-datepicker3.css" rel="stylesheet">
+  <link href="/static/css/tuananh.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type=”text/javascript” src=”dialog.js”></script>
+</head>
+
+<body class="authenticate">
+  <div class="section-left">
+    <div class="siderbar">
+      <div class="kizukai-logo">
+
+      </div>
+      <div class="menu-left text-left">
+        <ul>
+          <li class='active'>
+            <a href="/seller">
+              <span><i class="fa fa-key center"></i></span> Order List
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span><i class="fa fa-user center"></i></span> Create Order
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="section-right">
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="title-header">
+
+          </div>
+
+          <div class="navbar-right">
+            <a href="#">
+              <i class="fa fa-list-ul"></i>
+            </a>
+            <a href="#" class="dropdown-custoggle">
+              <i class="far fa-user-circle"></i>
+            </a>
+            <ul class="cusdropdown">
+              <li>
+                <a class="dropdown-item" href="user/logout">
+                  <span><i class="fas fa-sign-out-alt" id="current-account"></i>Log out
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="main">
+      <div class="order_list">
+        <h2 class="header">Order Detail</h2>
+        <div class="detail line">
+          <div class="left">
+            <h5> Thông tin khách hàng <i class="fas fa-arrow-alt-circle-down" onclick="toggleCustomer(this)"></i></h5>
+          </div>
+          <div class="right">
+            <button class="btn btn-success"> Save </button>
+            <button class="btn btn-danger"> Cancel </button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#add_product_modal"> Add Product </button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#set_customter_modal"> Set Customer </button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#add_customer_modal"> Add Customer </button>
+          </div>
+        </div>
+        <div class="modal-body" id="customer">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>Tên khách hàng</td>
+                <td>
+                  <p>{{customer.name}}</p>
+                </td>
+              </tr>
+              <tr>
+                <td>Số điện thoại</td>
+                <td> {{customer.phone}}</td>
+              </tr>
+              <tr>
+                <td>Địa chỉ</td>
+                <td> {{customer.address}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h5> Thông tin sản phẩm</h5>
+        <div class="detail_task_table">
+          <div class="detail_task_table_row header">
+            <div class = "task_column name">
+              Name
+            </div>
+            <div class = "task_column foreman">
+              Design ID
+            </div>
+            <div class = "task_column priority">
+              Quantity
+            </div>
+            <div class = "task_column status">
+              Price
+            </div>
+            <div class = "task_column current_progress">
+              Total
+            </div>
+          </div>
+          <div class="detail_task_table_row">
+            <div class = "task_column name">
+              Ghế gỗ
+            </div>
+            <div class = "task_column foreman">
+              123
+            </div>
+            <div class = "task_column priority">
+              456
+            </div>
+            <div class = "task_column status">
+              1234
+            </div>
+            <div class = "task_column">
+              1234
+            </div>
+          </div>
+          <div class="detail_task_table_row">
+            <a class="add" style="flex-basis: 70%">
+              <i class="fas fa-plus"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<div class="modal" tabindex="-1" role="dialog" id="add_product_modal">
+  <div class="modal-dialog" role="document" style="width: 70%; max-width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Choose Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="detail line">
+            <div class="left">
+              <h3>Product List</h3>
+            </div>
+            <div class="right">
+              <div class="search-form" style="width: 70%;">
+                <div class="form-group">
+                  <input class="search-field-project" type="search" name="order_name" id="search_product_name"  />
+                  <button type="button" onclick="searchProduct(this)">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="detail_task_table" id="add_product_table">
+            <div class="detail_task_table_row header">
+              <div class = "task_column stt">
+                Id
+              </div>
+              <div class = "task_column name">
+                Name
+              </div>
+              <div class = "task_column priority">
+                Quantity
+              </div>
+              <div class = "task_column status">
+                Price
+              </div>
+              <div class = "task_column current_progress">
+                Design ID
+              </div>
+            </div>
+            <div class="detail_task_table_row">
+              <div class = "task_column stt">
+                1
+              </div>
+              <div class = "task_column name">
+                Ghế gỗ hoà phát
+              </div>
+              <div class = "task_column quantity">
+                <input class="field_input gray" id="email-login" type="number" value="" name=""/>
+              </div>
+              <div class = "task_column status">
+                100
+              </div>
+              <div class = "task_column">
+                BD123
+              </div>
+              <div class = "task_column">
+                <input type="checkbox" class="material_checkbox">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="createMaterialRequest(this)">Save changes</button>
+      </div>
+      <form action="/create_material">
+        <input type="hidden" name="material_id" id ="material_id">
+        <input type="hidden" name="material_quantity"  id ="material_quantity">
+      </form>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="set_customter_modal">
+  <div class="modal-dialog" role="document" style="width: 70%; max-width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Choose Customer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="detail line">
+            <div class="left">
+              <h3>Customer List</h3>
+            </div>
+            <div class="right">
+              <div class="search-form" style="width: 70%;">
+                <div class="form-group">
+                  <input class="search-field-project" type="search" name="order_name" id="search_product_name"  />
+                  <button type="button" onclick="searchProduct(this)">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="detail_task_table" id="add_product_table">
+            <div class="detail_task_table_row header">
+              <div class = "task_column stt">
+                Id
+              </div>
+              <div class = "task_column name">
+                Name
+              </div>
+              <div class = "task_column priority">
+                Phone
+              </div>
+              <div class = "task_column current_progress" style="flex-basis: 40%">
+                Address
+              </div>
+            </div>
+            <div class="detail_task_table_row">
+              <div class = "task_column stt">
+                1
+              </div>
+              <div class = "task_column name">
+                Hạnh 
+              </div>
+              <div class = "task_column status">
+                096063105
+              </div>
+              <div class = "task_column" style="flex-basis: 40%" >
+                Xuân Dục yên Thường gia lâm hà nội
+              </div>
+              <div class = "task_column">
+                <input type="checkbox" class="material_checkbox">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="setCustomer(this)">Save changes</button>
+      </div>
+      <form action="/create_material">
+        <input type="hidden" name="material_id" id ="material_id">
+        <input type="hidden" name="material_quantity"  id ="material_quantity">
+      </form>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="add_customer_modal">
+  <div class="modal-dialog" role="document" style="width: 40%; max-width: 40%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Choose Customer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="detail line">
+          <label>
+            Name:
+          </label>
+          <input
+          class="field_input"
+          id="customer_name"
+          type="text"
+          value=""
+          name="due"
+          required
+          />
+        </div>
+        <div class="detail line">
+          <label>
+            Phone:
+          </label>
+          <input
+          class="field_input"
+          id="customer_phone"
+          type="text"
+          value=""
+          name="due"
+          required
+          />
+        </div>
+        <div class="detail line">
+          <label>
+            Address:
+          </label>
+          <input
+          class="field_input"
+          id="customer_address"
+          type="text"
+          value=""
+          name="due"
+          required
+          />
+        </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="addCustomer(this)">Save Customer</button>
+      </div>
+      <form action="/create_material">
+        <input type="hidden" name="material_id" id ="material_id">
+        <input type="hidden" name="material_quantity"  id ="material_quantity">
+      </form>
+    </div>
+</div>
+<script>
+  function toggleCustomer(elem) {
+    $("#customer").toggle();
+  }
+  function searchProduct(elem) {
+    var search = $("#search_product_name").val();
+    $.ajax({
+      type: "POST",
+      data: {search_data: search},
+      url: "/api/product/searchProductbyName",
+      success: function (data) {
+        var array =  $("#request_material_table").find(".detail_task_table_row");
+        for (let index = 1; index < array.length; index++) {
+          const element = array[index];
+          $(element).remove();
+        }
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+
+          var item = '<div class="detail_task_table_row">'+
+        '                <div class = "task_column stt">'+
+        `                  ${element.id}`+
+        '                </div>'+
+        '                <div class = "task_column name">'+
+        `                  ${element.name}`+
+        '                </div>'+
+        '                <div class = "task_column quantity">'+
+        `                  ${element.type}`+
+        '                </div>'+
+        '                <div class = "task_column current_progress">'+
+        `                  ${element.desc}`+
+        '                </div>'+
+        '                <div class = "task_column">'+
+        '                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">'+
+        '                </div>'+
+        '              </div>';
+          $("#request_material_table").append(item)
+        }
+      }
+    })
+  }
+  function addCustomer(elem) {
+    var cus_name    = $("#customer_name").val();
+    var cus_phone   = $("#customer_phone").val();
+    var cus_address = $("#customer_adress").val();
+    $.ajax({
+      type: "POST",
+      data: {name: cus_name, phone: cus_phone, address= cus_address},
+      url: "/api/customer/add",
+      success: function (data) {
+      }
+    })
+  }
+</script>
+</html>

@@ -2,7 +2,7 @@ from wood_producing.views.approve_material_request import ApproveMaterialRequest
 from wood_producing.views.api import delete_product, delete_task
 from wood_producing.views.storage_manager import AddProduct, EditMaterial, EditProduct, ImportMaterialFromProvider, AddMaterial, MaterialBase, ProductManagement
 from wood_producing.views.statistic import MaterialStatistic, ProductionStatistic
-from wood_producing.views.seller import CreateOrder, PublishOrder
+from wood_producing.views.seller import CreateOrder, PublishOrder, ListOrder, OrderDetail
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
@@ -17,6 +17,7 @@ urlpatterns = [
     path('producing_manager/order_detail/add_task/<int:ordered_product_id>', views.AddTaskView.as_view(), name='ask_task'),
     path('seller/create_order', views.CreateOrder.as_view(), name='create_order'),
     path('seller/', views.ListOrder.as_view(), name='list_order'),
+    path('seller/order_detail/<int:order_id>', views.OrderDetail.as_view(), name='order_detail'),
     path('seller/publish_order', views.PublishOrder.as_view(), name='publish_order'),
     path('statistic/production', views.ProductionStatistic.as_view(), name='production_statistic'),
     path('statistic/profit', views.ProfitStatistic.as_view(), name='profit_statistic'),
