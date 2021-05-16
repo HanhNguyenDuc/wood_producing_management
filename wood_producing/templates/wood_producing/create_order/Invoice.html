@@ -4,17 +4,19 @@
     <meta charset="utf-8">
     <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
     <!--  All snippets are MIT license http://bootdey.com/license -->
-    <title>Invoice receipt - Bootdey.com</title>
+    <title>Hợp đồng mua bán</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.js" ></script>
 </head>
 <body>
-                        
-<div class="receipt-content">
-    <div class="container bootstrap snippets bootdey">
+<div class="print">
+	<button id="download">Download</button>
+</div>                     
+<div class="receipt-content" id="invoice">
+    <div class="container bootstrap snippets bootdey"  >
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" >
 				<div class="invoice-wrapper">
 					<div class="intro">
 						<p style="font-size: 25px;">HỢP ĐỒNG MUA BÁN</p>
@@ -131,18 +133,7 @@
 								Total <span>$312.00</span>
 							</div>
 						</div>
-
-						<div class="print">
-							<a href="#">
-								<i class="fa fa-print"></i>
-								Print this receipt
-							</a>
-						</div>
 					</div>
-				</div>
-
-				<div class="footer">
-					Copyright © 2014. company name
 				</div>
 			</div>
 		</div>
