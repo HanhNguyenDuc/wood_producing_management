@@ -1,0 +1,13 @@
+.material_quantity{
+  flex-basis: 15%;
+}
+.name{
+  justify-content: center;
+}
+#approve_request .order_name{
+  flex-basis: 35%;
+  margin: 0px;
+}
+.request_date{
+  flex-basis: 10%;
+}
