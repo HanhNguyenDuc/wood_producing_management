@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 <html lang="en">
   <head>
     <title>ALT F4</title>
@@ -16,11 +18,11 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" 
+      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" 
+      crossorigin="anonymous">
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -125,39 +127,34 @@
             </h3>
           </div>
           <div class = "list_body">
-            <form class="add">
+            <form class="add" action="" method="post">
+              {% csrf_token %}
               <div class = "id">
                 <label for="id">ID:</label>
-                <input type="text" id="id" value="" >
+                 {{material.id}}
               </div>
              <br>
               <div class = "material_name">
-                <label for="id">Material Name:</label>
-                <input type="text" id="material_name" value="" >
-             </div>
-              <br>
-             <div class = "provider_name">
-               <label for="id">Provider Name:</label>
-                <input type="text" id="provider_name" value="" >
+                <label for="name">Material Name:</label>
+                  {{form.name|attr:"type:text"}}
               </div>
              <br>
              <div class = "type">
-               <label for="id">Type:</label>
-                <input type="text" id="type" value="" >
+               <label for="type">Type:</label>
+                {{form.type|attr:"type:text"}}
               </div>
              <br>
-             <div class = "price">
-               <label for="id">Price:</label>
-               <input type="text" id="price" value="" >
+             <div>
+               <label for="desc">Desc:</label>
+                {{form.desc|attr:"type:text"}}
              </div>
              <br>
+             <input type="submit" value="Save"/>
             </form>
-            
           </div>
           <div class = "list_footer">
             <nav aria-label="Page navigation example">
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="material_base.html">Confirm</a></li>
                 <li class="page-item"><a class="page-link" href="material_base.html">Cancel</a></li>
               </ul>
             </nav>

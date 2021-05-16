@@ -26,10 +26,6 @@ def delete_task(request):
 
 @csrf_exempt
 def statistic_profit(request):
-    if request.method != 'POST':
-        return JsonResponse({
-            "msg": "Method is not allowed",
-        })
     start_date = int(request.POST.get("date-input-1").split("-")[0])
     end_date = int(request.POST.get("date-input-2").split("-")[0])
     response = {
@@ -196,3 +192,43 @@ def statistic_material(request):
         temp_date += 1
     
     return merge({"msg": "Success"},response)
+
+def create_material_request(request):
+    if request.method != 'POST':
+        return JsonResponse({
+            "msg": "Method is not allowed",
+        })
+    material_id = request.POST.get('material_id')
+    task_id = request.POST.get('task_id')
+    quantity = request.POST.get('quantity')
+
+    material = Material.objects.get(id=material_id)
+    task = Task.objects.get(id=task_id)
+    mr = Materialrequest(material=material, taskid=task, quantity=quantity)
+    mr.save()
+
+    return JsonResponse({
+        "msg": "Success",
+        "material_request": {
+            "id": mr.id,
+        }
+    })
+
+@csrf_exempt
+def delete_material(request):
+    id = int(request.POST.get("material_id"))
+    material = Material.objects.get(pk=id)
+    material.delete()
+    return JsonResponse({
+        "msg": "Success",
+    })
+        
+@csrf_exempt
+def delete_product(request):
+    id = int(request.POST.get('product_id'))
+    product = Product.objects.get(pk=id)
+    product.delete()
+    return JsonResponse({
+        "msg":"Sucess",
+    })
+

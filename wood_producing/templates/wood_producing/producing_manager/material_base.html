@@ -16,11 +16,11 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" 
+      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" 
+      crossorigin="anonymous">
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -126,12 +126,12 @@
             <div class="add_material">
                 <ul class="nav justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="material_add.html">Add Material</a>
+                        <a class="nav-link active" href="add_material">Add Material</a>
                     </li>
                 </ul>
             </div>
             <div class="search-form">
-              <form action="/user_analytic_projects" accept-charset="UTF-8" data-remote="true" method="get">
+              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
                 <div class="form-group">
                   <input class="search-field-project" type="search" name="material_name" id="q_name_or_description_cont" />
                   <button name="button" type="submit">
@@ -149,71 +149,42 @@
               <div class="table_col material_name">
                 Material Name
               </div>
-              <div class="table_col provider_name">
-                Provider Name
-              </div>
               <div class="table_col type">
                 Type
               </div>
-              <div class="table_col price">
-                Price
-              </div>
+              
               <div class="table_col edit">
               </div>
               <div class="table_col delete">
               </div>
             </div>
-         
+            {%for material in materials%}
             <div class="table_row">
-              <div class="table_col id">
-                
+              <div class="table_col id" name="material_id">
+                {{material.id}}
               </div>
-              <div class="table_col material_name">
-               
+              <div class="table_col material_name" name="material_name">
+               {{material.name}}
               </div>
-              <div class="table_col provider_name">
-                
-              </div>
-              <div class="table_col type">
-                
-              </div>
-              <div class="table_col price">
-                
+              <div class="table_col type" name="material_type">
+                {{material.type}}
               </div>
               <div class="table_col edit">
                 <ul class="nav justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="material_edit.html">Edit</a>
+                        <a class="nav-link active" href="edit_material/{{material.id}}">Edit</a>
                     </li>
                 </ul>
               </div>
               <div class="table_col delete">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary" id = "{{material.id}}" onclick="deleteMaterial(this)">
                     Delete
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Delete Material</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                   <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                "Bạn có chắc chắn muốn xoá nguyên liệu này không?"
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                <button type="button" class="btn btn-primary">Yes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               </div>
+              </div>
             </div>
+            {%endfor%}
           </div>
           <div class = "list_footer">
             <nav aria-label="Page navigation example">
@@ -234,6 +205,16 @@
     $('.dropdown-custoggle').click(function () {
       $('.cusdropdown').toggle();
     });
-    
+    function deleteMaterial(elem) {
+    var id = $(elem).attr("id");
+    $.ajax({
+      type: "POST",
+      data: {material_id: id},
+      url: "/api/material/delete_material",
+      success: function (data) {
+        $(elem).parent().parent().remove();
+      }
+    })
+  }
     </script>
 </html>

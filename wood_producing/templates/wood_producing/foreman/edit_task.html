@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ALT F4</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="/static/css/base.css" rel="stylesheet">
+    <link href="/static/css/new.css" rel="stylesheet">
+    <link href="/static/css/detail.css" rel="stylesheet">
+    <link href="/static/css/new_task.css" rel="stylesheet">
+    <link href="/static/css/foreman.css" rel="stylesheet">
+    <link href="/static/css/task_detail.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-datepicker3.css" rel="stylesheet">
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" 
+      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" 
+      crossorigin="anonymous">
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+    integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" 
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+  </head>
+  <body class="authenticate">
+    <div class = "section-left">
+      <div class="siderbar">
+        <div class="kizukai-logo">
+ 
+        </div>
+        <div class="menu-left text-left">
+          <ul>
+              <li class= 'active' >
+                <a href="#">
+                  <span><i class="fa fa-key center"></i></span> Order List
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span><i class="fa fa-user center"></i></span> Task
+                </a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class = "section-right">
+      <header>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="title-header">
+      
+            </div>
+
+            <div class="navbar-right">
+              <a href="#">
+                <i class="fa fa-list-ul"></i>
+              </a> 
+              <a href="#" class = "dropdown-custoggle">
+                <i class="far fa-user-circle"></i>
+              </a>
+              <ul class="cusdropdown">
+                <li>
+                  <a class="dropdown-item"  >
+                    <span><i class="far fa-user"></i></span> fasdfasd
+                  </a>
+                </li>
+                  <li>
+                    <a class="dropdown-item">
+                      <span><i class="far fa-address-book"></i></span> asd
+                    </a>
+                  </li>
+                <li>
+                  <a class="dropdown-item">
+                    <span><i class="fas fa-sign-out-alt" id="current-account"></i>asdfasd
+                    </span> 
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class ="main">
+        <div class="order_list">
+          <div class = "list_header">
+            <h3 class = "title">
+              Task #{{task.id}}
+            </h3>
+            <input type="hidden" id="task_id" value="1">
+          </div>
+          <div class = "detail_body" id="task_detail">
+            <div class = "detail line">
+              <div class="left">
+                <h4>{{task.name}}</h4>
+              </div>
+              <div class="right">
+                <div>
+                  <button type="button" class="btn btn-success" onclick="updateTask(this)">Update</button>
+                  <button type ="button" class="btn btn-danger" onclick="deleteTask(this)">Delete</button>
+                  <button type ="button" class="btn btn-info" data-toggle="modal" data-target="#add_material_modal"> Request Material</button>
+                </div>
+              </div>
+            </div>
+            <div class = "detail line">
+              <span>{{add_at_str}} - {{task.create_at}}. {{update_at_str}}.<span>
+            </div>
+            <form action="" method="POST">
+            {% csrf_token %}
+            <div class="detail line">
+              <div class = "left">
+                <label>
+                  Priority:
+                </label>
+                <select class="field_input" name="priority">
+                  {% if task.priority == 'low' %}
+                  <option value="low" selected>Low</option>
+                  {% else %}
+                  <option value="low">Low</option>
+                  {% endif %}
+                  {% if task.priority == 'normal' %}
+                  <option value="normal" selected>Normal</option>
+                  {% else %}
+                  <option value="normal">Normal</option>
+                  {% endif %}
+                  {% if task.priority == 'high' %}
+                  <option value="high" selected>High</option>
+                  {% else %}
+                  <option value="high">High</option>
+                  {% endif %}
+                  {% if task.priority == 'urgent'%}
+                  <option value="urgent" selected>Urgent</option>
+                  {% else %}
+                  <option value="urgent">Urgent</option>
+                  {% endif %}
+                </select>
+              </div>
+              <div class = "right">
+                <label>
+                  Status:
+                </label>
+                <select class="field_input" name="status">
+                  {% if task.status == 'low' %}
+                  <option value="pending" selected>Pending</option>
+                  {% else %}
+                  <option value="pending">Pending</option>
+                  {% endif %}
+                  {% if task.status == 'normal' %}
+                  <option value="holding" selected>Holding</option>
+                  {% else %}
+                  <option value="holding">Holding</option>
+                  {% endif %}
+                  {% if task.status == 'high' %}
+                  <option value="hold" selected>Hold</option>
+                  {% else %}
+                  <option value="hold">Hold</option>
+                  {% endif %}
+                  {% if task.status == 'urgent'%}
+                  <option value="done" selected>Done</option>
+                  {% else %}
+                  <option value="done">Done</option>
+                  {% endif %}
+                </select>
+              </div>
+            </div>
+            <div class="detail line">
+              <div class = "left">
+                <label>
+                  Progress:
+                </label>
+                <select class="field_input" name="progress" onchange="toggleStorage(this)">
+                  {% for progress in progress_list %}
+                    <option value="{{progress.id}}">{{progress.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class = "right">
+                <label>
+                  Due Date:
+                </label>
+                <input
+                class="field_input datepicker"
+                id="email-login"
+                type="text"
+                value="{{task.estimated}}"
+                name="due"
+              />
+              </div>
+            </div>
+            <div class="detail line">
+              <div class = "left">
+                <label>
+                  Foreman:
+                </label>
+                <input
+                class="field_input"
+                id="email-login"
+                type="text"
+                value="{{task.userid.first_name}} {{task.userid.last_name}}"
+                name="due"
+                disabled
+              />
+              </div>
+              <div class = "right">
+                <label>
+                  Estimate Date:
+                </label>
+                <input
+                class="field_input esimatepicker"
+                id="email-login"
+                type="text"
+                value="{{newest_progress.enddate}}"
+                name="estimate_date"
+              />
+              </div>
+            </div>
+            <div class="detail line">
+              <div class = "left">
+                <label>
+                  Order:
+                </label>
+                <a href="#">
+                  {{task.orderedproductid.order.name}}
+                </a>
+              </div>
+              <div class = "right">
+                <label>
+                  Done(%)
+                </label>
+                <input
+                class="field_input"
+                id="email-login"
+                type="number"
+                {% if newest_progress.percentage %}
+                  value="{{newest_progress.percentage}}"
+                {% else %}
+                  value="0"
+                {% endif %}
+                name="done_percentage"
+              />
+
+              <input type="submit" id="update_task" style="display:none"></input>
+              </div>
+            </form>
+            </div>
+            <div class="detail line">
+              <div class = "left">
+                <label>
+                  Product:
+                </label>
+                <a href="#">
+                  {{task.orderedproductid.product.name}}
+                </a>
+              </div>
+            </div>
+            <div class="detail line" id="select_storage">
+              <div class = "left">
+                <label>
+                  Storage:
+                </label>
+                <select class="field_input" name="storage" style="width: 25%;">
+                  <option value="1">Kho 1</option>
+                  <option value="2">Kho 2</option>
+                  <option value="3">Kho 3</option>
+                  <option value="4">Kho 4</option>
+                </select>
+              </div>
+            </div>
+            <div class="detail line">
+              <h3> Material List</h3>
+            </div>
+            <div class="detail_task_table">
+              <div class="detail_task_table_row header">
+                <div class = "task_column name">
+                  Material <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
+                </div>
+                <div class = "task_column foreman">
+                  Quantity
+                </div>
+                <div class = "task_column description">
+                  Description
+                </div>
+              </div>
+              {% for material in material_in_product %}
+              <div class="detail_task_table_row">
+                <div class = "task_column name">
+                  {{material.materialid.name}}
+                </div>
+                <div class = "task_column foreman">
+                  {{material.taken_material_ammount}}/{{material.quantity_total}}
+                </div>
+                <div class = "task_column description">
+                  {{material.description}}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="detail line">
+              <h3> Requested Material</h3>
+            </div>
+            <div class="detail_task_table">
+              <div class="detail_task_table_row header">
+                <div class = "task_column stt">
+                  No <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
+                </div>
+                <div class = "task_column name">
+                  Name
+                </div>
+                <div class = "task_column priority">
+                  Quantity
+                </div>
+                <div class = "task_column current_progress">
+                  Approved
+                </div>
+              </div>
+              {% for requested_material in requested_materials %}
+              <div class="detail_task_table_row">
+                <div class = "task_column stt">
+                  {{requested_material.id}}
+                </div>
+                <div class = "task_column name">
+                  {{requested_material.material.name}}
+                </div>
+                <div class = "task_column priority">
+                  {{requested_material.quantity}}
+                </div>
+                {% if requested_material.is_approved %}
+                <div class = "task_column status">
+                  Approved
+                </div>
+                {% else %}
+                <div class = "task_column status">
+                  Not be approved
+                </div>
+                {% endif %}
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="detail line">
+              <h3> Task History</h3>
+            </div>
+            <div class="detail_task_table">
+              <div class="detail_task_table_row header">
+                <div class = "task_column stt">
+                  No
+                </div>
+                <div class = "task_column name">
+                  Progress
+                </div>
+                <div class = "task_column foreman">
+                  Date
+                </div>
+                <div class = "task_column foreman">
+                  Percentage
+                </div>
+              </div>
+
+              {% for task_progress in task_history %}
+              <div class="detail_task_table_row">
+                <div class = "task_column stt">
+                  {{loop.index}}
+                </div>
+                <div class = "task_column name">
+                  {{task_progress.progressid.name}}
+                </div>
+                <div class = "task_column foreman">
+                  {{task_progress.enddate}}
+                </div>
+                <div class = "task_column foreman">
+                  {{task_progress.percentage}}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <div class="modal" tabindex="-1" role="dialog" id="add_material_modal">
+    <div class="modal-dialog" role="document" style="width: 70%; max-width: 70%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Choose Material</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="detail line">
+              <div class="left">
+                <h3>Material List</h3>
+              </div>
+              <div class="right">
+                <label> Quantity </label>
+                <input
+                class="field_input"
+                id="material_input"
+                type="number"
+                value=""
+                name=""
+              />
+              </div>
+            </div>
+            <div class="detail_task_table" id="request_material_table">
+              <div class="detail_task_table_row header">
+                <div class = "task_column stt">
+                  Id
+                </div>
+                <div class = "task_column name">
+                  Name
+                </div>
+                <div class = "task_column priority">
+                  Type
+                </div>
+              </div>
+              {% for material in material_in_product %}
+              <div class="detail_task_table_row">
+                <div class = "task_column stt">
+                  {{material.materialid.id}}
+                </div>
+                <div class = "task_column name">
+                  {{material.materialid.name}}
+                </div>
+                <div class = "task_column quantity">
+                  {{material.materialid.type}}
+                </div>
+                <div class = "task_column">
+                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="createMaterialRequest(this)">Save changes</button>
+        </div>
+        <form action="/create_material">
+          <input type="hidden" name="material_id" id ="material_id">
+          <input type="hidden" name="material_quantity"  id ="material_quantity">
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+  $(".datepicker").datepicker({
+    orientation: "bottom left",
+    autoclose: true
+  });
+  $(".esimatepicker").datepicker({
+    orientation: "bottom left",
+    autoclose: true
+  });
+  $('.dropdown-custoggle').click(function () {
+    $('.cusdropdown').toggle();
+  });
+  function toggleDetail(elem) {
+    var array =  $(elem).parent().parent().parent().find(".detail_task_table_row");
+    for (let index = 1; index < array.length; index++) {
+      const element = array[index];
+      $(element).toggle();
+    }
+  }
+  function toggleFilter(elem) {
+    $(".filter").toggle();
+  }
+  function deleteTask(elem) {
+    var id = $("#task_id").val();
+    $.ajax({
+      type: "POST",
+      data: {task_id: id},
+      url: "/api/task/delete_task",
+      success: function (data) {
+        $(elem).parent().parent().parent().remove();
+      }
+    })
+  }
+  function toggleStorage(elem) {
+    var value =  $(elem).val();
+    if(value == "Completed"){
+      $("#select_storage").toggle();
+    }
+  }
+  function createMaterialRequest(elem) {
+    var material_id = $("#material_id").val()
+    var quantity = $("#material_quantity").val();
+    var task_id = $("#task_id").val();
+    $.ajax({
+      type: "POST",
+      data: {task_id: task_id, material_id: material_id, quantity: quantity},
+      url: "/api/material/request_material",
+      success: function (data) {
+        location.reload();
+      }
+    })
+  }
+  function updateTask(elem) {
+    $("#update_task").click();
+  }
+  function selectMaterial(elem) {
+    $(".material_checkbox").prop("checked", false);
+    $(elem).prop("checked",  true)
+    var id = $(elem).parent().parent().find(".stt").text().trim();
+    var quantity = $("#material_input").val();
+    $("#material_id").val(id)
+    $("#material_quantity").val(quantity);
+  }
+  function searchMaterial(elem) {
+    var search = $(elem).parent().find(".search_material_name").val();
+    $.ajax({
+      type: "POST",
+      data: {search_data: search},
+      url: "/search",
+      success: function (data) {
+        var array =  $("#request_material_table").find(".detail_task_table_row");
+        for (let index = 1; index < array.length; index++) {
+          const element = array[index];
+          $(element).remove();
+        }
+        // Gia su data gom: ten foreman, status, so task dang lam
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+
+            var item = '<div class="detail_task_table_row">'+
+        '                <div class = "task_column stt">'+
+        `                  ${element.id}`+
+        '                </div>'+
+        '                <div class = "task_column name">'+
+        `                  ${element.name}`+
+        '                </div>'+
+        '                <div class = "task_column quantity">'+
+        `                  ${element.type}`+
+        '                </div>'+
+        '                <div class = "task_column current_progress">'+
+        `                  ${element.desc}`+
+        '                </div>'+
+        '                <div class = "task_column">'+
+        '                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">'+
+        '                </div>'+
+        '              </div>';
+          $("#request_material_table").append(item)
+        }
+      }
+    })
+  }
+  </script>
+</html>
