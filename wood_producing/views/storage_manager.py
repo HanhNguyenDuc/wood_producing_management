@@ -37,6 +37,7 @@ class MaterialBase(RoleRequiredView):
 class AddMaterialForm(forms.Form):
     material_name = forms.CharField()
     type = forms.CharField()
+    desc = forms.CharField()
 
 class AddMaterial(RoleRequiredView):
     user_role = 2
@@ -56,8 +57,7 @@ class AddMaterial(RoleRequiredView):
         material = Material.objects.create(
             name = self.cleaned_data.get('material_name'),
             type = self.cleaned_data.get('type'),
-            desc = "test",
-            discriminator = 1
+            desc = self.cleaned_data.get('desc'),
         )
         material.save()
         return None
