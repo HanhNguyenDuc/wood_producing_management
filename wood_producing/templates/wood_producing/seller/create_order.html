@@ -33,6 +33,9 @@
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script type=”text/javascript” src=”dialog.js”></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+  integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" 
+  crossorigin="anonymous"></script>
 </head>
 
 <body class="authenticate">
@@ -92,75 +95,93 @@
             <h5> Thông tin khách hàng <i class="fas fa-arrow-alt-circle-down" onclick="toggleCustomer(this)"></i></h5>
           </div>
           <div class="right">
-            <button class="btn btn-success"> Save </button>
-            <button class="btn btn-danger"> Cancel </button>
-            <button class="btn btn-info" data-toggle="modal" data-target="#add_product_modal"> Add Product </button>
+            <button class="btn btn-success" type="button" onclick="create_order(this)"> Save </button>
+            <button class="btn btn-danger" type="button"> Cancel </button>
             <button class="btn btn-info" data-toggle="modal" data-target="#set_customter_modal"> Set Customer </button>
             <button class="btn btn-info" data-toggle="modal" data-target="#add_customer_modal"> Add Customer </button>
           </div>
         </div>
-        <div class="modal-body" id="customer">
-          <table class="table">
-            <tbody>
-              <tr>
-                <td>Tên khách hàng</td>
-                <td>
-                  <p>{{customer.name}}</p>
-                </td>
-              </tr>
-              <tr>
-                <td>Số điện thoại</td>
-                <td> {{customer.phone}}</td>
-              </tr>
-              <tr>
-                <td>Địa chỉ</td>
-                <td> {{customer.address}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <h5> Thông tin sản phẩm</h5>
-        <div class="detail_task_table">
-          <div class="detail_task_table_row header">
-            <div class = "task_column name">
-              Name
-            </div>
-            <div class = "task_column foreman">
-              Design ID
-            </div>
-            <div class = "task_column priority">
-              Quantity
-            </div>
-            <div class = "task_column status">
-              Price
-            </div>
-            <div class = "task_column current_progress">
-              Total
-            </div>
+        <form action="" method="post">
+        <div class="detail line" style="padding-top: 20px;">
+          <div class = "left">
+            <label>
+              Name:
+            </label>
+            <input
+            class="field_input"
+            id="material_input"
+            type="text"
+            value=""
+            name="name"
+          />
           </div>
-          <div class="detail_task_table_row">
-            <div class = "task_column name">
-              Ghế gỗ
-            </div>
-            <div class = "task_column foreman">
-              123
-            </div>
-            <div class = "task_column priority">
-              456
-            </div>
-            <div class = "task_column status">
-              1234
-            </div>
-            <div class = "task_column">
-              1234
-            </div>
-          </div>
-          <div class="detail_task_table_row">
-            <a class="add" style="flex-basis: 70%">
-              <i class="fas fa-plus"></i>
-            </a>
+          <div class = "right">
+            <label>
+              Due Date:
+            </label>
+            <input
+            class="field_input datepicker"
+            id="email-login"
+            type="text"
+            value=""
+            name="due"
+          />
           </div>
         </div>
+          {% csrf_token %}
+          <div class="modal-body" id="customer">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Customer Name</td>
+                  <td>
+                    <p id="customer_display_name">{{customer.name}}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Phone</td>
+                  <td  id="customer_display_phone"> {{customer.phone}}</td>
+                </tr>
+                <tr>
+                  <td>Address</td>
+                  <td id="customer_display_address"> {{customer.address}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+
+          </div>
+          <h5> Product </h5>
+          <div class="detail_task_table" id="order_product_table">
+            <div class="detail_task_table_row header">
+              <div class = "task_column name">
+                Name
+              </div>
+              <div class = "task_column foreman">
+                Design ID
+              </div>
+              <div class = "task_column priority">
+                Quantity
+              </div>
+              <div class = "task_column status">
+                Price
+              </div>
+              <div class = "task_column current_progress">
+                Total
+              </div>
+            </div>
+            <div class="detail_task_table_row" id="add_modal">
+              <a class="add" data-toggle="modal" data-target="#add_product_modal" style="flex-basis: 70%">
+                <i class="fas fa-plus"></i>
+              </a>
+            </div>
+          </div>
+          <input type = "hidden" id="customer_id" value="" name="customer_id"></input>
+          <input type = "submit" id="submit_form" style="display: none;"></input>
+          <input type = "hidden" name="quantity" id="form_quantity" value=""></input>
+          <input type = "hidden" name="product" id="form_product" value=""></input>
+        </form>
       </div>
     </div>
   </div>
@@ -208,37 +229,14 @@
                 Design ID
               </div>
             </div>
-            <div class="detail_task_table_row">
-              <div class = "task_column stt">
-                1
-              </div>
-              <div class = "task_column name">
-                Ghế gỗ hoà phát
-              </div>
-              <div class = "task_column quantity">
-                <input class="field_input gray" id="email-login" type="number" value="" name=""/>
-              </div>
-              <div class = "task_column status">
-                100
-              </div>
-              <div class = "task_column">
-                BD123
-              </div>
-              <div class = "task_column">
-                <input type="checkbox" class="material_checkbox">
-              </div>
-            </div>
           </div>
+          <button type="button" class="btn btn-secondary" id="product_modal_dismiss" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="addProduct(this)">Save changes</button>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="createMaterialRequest(this)">Save changes</button>
+
       </div>
-      <form action="/create_material">
-        <input type="hidden" name="material_id" id ="material_id">
-        <input type="hidden" name="material_quantity"  id ="material_quantity">
-      </form>
     </div>
 </div>
 <div class="modal" tabindex="-1" role="dialog" id="set_customter_modal">
@@ -258,15 +256,15 @@
             <div class="right">
               <div class="search-form" style="width: 70%;">
                 <div class="form-group">
-                  <input class="search-field-project" type="search" name="order_name" id="search_product_name"  />
-                  <button type="button" onclick="searchProduct(this)">
+                  <input class="search-field-project" type="search" name="order_name" id="search_customer_name"  />
+                  <button type="button" onclick="searchCustomer(this)">
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="detail_task_table" id="add_product_table">
+          <div class="detail_task_table" id="set_customter_table">
             <div class="detail_task_table_row header">
               <div class = "task_column stt">
                 Id
@@ -281,41 +279,21 @@
                 Address
               </div>
             </div>
-            <div class="detail_task_table_row">
-              <div class = "task_column stt">
-                1
-              </div>
-              <div class = "task_column name">
-                Hạnh 
-              </div>
-              <div class = "task_column status">
-                096063105
-              </div>
-              <div class = "task_column" style="flex-basis: 40%" >
-                Xuân Dục yên Thường gia lâm hà nội
-              </div>
-              <div class = "task_column">
-                <input type="checkbox" class="material_checkbox">
-              </div>
-            </div>
           </div>
+          <button type="button" class="btn btn-secondary" id="button-dismiss" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="setCustomer(this)">Set Customer</button>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="setCustomer(this)">Save changes</button>
+
       </div>
-      <form action="/create_material">
-        <input type="hidden" name="material_id" id ="material_id">
-        <input type="hidden" name="material_quantity"  id ="material_quantity">
-      </form>
     </div>
 </div>
 <div class="modal" tabindex="-1" role="dialog" id="add_customer_modal">
   <div class="modal-dialog" role="document" style="width: 40%; max-width: 40%;">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Choose Customer</h5>
+        <h5 class="modal-title">Customer</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -360,70 +338,197 @@
           required
           />
         </div>
-      </div>
-      </div>
-      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onclick="addCustomer(this)">Save Customer</button>
       </div>
-      <form action="/create_material">
-        <input type="hidden" name="material_id" id ="material_id">
-        <input type="hidden" name="material_quantity"  id ="material_quantity">
-      </form>
+      </div>
     </div>
 </div>
 <script>
   function toggleCustomer(elem) {
     $("#customer").toggle();
   }
+  $(".datepicker").datepicker({
+    orientation: "bottom left",
+    autoclose: true
+  });
   function searchProduct(elem) {
     var search = $("#search_product_name").val();
     $.ajax({
-      type: "POST",
+      type: "GET",
       data: {search_data: search},
+      async: false,
       url: "/api/product/searchProductbyName",
       success: function (data) {
-        var array =  $("#request_material_table").find(".detail_task_table_row");
+        var array =  $("#add_product_table").find(".detail_task_table_row");
         for (let index = 1; index < array.length; index++) {
           const element = array[index];
           $(element).remove();
         }
-        for (let index = 0; index < data.length; index++) {
-          const element = data[index];
+        var products = data.material_request.products;
+        for (let index = 0; index < products.length; index++) {
+          const element = products[index];
 
           var item = '<div class="detail_task_table_row">'+
-        '                <div class = "task_column stt">'+
-        `                  ${element.id}`+
-        '                </div>'+
-        '                <div class = "task_column name">'+
-        `                  ${element.name}`+
-        '                </div>'+
-        '                <div class = "task_column quantity">'+
-        `                  ${element.type}`+
-        '                </div>'+
-        '                <div class = "task_column current_progress">'+
-        `                  ${element.desc}`+
-        '                </div>'+
-        '                <div class = "task_column">'+
-        '                  <input type="checkbox" class="material_checkbox" onchange="selectMaterial(this)">'+
-        '                </div>'+
-        '              </div>';
-          $("#request_material_table").append(item)
+'              <div class = "task_column stt">'+
+`                ${element.id}`+
+'              </div>'+
+'              <div class = "task_column name">'+
+`                ${element.name}`+
+'              </div>'+
+'              <div class = "task_column quantity">'+
+'                <input class="field_input gray" id="email-login" type="number" value="" name=""/>'+
+'              </div>'+
+'              <div class = "task_column status">'+
+`                ${element.price}`+
+'              </div>'+
+'              <div class = "task_column iddesign">'+
+`                ${element.iddesign}`+
+'              </div>'+
+'              <div class = "task_column">'+
+'                <input type="checkbox" class="material_checkbox">'+
+'              </div>'+
+'            </div>';
+
+          $("#add_product_table").append(item)
         }
       }
     })
   }
+
+  function searchCustomer(elem) {
+    var search = $("#search_customer_name").val();
+    $.ajax({
+      type: "GET",
+      data: {search_data: search},
+      url: "/api/customer/search_customer_by_name",
+      success: function (data) {
+        var array =  $("#set_customter_table").find(".detail_task_table_row");
+        for (let index = 1; index < array.length; index++) {
+          const element = array[index];
+          $(element).remove();
+        }
+        var customers = data.material_request.customers;
+        for (let index = 0; index < customers.length; index++) {
+          const element = customers[index];
+          
+          var item = '<div class="detail_task_table_row">'+
+          '              <div class = "task_column stt">'+
+          `                ${element.id}`+
+          '              </div>'+
+          '              <div class = "task_column name">'+
+          `                ${element.name}`+
+          '              </div>'+
+          '              <div class = "task_column status">'+
+          `                ${element.phone}`+
+          '              </div>'+
+          '              <div class = "task_column customer_add" style="flex-basis: 40%" >'+
+          `                ${element.address}`+
+          '              </div>'+
+          '              <div class = "task_column">'+
+          '                <input type="checkbox" class="material_checkbox">'+
+          '              </div>'+
+          '            </div>';
+
+          $("#set_customter_table").append(item)
+        }
+      }
+    })
+  }
+
   function addCustomer(elem) {
     var cus_name    = $("#customer_name").val();
     var cus_phone   = $("#customer_phone").val();
-    var cus_address = $("#customer_adress").val();
+    var cus_address = $("#customer_address").val();
     $.ajax({
       type: "POST",
-      data: {name: cus_name, phone: cus_phone, address= cus_address},
+      data: {name: cus_name, phone: cus_phone, address: cus_address},
       url: "/api/customer/add",
       success: function (data) {
+        $("#customer_display_name").text(cus_name);
+        $("#customer_display_phone").text(cus_phone);
+        $("#customer_display_address").text(cus_address);
+        $("#customer_id").val(data.id);
+        $('#add_customer_modal').modal('hide');
       }
     })
+  }
+  function setCustomer(elem) {
+    var array = $("#set_customter_table").find(".detail_task_table_row");
+    $(".checkbox").prop("checked", false);
+    $(elem).prop("checked",  true);
+    for (let index = 1; index < array.length; index++) {
+        const element = array[index];
+        var check = $(element).find(".material_checkbox").first().prop("checked")
+        console.log(check);
+        if(check){
+          var name = $(element).find(".name").first().text().trim();
+          var phone = $(element).find(".status").first().text().trim();
+          var address = $(element).find(".customer_add").first().text().trim();
+          var id = $(element).find(".stt").first().text().trim();
+          $("#customer_display_name").text(name);
+          $("#customer_display_phone").text(phone);
+          $("#customer_display_address").text(address);
+          $("#customer_id").val(id);
+          $('#button-dismiss').click();
+        }
+    }
+  }
+
+  function addProduct(elem) {
+    var array = $("#add_product_table").find(".detail_task_table_row");
+    var quantity_str = "";
+    var product_str = "";
+    for (let index = 1; index < array.length; index++) {
+          const element = array[index];
+          var check = $(element).find(".material_checkbox").first().prop("checked")
+
+          if(check){
+            var name = $(element).find(".name").first().text().trim();
+            var price = $(element).find(".status").first().text().trim();
+            var quantity = $(element).find(".field_input").first().val();
+            var iddesign = $(element).find(".iddesign").first().text().trim();
+            var id = $(element).find(".stt").first().text().trim();
+            var total = parseInt(price) * parseInt(quantity)
+            var item = '<div class="detail_task_table_row">'+
+    '              <div class = "task_column name">'+
+    `                ${name} <i class="far fa-trash-alt" onclick="deleteProduct(this)" style="color: #007bff;cursor: pointer;"></i>`+
+    '              </div>'+
+    '              <div class = "task_column foreman">'+
+    `                ${iddesign}`+
+    '              </div>'+
+    '              <div class = "task_column priority">'+
+    `                ${quantity}`+
+    '              </div>'+
+    '              <div class = "task_column status">'+
+    `                ${price}`+
+    '              </div>'+
+    '              <div class = "task_column">'+
+    `                ${total}`+
+    '              </div>'+
+    '            </div>';
+          quantity_str +=  quantity+";" ;
+          product_str += id + ";";
+
+        $("#add_modal").before(item)
+      }
+    }
+    $('#product_modal_dismiss').click();
+    console.log(quantity_str);
+    console.log(product_str);
+    var form_quantity =  $("#form_quantity").val();
+    var form_product =  $("#form_product").val();
+    console.log(form_quantity);
+    console.log(form_product);
+    $("#form_product").val(product_str + form_product);
+    $("#form_quantity").val(quantity_str + form_quantity);
+
+  }
+  function create_order(elem) {
+    $("#submit_form").click();
+  }
+  function deleteProduct(elem) {
+    $(elem).parent().parent().remove();
   }
 </script>
 </html>
