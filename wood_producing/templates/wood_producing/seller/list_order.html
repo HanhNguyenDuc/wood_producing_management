@@ -121,13 +121,10 @@
               <div class="table_col name">
                 Order Name
               </div>
-              <div class="table_col total">
-                Total Task
+              <div class="table_col" style="flex-basis: 15%;">
+                Created At
               </div>
-              <div class="table_col completed">
-                Completed Task
-              </div>
-              <div class="table_col due_date">
+              <div class="table_col">
                 Due Date
               </div>
             </div>
@@ -137,16 +134,12 @@
                 {{order.id}}
               </div>
               <div class="table_col name">
-                <a href="{{direct_url.order_detail}}/{{order.id}}">{{order.name}}</a>
+                <a href="order_detail/{{order.id}}">{{order.name}}</a>
               </div>
-              <div class="table_col total">
-                <p> {{order.total_task_num}} </p>
-                <a href="#"><i class="fas fa-plus-circle"></i></a>
+              <div class="table_col" style="flex-basis: 15%;">
+                <p> {{order.created_at}} </p>
               </div>
-              <div class="table_col completed">
-                {{order.done_task_num}}
-              </div>
-              <div class="table_col due_date">
+              <div class="table_col">
                 {{order.duedate}}
               </div>
             </div>
