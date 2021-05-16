@@ -46,7 +46,7 @@
         <div class="menu-left text-left">
           <ul>
               <li class= 'active' >
-                <a href="#">
+                <a href="/seller">
                   <span><i class="fa fa-key center"></i></span> Order List
                 </a>
               </li>
@@ -75,16 +75,6 @@
                 <i class="far fa-user-circle"></i>
               </a>
               <ul class="cusdropdown">
-                <li>
-                  <a class="dropdown-item"  >
-                    <span><i class="far fa-user"></i></span> fasdfasd
-                  </a>
-                </li>
-                  <li>
-                    <a class="dropdown-item">
-                      <span><i class="far fa-address-book"></i></span> asd
-                    </a>
-                  </li>
                 <li>
                   <a class="dropdown-item" href="/user/logout">
                     <span><i class="fas fa-sign-out-alt" id="current-account"></i> Logout
@@ -137,7 +127,7 @@
                 <a href="order_detail/{{order.id}}">{{order.name}}</a>
               </div>
               <div class="table_col" style="flex-basis: 15%;">
-                <p> {{order.created_at}} </p>
+                <p> {{order.create_at}} </p>
               </div>
               <div class="table_col">
                 {{order.duedate}}

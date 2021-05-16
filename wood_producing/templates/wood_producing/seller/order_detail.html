@@ -43,7 +43,7 @@
       <div class="menu-left text-left">
         <ul>
           <li class='active'>
-            <a href="#">
+            <a href="/seller">
               <span><i class="fa fa-key center"></i></span> Order List
             </a>
           </li>
@@ -85,158 +85,66 @@
     </header>
     <div class="main">
       <div class="order_list">
-        <h2 class="header">Tạo đơn hàng</h2>
+        <h2 class="header">Order Detail</h2>
         <h5> Thông tin khách hàng</h5>
-        <div class="search-form" style="width: 30%;">
-          <div class="form-group">
-            <input class="search-field-project" type="search" name="order_name" id="search_material_name"  />
-            <button type="button" onclick="searchMaterial(this)">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
         <div class="modal-body">
           <table class="table">
             <tbody>
               <tr>
                 <td>Tên khách hàng</td>
                 <td>
-                  <p>aaaaaaaaaaaaaaa</p>
+                  <p>{{customer.name}}</p>
                 </td>
               </tr>
               <tr>
                 <td>Số điện thoại</td>
-                <td></td>
+                <td> {{customer.phone}}</td>
               </tr>
               <tr>
                 <td>Địa chỉ</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Hình thức thanh toán</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Số tài khoản</td>
-                <td></td>
+                <td> {{customer.address}}</td>
               </tr>
             </tbody>
           </table>
         </div>
         <h5> Thông tin sản phẩm</h5>
-        <div class="modal-body">
-          <table class="table">
-            <tbody>
-              <tr>
-                <th>STT</th>
-                <th>Mã sản phẩm</th>
-                <th>Tên sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Đơn giá</th>
-                <th>Tổng tiền</th>
-              </tr>
-              <tr>
-                <td> 1</td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <br>
-        <div class="list_footer">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <button id="themsanpham" class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themsp">Thêm sản phẩm </button>
-              <button id="themkhachhang" class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themkh">Thêm mới khách hàng</button>
-              <a href="contract.html"> <button id="xuathoadon" type="button" class="btn" style="border-color: black;">Xuất hợp đồng</button></a>
-              <button type="button" class="btn" style="border-color: black;"> <a href="" style="color: black;">Huỷ</a>
-              </button>
-            </ul>
-          </nav>
-        </div>
-        <div class="modal fade" id="themsp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Thêm sản phẩm</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td>Tên sản phẩm</td>
-                      <td><input type="text" placeholder="Nhập tên sản phẩm"></td>
-                    </tr>
-                    <tr>
-                      <td>Mã sản phẩm</td>
-                      <td></td>
-
-                    </tr>
-                    <tr>
-                      <td>Số lượng</td>
-                      <td><input type="number" name="quantity" min="0" value="0"></td>
-
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Lưu</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
+        <div class="detail_task_table">
+          <div class="detail_task_table_row header">
+            <div class = "task_column name">
+              Name <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
+            </div>
+            <div class = "task_column foreman">
+              Design ID
+            </div>
+            <div class = "task_column priority">
+              Quantity
+            </div>
+            <div class = "task_column status">
+              Price
+            </div>
+            <div class = "task_column current_progress">
+              Total
             </div>
           </div>
-        </div>
-        <div class="modal fade" id="themkh" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Thêm mới khách hàng</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td>Tên khách hàng</td>
-                      <td><input type="text"></td>
-                    </tr>
-                    <tr>
-                      <td>Số điện thoại</td>
-                      <td><input type="text" maxlength="9" size="9" min="0"></td>
-                    </tr>
-                    <tr>
-                      <td>Địa chỉ</td>
-                      <td><textarea name="form-control" id="" rows="2"></textarea></td>
-                    </tr>
-                    <tr>
-                      <td>Số tài khoản</td>
-                      <td><input type="number" min="0"></td>
-                    </tr>
-                    <tr>
-                      <td>Ngân hàng </td>
-                      <td><input type="text"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Lưu</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
+          {% for product in ordered_products %}
+          <div class="detail_task_table_row">
+            <div class = "task_column name">
+              {{product.product.name}} 
+            </div>
+            <div class = "task_column foreman">
+              {{product.design_id}}
+            </div>
+            <div class = "task_column priority">
+              {{product.quantity}}
+            </div>
+            <div class = "task_column status">
+              {{product.price}}
+            </div>
+            <div class = "task_column">
+              {{product.total_price}}
             </div>
           </div>
+          {% endfor %}
         </div>
       </div>
     </div>

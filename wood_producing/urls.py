@@ -2,7 +2,7 @@ from wood_producing.views.approve_material_request import ApproveMaterialRequest
 from wood_producing.views.api import delete_product, delete_task
 from wood_producing.views.storage_manager import AddProduct, EditMaterial, EditProduct, ImportMaterialFromProvider, AddMaterial, MaterialBase, ProductManagement
 from wood_producing.views.statistic import MaterialStatistic, ProductionStatistic
-from wood_producing.views.seller import CreateOrder, PublishOrder
+from wood_producing.views.seller import CreateOrder, PublishOrder, ListOrder, OrderDetail
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
