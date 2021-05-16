@@ -35,3 +35,13 @@ def create_material_request(request):
             "id": mr.id,
         }
     })
+    
+@csrf_exempt
+def delete_material(request):
+    material_id = int(request.POST.get("material_id"))
+    material = Material.objects.get(pk=id)
+    material.delete()
+    return JsonResponse({
+        "msg": "Success",
+    })
+        
