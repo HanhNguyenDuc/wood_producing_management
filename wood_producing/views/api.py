@@ -53,3 +53,4 @@ def delete_product(request):
     return JsonResponse({
         "msg":"Sucess",
     })
+
