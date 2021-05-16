@@ -10,7 +10,7 @@
     <meta name="author" content="" />
     <link href="{% static 'css/new.css' %}" rel="stylesheet">
     <link href="{% static 'css/choose_material.css' %}" rel="stylesheet">
-    <!-- <link href="choose_material.css" rel="stylesheet"> -->
+    <link href="choose_material.css" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -158,30 +158,24 @@
                 </div>
                 <div class = "material_column price">
                   Price
-                </div>
-                <div class = "material_column description">
-                  Description
-                </div>
+                </div>>
                 <div class = "material_column import">
                   
                 </div>
               </div>
-              {% for material in materials %}
+              {% for materialofprovider in materialofproviders %}
               <div class="material_table_row">
                 <div class = "material_column id">
-                  {{material.id}}
+                  {{materialofprovider.id}}
                 </div>
                 <div class = "material_column name">
-                  {{material.name}}
+                  {{materialofprovider.name}}
                 </div>
                 <div class = "material_column type">
-                  {{material.type}}
+                  {{materialofprovider.type}}
                 </div>
                 <div class = "material_column price">
-                  {{material.price}}
-                </div>
-                <div class = "material_column description">
-                  {{material.description}}
+                  {{materialofprovider.price}}
                 </div>
                 <div class = "material_column import">
                   <button id="import" class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themsp">Import </button>
@@ -208,6 +202,10 @@
                               <tr>
                                 <td>Số lượng</td>
                                 <td><input type="number" name="quantity" min="0" value="0"></td>
+                              </tr>
+                              <tr>
+                                <td>Price</td>
+                                <td><input type="text" name="price"></td>
                               </tr>
                             </tbody>
                           </table>
