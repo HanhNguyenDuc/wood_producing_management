@@ -91,8 +91,6 @@ class Material(models.Model):
     name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
     type = models.CharField(db_column='Type', max_length=255, blank=True, null=True)  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    discriminator = models.CharField(db_column='Discriminator', max_length=255)  # Field name made lowercase.
-
 
 
 class Materialinproduct(models.Model):
@@ -116,7 +114,6 @@ class Materialofprovider(models.Model):
 
 class Materialofproviderinstorage(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    requestedmaterialid = models.ForeignKey('Requestedmaterial', models.DO_NOTHING, db_column='RequestedMaterialID', blank=True, null=True)  # Field name made lowercase.
     material = models.IntegerField(db_column='Material', blank=True, null=True)  # Field name made lowercase.
     quantity = models.FloatField(db_column='Quantity')  # Field name made lowercase.
     storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID')  # Field name made lowercase.
@@ -131,6 +128,7 @@ class Materialrequest(models.Model):
     storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID', null=True)  # Field name made lowercase.
     is_approved = models.BooleanField(db_column='is_approve', default=False)
     quantity = models.IntegerField(default=10)
+    create_at = models.DateTimeField(db_column="create_at")
 
 
 class MaterialrequestListmaterial(models.Model):
@@ -143,6 +141,7 @@ class Order(models.Model):
     userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID', null=True)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=255, default="")
     duedate = models.DateTimeField(db_column='duedate', max_length=255)
+    create_at = models.DateTimeField(db_column='create_at')
 
 class OrderListproduct(models.Model):
     orderid = models.OneToOneField(Order, models.DO_NOTHING, db_column='OrderID', primary_key=True)  # Field name made lowercase.
@@ -204,6 +203,7 @@ class Provider(models.Model):
 
 class Requestedmaterial(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    materialofproviderinstorageid = models.ForeignKey(Materialofproviderinstorage, models.CASCADE, null=True)
     quantity = models.FloatField(db_column='Quantity')  # Field name made lowercase.
     materialrequestid = models.ForeignKey(Materialrequest, models.DO_NOTHING, db_column='MaterialRequestID')  # Field name made lowercase.
 
