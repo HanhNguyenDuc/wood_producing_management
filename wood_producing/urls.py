@@ -39,6 +39,7 @@ urlpatterns = [
     path('api/task/delete_task', views.delete_task, name='delete_task'),
     path('storage_manager/import_material/choose_provider', views.ImportChooseProvider.as_view(), name='choose_provider'),
     path('api_duc/provider/add_provider', views.add_provider, name = 'add_provider'),
+    path('api_duc/provider/choose_provider', views.choose_provider, name = 'choose'),
     path('storage_manager/import_material/choose_material', views.ImportChooseMaterial.as_view(), name='choose_material'),
     path('api/statistic/statistic_profit', views.statistic_profit, name='statistic_profit'),
     path('api/statistic/statistic_production', views.statistic_production, name='statistic_production'),

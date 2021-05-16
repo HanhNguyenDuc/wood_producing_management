@@ -221,7 +221,7 @@
               <div class="table_col select">
                 <nav aria-label="Page navigation example"></nav>
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="choose_material">select</a></li>
+                        <li class="page-item"><a class="page-link" id="{{provider.id}}" href="choose_material" onclick="choose_provider(this)">select</a></li>
                 </nav>
               </div>
             </div>
@@ -284,8 +284,16 @@
         $('#close').click();
       }
     })
-    
-
+  }
+  function choose_provider(elem) {
+    var id = $(elem).attr("id");
+    $.ajax({
+      type: "POST",
+      data: {provider_id: id},
+      url: "/api_duc/provider/choose_provider",
+      success: function (data) {
+      }
+    })
   }
   
   </script>

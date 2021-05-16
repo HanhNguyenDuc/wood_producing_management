@@ -15,3 +15,11 @@ def add_provider(request):
         "msg":"sucess"
     })
 
+@csrf_exempt
+def choose_provider(request):
+    provider_id = request.POST.get('provider_id')
+    provider = Provider.objects.get(pk=provider_id)
+    request.session['provider']=provider
+    return JsonResponse({
+        "msg":"sucess"
+    })
