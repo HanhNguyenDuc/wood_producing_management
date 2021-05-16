@@ -130,7 +130,9 @@
             <div class="detail line">
               <h3> Storage List</h3>
             </div>
-            <form>
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" value="{{material_request.material.id}}" name="material_id"/>
               <div class="detail_task_table">
                 <div class="detail_task_table_row header">
                   <div class = "task_column name">
@@ -146,15 +148,16 @@
                     Desired
                   </div>
                 </div>
+                {% for storage in storages %}
                 <div class="detail_task_table_row">
                   <div class = "task_column name">
-                    Kho 1
+                    {{storage.name}}
                   </div>
                   <div class = "task_column foreman">
-                    Gỗ Lim
+                    {{material_request.material.name}}
                   </div>
                   <div class = "task_column priority">
-                    50
+                    {{storage.total_quantity}}
                   </div>
                   <div class = "task_column desired">
                     <input
@@ -162,33 +165,15 @@
                     id="email-login"
                     type="number"
                     value=""
-                    name=""
+                    name="storage-{{storage.id}},quantity"
                   />
                   </div>
                 </div>
-                <div class="detail_task_table_row">
-                  <div class = "task_column name">
-                    Kho 2
-                  </div>
-                  <div class = "task_column foreman">
-                    Gỗ Lim
-                  </div>
-                  <div class = "task_column priority">
-                    70
-                  </div>
-                  <div class = "task_column desired">
-                    <input
-                    class="field_input gray"
-                    id="email-login"
-                    type="number"
-                    value=""
-                    name=""
-                  />
-                  </div>
-                </div>
+                {% endfor %}
               </div>
               <input type="hidden" name="request_id" value="1">
               <input type="submit" style="display: none;" id="submit_btn">
+              <input type="hidden" name="material_request_id" value="{{material_request.id}}">
             </form>
           </div>
         </div>
