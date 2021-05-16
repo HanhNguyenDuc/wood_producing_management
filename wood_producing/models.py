@@ -36,6 +36,13 @@ class Provider(models.Model):
 
 
 
+class Material(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    type = models.CharField(db_column='Type', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
+
+
 class Company(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
@@ -53,20 +60,9 @@ class Customer(models.Model):
 class Importbill(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     date = models.DateField(db_column='Date', blank=True, null=True)  # Field name made lowercase.
-    manager = models.IntegerField(db_column='Manager', blank=True, null=True)  # Field name made lowercase.
+    manager = models.ForeignKey(Material, db_column='Manager', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
     provider = models.IntegerField(db_column='Provider', blank=True, null=True)  # Field name made lowercase.
     providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
-
-
-
-
-
-class Material(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    type = models.CharField(db_column='Type', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
-
 
 class Materialinproduct(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
