@@ -63,13 +63,6 @@ class Exportbill(models.Model):
 
 
 
-class ExportbillListproduct(models.Model):
-    exportbillid = models.OneToOneField(Exportbill, models.DO_NOTHING, db_column='ExportBillID', primary_key=True)  # Field name made lowercase.
-    exportbillindex = models.IntegerField(db_column='ExportBillIndex')  # Field name made lowercase.
-    listproduct = models.IntegerField(db_column='ListProduct', blank=True, null=True)  # Field name made lowercase.
-
-
-
 class Importbill(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     date = models.DateField(db_column='Date', blank=True, null=True)  # Field name made lowercase.
@@ -77,12 +70,6 @@ class Importbill(models.Model):
     provider = models.IntegerField(db_column='Provider', blank=True, null=True)  # Field name made lowercase.
     providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
 
-
-
-class ImportbillListmaterial(models.Model):
-    importbillid = models.OneToOneField(Importbill, models.DO_NOTHING, db_column='ImportBillID', primary_key=True)  # Field name made lowercase.
-    importbillindex = models.IntegerField(db_column='ImportBillIndex')  # Field name made lowercase.
-    listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
 
 
 
@@ -138,10 +125,6 @@ class Materialrequest(models.Model):
     create_at = models.DateTimeField(db_column="create_at")
 
 
-class MaterialrequestListmaterial(models.Model):
-    materialrequestid = models.OneToOneField(Materialrequest, models.DO_NOTHING, db_column='MaterialRequestID', primary_key=True)  # Field name made lowercase.
-    listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
-
 class Order(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerID')  # Field name made lowercase.
@@ -149,11 +132,6 @@ class Order(models.Model):
     name = models.CharField(db_column='Name', max_length=255, default="")
     duedate = models.DateTimeField(db_column='duedate', max_length=255)
     create_at = models.DateTimeField(db_column='create_at')
-
-class OrderListproduct(models.Model):
-    orderid = models.OneToOneField(Order, models.DO_NOTHING, db_column='OrderID', primary_key=True)  # Field name made lowercase.
-    orderindex = models.IntegerField(db_column='OrderIndex')  # Field name made lowercase.
-    listproduct = models.IntegerField(db_column='ListProduct', blank=True, null=True)  # Field name made lowercase.
 
 class Product(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -173,12 +151,6 @@ class Orderedproduct(models.Model):
     quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
     productexportedid = models.ForeignKey('Productexported', models.CASCADE, db_column='ProductExportedID', null=True)  # Field name made lowercase.
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
-
-
-class ProductListmaterial(models.Model):
-    productid = models.OneToOneField(Product, models.DO_NOTHING, db_column='ProductID', primary_key=True)  # Field name made lowercase.
-    productindex = models.IntegerField(db_column='ProductIndex')  # Field name made lowercase.
-    listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
 
 
 
@@ -216,12 +188,6 @@ class Storage(models.Model):
 
 
 
-class StorageListmaterial(models.Model):
-    storageid = models.OneToOneField(Storage, models.DO_NOTHING, db_column='StorageID', primary_key=True)  # Field name made lowercase.
-    storageindex = models.IntegerField(db_column='StorageIndex')  # Field name made lowercase.
-    listmaterial = models.IntegerField(db_column='ListMaterial', blank=True, null=True)  # Field name made lowercase.
-
-
 
 class Task(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -236,19 +202,6 @@ class Task(models.Model):
     create_at = models.DateTimeField(db_column="create_at")
     update_at = models.DateTimeField(db_column="update_at")
     status = models.CharField(db_column='status', default="doing", max_length=100)
-
-class TaskListprogress(models.Model):
-    taskid = models.OneToOneField(Task, models.DO_NOTHING, db_column='TaskID', primary_key=True)  # Field name made lowercase.
-    taskindex = models.IntegerField(db_column='TaskIndex')  # Field name made lowercase.
-    listprogress = models.IntegerField(db_column='ListProgress', blank=True, null=True)  # Field name made lowercase.
-
-
-
-class TaskListrequest(models.Model):
-    taskid = models.OneToOneField(Task, models.DO_NOTHING, db_column='TaskID', primary_key=True)  # Field name made lowercase.
-    taskindex = models.IntegerField(db_column='TaskIndex')  # Field name made lowercase.
-    listrequest = models.IntegerField(db_column='ListRequest', blank=True, null=True)  # Field name made lowercase.
-
 
 
 class Taskprogress(models.Model):
