@@ -125,12 +125,12 @@
             </h3>
             <div class="add_product">
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="product_add.html">Add Product</a></li>
+                <li class="page-item"><a class="page-link" href="product_manage/add_product">Add Product</a></li>
                     </li>
               </ul>
             </div>
             <div class="search-form">
-              <form action="/user_analytic_projects" accept-charset="UTF-8" data-remote="true" method="get">
+              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
                 <div class="form-group">
                   <input class="search-field-project" type="search" name="product_name" id="q_name_or_description_cont" />
                   <button name="button" type="submit" onclick="searchProduct(this)">
@@ -186,12 +186,12 @@
                 {{product.desc}}
               </div>
               <div class="table_col edit">
-                <a href="product_edit.html">
+                <a href="product_manage/edit_product/{{product.id}}">
                   <i class="fas fa-edit"></i>
                 </a>
               </div>
               <div class="table_col delete">
-                <i class="far fa-trash-alt" onclick="deleteProduct(this)" style="color: #007bff;cursor: pointer;"></i>
+                <i class="far fa-trash-alt" id="{{product.id}}" onclick="deleteProduct(this)" style="color: #007bff;cursor: pointer;"></i>
               </div>
             </div>
             {% endfor %}
@@ -220,7 +220,7 @@
       var search = $(".search-field-project").val();
       $(elem).attr("href", `/product_manager?search=${search}&number=${number}`);
     }
-    function searchProduct(elem) {
+    {% comment %} function searchProduct(elem) {
       var search = $(elem).parent().find(".search-field-project").val();
       $.ajax({
         type: "POST",
@@ -234,15 +234,15 @@
           }        
         }
       })
-    }
+    } {% endcomment %}
     function deleteProduct(elem) {
-      var id = $(elem).parent().parent().parent().find(".product_id").val();
+      var id = $(elem).attr('id')
       $.ajax({
         type: "POST",
         data: {product_id: id},
-        url: "/api/task/delete_product",
+        url: "/api/product/delete_product",
         success: function (data) {
-          $(elem).parent().parent().parent().remove();
+          $(elem).parent().parent().remove();
         }
       })
     }

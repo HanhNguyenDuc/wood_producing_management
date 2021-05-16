@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 <html lang="en">
   <head>
     <title>ALT F4</title>
@@ -125,32 +127,32 @@
             </h3>
           </div>
           <div class = "list_body">
-            <form class="add">
+            <form class="add" action="" method="POST">
+              {% csrf_token %}
               <div class = "product_name">
                 <label for="id">Product Name:</label>
-                <input type="text" id="product_name" value="" >
+                {{form.name|attr:"type:text"}}
               </div>
               <br>
               <div class = "iddesign">
                 <label for="id">ID Design:</label>
-                <input type="text" id="iddesign" value="" >
+                {{form.id|attr:"type:text"}}
               </div>
               <br>
               <div class = "type">
                <label for="id">Type:</label>
-                <input type="text" id="type" value="" >
+                {{form.type|attr:"type:text"}}
               </div>
               <br>
               <div class = "price">
                 <label for="id">Price:</label>
-                <input type="text" id="price" value="" >
+                {{form.price|attr:"type:text"}}
               </div>
               <br>
               <div class = "desc">
                 <label for="id">Descption:</label>
-                <input type="text" id="desc" value="" >
+                {{form.desc|attr:"type:text"}}
               </div>
-            </form>
             
           </div>
           <div class = "list_footer">
@@ -164,6 +166,7 @@
             </nav> -->
           </div>
         </div>
+        </form>
       </div>
     </div>
   </body>
