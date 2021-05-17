@@ -60,7 +60,7 @@ class Customer(models.Model):
 class Importbill(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     date = models.DateField(db_column='Date', blank=True, null=True)  # Field name made lowercase.
-    manager = models.ForeignKey(Material, db_column='Manager', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
+    manager = models.ForeignKey(User, db_column='Manager', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
     providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
 
 class Materialinproduct(models.Model):
