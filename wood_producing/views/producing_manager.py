@@ -45,6 +45,7 @@ class MainProducingManagerView(RoleRequiredView):
                 task_done += Task.objects.filter(orderedproductid=ordered_product, progress__id=1).count()
             setattr(order, 'total_task_num', task_num)
             setattr(order, 'done_task_num', task_done)
+            setattr(order, 'duedate', order.duedate.strftime('%m/%d/%Y'))
 
 
         p = Paginator(orders, page_size)
@@ -82,6 +83,7 @@ class ManageTaskView(RoleRequiredView):
             setattr(ordered_product, 'tasks', tasks)
             assigned_product = 0
             for task in tasks:
+                setattr(task, 'estimated', task.estimated.strftime('%m/%d/%Y'))
                 assigned_product += task.quantity
             setattr(ordered_product, 'assigned_product', assigned_product)
 
@@ -102,11 +104,19 @@ class AddTaskView(RoleRequiredView):
 
     def update_get_context(self, request, *args, **kwargs):
         foremen = User.objects.filter(role=3)
+        ordered_product = Orderedproduct.objects.get(id=int(kwargs.get('ordered_product_id')))
+        
+        assigned_product = 0
+        tasks = Task.objects.filter(orderedproductid=ordered_product)
+        for task in tasks:
+            assigned_product += task.quantity
+        setattr(ordered_product, 'product_quantity_left', ordered_product.quantity - assigned_product)
         for foreman in foremen:
             task_num = Task.objects.filter(userid=foreman).count()
             setattr(foreman, 'task_num', task_num)
 
         self.context['foremen'] = foremen
+        self.context['ordered_product'] = ordered_product
         return None
     
     def update_post_context(self, request, *args, **kwargs):
@@ -121,9 +131,4 @@ class AddTaskView(RoleRequiredView):
         if self.cleaned_data.get("foreman_id") is not None:
             task.userid_id=self.cleaned_data.get("foreman_id")
         task.save()
-        foremen = User.objects.filter(role=3)
-        for foreman in foremen:
-            task_num = Task.objects.filter(userid=foreman).count()
-            setattr(foreman, 'task_num', task_num)
-
-        self.context['foremen'] = foremen
+        self.update_get_context(self, request, *args, **kwargs)

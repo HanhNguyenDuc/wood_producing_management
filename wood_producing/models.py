@@ -104,7 +104,7 @@ class Materialrequest(models.Model):
     storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID', null=True)  # Field name made lowercase.
     is_approved = models.BooleanField(db_column='is_approve', default=False)
     quantity = models.IntegerField(default=10)
-    create_at = models.DateTimeField(db_column="create_at")
+    create_at = models.DateTimeField(db_column="create_at", auto_now=True)
 
 
 class Order(models.Model):
@@ -113,7 +113,7 @@ class Order(models.Model):
     userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID', null=True)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=255, default="")
     duedate = models.DateTimeField(db_column='duedate', max_length=255)
-    create_at = models.DateTimeField(db_column='create_at')
+    create_at = models.DateTimeField(db_column='create_at', auto_now=True)
 
 class Product(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -165,8 +165,8 @@ class Task(models.Model):
     priority = models.CharField(db_column='priority', max_length=10, default="low")
     quantity = models.IntegerField(db_column='quantity', default=0)
     estimated = models.DateTimeField(db_column='estimated')
-    create_at = models.DateTimeField(db_column="create_at")
-    update_at = models.DateTimeField(db_column="update_at")
+    create_at = models.DateTimeField(db_column="create_at", auto_now_add=True)
+    update_at = models.DateTimeField(db_column="update_at", auto_now=True)
     status = models.CharField(db_column='status', default="doing", max_length=100)
 
 

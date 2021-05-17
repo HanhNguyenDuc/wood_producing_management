@@ -132,6 +132,7 @@
               Add New Task
             </h3>
             <div>
+              <button class="btn btn-success" onclick="submit(this)">Submit</button>
               <button class="btn btn-danger">Cancel</button>
             </div>
           </div>
@@ -142,14 +143,14 @@
                 <h4>
                   Order ID: 
                 </h4>
-                <h4 class="order_id"> 123 </h4>
+                <h4 class="order_id"> {{ordered_product.order.id}} </h4>
                 <input type="hidden" id="order_id" value="123">
               </div>
               <div class="detail line">
                 <h4>
                   Parent Task:
                 </h4>
-                <h4 class="order_id"> 80 ghế gỗ lim</h4>
+                <h4 class="order_id"> {{ordered_product.quantity}} {{ordered_product.product.name}} - Cần giao {{ordered_product.product_quantity_left}}</h4>
                 <input type="hidden" id="parent_task_id" value="4">
               </div>
               <div class="detail block">
@@ -178,20 +179,8 @@
                   {{form.priority|attr:"class:field_input"}}
                 </div>
               </div>
-              <div class="detail line">
-                <h4 style="margin-right: 16px;">
-                  Foreman
-                </h4>
-                <div class="search-form">
-                  <div class="form-group">
-                    <input class="search-field-project" type="search" name="order_name" id="q_name_or_description_cont" />
-                    <button type="button" onclick="searchForeman(this)">
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="foreman_table">
+              
+              <div class="foreman_table" style="margin-top: 50px">
                 <div class="detail_task_table_row header">
                   <div class = "task_column name">
                     Foreman
@@ -235,7 +224,7 @@
               </div>
               {{form.foreman_id|attr:"type:hidden"|attr:"id:foreman_id"}}
 
-              <button class="btn btn-success" type="submit">Create</button>
+              <button class="btn btn-success" id="submit-btn" type="submit" hidden>Create</button>
             </form>
           </div>
       </div>
@@ -310,6 +299,10 @@
     $(elem).prop("checked",  true)
     var id = $(elem).parent().parent().find(".name").attr("id");
     $("#foreman_id").val(id)
+  }
+
+  function submit(elem){
+    $("#submit-btn").click();
   }
   </script>
 </html>
