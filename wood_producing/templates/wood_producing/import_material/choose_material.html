@@ -156,26 +156,25 @@
                 <div class = "material_column type">
                   Type
                 </div>
-                <div class = "material_column price">
-                  Price
-                </div>>
-                <div class = "material_column import">
-                  
+                <div class = "material_column desc">
+                  Desc
+                </div>
+                <div class = "material_column import">                  
                 </div>
               </div>
-              {% for materialofprovider in materialofproviders %}
+              {% for material in materials %}
               <div class="material_table_row">
                 <div class = "material_column id">
-                  {{materialofprovider.id}}
+                  {{material.id}}
                 </div>
                 <div class = "material_column name">
-                  {{materialofprovider.name}}
+                  {{material.name}}
                 </div>
                 <div class = "material_column type">
-                  {{materialofprovider.type}}
+                  {{material.type}}
                 </div>
-                <div class = "material_column price">
-                  {{materialofprovider.price}}
+                <div class = "material_column desc">
+                  {{material.desc}}
                 </div>
                 <div class = "material_column import">
                   <button id="import" class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themsp">Import </button>
