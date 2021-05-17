@@ -17,11 +17,11 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" 
+      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" 
+      crossorigin="anonymous">
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -131,9 +131,9 @@
                 </nav>
             </div>
             <div class="search-form">
-              <form action="/user_analytic_projects" accept-charset="UTF-8" data-remote="true" method="get">
+              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
                 <div class="form-group">
-                  <input class="search-field-project" type="search" name="q[name_or_description_cont]" id="q_name_or_description_cont" />
+                  <input class="search-field-project" type="search" name="search" id="search" />
                   <button name="button" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
@@ -156,70 +156,32 @@
                 <div class = "material_column type">
                   Type
                 </div>
-                <div class = "material_column price">
-                  Price
-                </div>>
-                <div class = "material_column import">
-                  
+                <div class = "material_column desc">
+                  Desc
+                </div>
+                <div class = "material_column import"> 
+                  Select               
                 </div>
               </div>
-              {% for materialofprovider in materialofproviders %}
+              {% for material in materials %}
               <div class="material_table_row">
                 <div class = "material_column id">
-                  {{materialofprovider.id}}
+                  {{material.id}}
                 </div>
                 <div class = "material_column name">
-                  {{materialofprovider.name}}
+                  {{material.name}}
                 </div>
                 <div class = "material_column type">
-                  {{materialofprovider.type}}
+                  {{material.type}}
                 </div>
-                <div class = "material_column price">
-                  {{materialofprovider.price}}
+                <div class = "material_column desc">
+                  {{material.desc}}
                 </div>
                 <div class = "material_column import">
-                  <button id="import" class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themsp">Import </button>
-                  <div class="modal fade" id="themsp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Import Material</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <table class="table">
-                            <tbody>
-                              <tr>
-                                <td>ID:</td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <td>Material Name</td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <td>Số lượng</td>
-                                <td><input type="number" name="quantity" min="0" value="0"></td>
-                              </tr>
-                              <tr>
-                                <td>Price</td>
-                                <td><input type="text" name="price"></td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary">Save</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <button id="import{{material.id}}" onclick="setModalId({{material.id}})"class="btn" type="button" style="border-color: black;" data-toggle="modal" data-target="#themsp">Import </button>
                 </div>
               </div>
-              {% endfor %}
+            {% endfor %}
             </div>
             <br>  
             <div class="detail line">
@@ -283,9 +245,69 @@
       </div>
     </div>
   </body>
+                    <div class="modal fade" id="themsp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Import Material</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <table class="table">
+                            <tbody>
+                              <tr>
+                                <td>ID:</td>
+                                <td><input type="hidden" value="" id="" class="modal_id"></td>
+                              </tr>
+                              <tr>
+                                <td>Số lượng</td>
+                                <td><input type="number" id="" class="modal_quantity" name="" min="0" value="0">KG</td>
+                              </tr>
+                              <tr>
+                                <td>Price</td>
+                                <td><input type="text" id="" class="modal_price" name="price"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" id="" class="modal_save btn btn-success" onclick="import_material(this)">Save</button>
+                          <button type="button" id="" class="modal_close btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
   <script>
   $('.dropdown-custoggle').click(function () {
     $('.cusdropdown').toggle();
   });
+  function import_material(elem){
+    var id = $(elem).attr('id')
+    var quantity = $("#quantity"+id).val()
+    var price = $("#price"+id).val()
+    console.log(id)
+    console.log(quantity)
+    console.log(price)
+    $.ajax({
+      type: "POST",
+      data:{
+        quantity:quantity,
+        price:price
+      },
+      url: "/api_duc/material/import_material/" + id,
+      success: function (data) {
+        $('#close'+id).click();
+      }
+    })
+  }
+  function setModalId(id){
+    $(".modal_id").attr("id","id"+id.toString());
+    $(".modal_quantity").attr("id","quantity"+id.toString());
+    $(".modal_price").attr("id","price"+id.toString());
+    $(".modal_save").attr("id",id)
+    $(".modal_close").attr("id","close"+id.toString())
+  }
   </script>
 </html>
