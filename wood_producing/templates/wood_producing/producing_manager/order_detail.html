@@ -154,9 +154,6 @@
                     {{task.name}}
                   </div>
                   <div class="icon_half">
-                    <a href="#">
-                      <i class="fas fa-edit"></i>
-                    </a>
                     <i class="far fa-trash-alt" onclick="deleteTask(this)" style="color: #007bff;cursor: pointer;"></i>
                   </div>
                 </div>
@@ -167,15 +164,9 @@
                 <div class = "task_column priority {{task.priority}}">
                   {{task.priority}}
                 </div>
-                {% if task.userid is not None %}
                 <div class = "task_column status doing">
-                  Doing
+                  {{task.status}}
                 </div>
-                {% else %}
-                <div class = "task_column status doing">
-                  Not Be Assigned
-                </div>
-                {% endif %}
                 <div class = "task_column current_progress">
                   {{task.progress.name}}
                 </div>
