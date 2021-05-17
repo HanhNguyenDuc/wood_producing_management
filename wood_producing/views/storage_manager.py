@@ -189,19 +189,19 @@ class ImportChooseMaterial(RoleRequiredView):
     form = None
     template_path = "wood_producing/import_material/choose_material.html"
     def update_get_context(self, request, *args, **kwargs):
-        page_size = settings.PAGE_SIZE
-        page_num = request.GET.get("page_num")
+        # page_size = settings.PAGE_SIZE
+        # page_num = request.GET.get("page_num")
         kw = request.GET.get('search')
         materials = []
         if kw is not None :
             materials = Material.objects.all().filter(name__contains=kw)
-        p = Paginator(materials,page_size)
-        cur_page = p.page(1)
-        if page_num is not None :
-            cur_page = p.page(page_num)
-        self.context['num_page'] = p.num_pages
-        self.context['page'] = range(1,p.num_pages+1)
-        self.context['materials'] = cur_page.object_list
+        # p = Paginator(materials,page_size)
+        # cur_page = p.page(1)
+        # if page_num is not None :
+        #     cur_page = p.page(page_num)
+        # self.context['num_page'] = p.num_pages
+        # self.context['page'] = range(1,p.num_pages+1)
+        self.context['materials'] = materials
         return None
     def update_post_context(self, request, *args, **kwargs):
         return None
