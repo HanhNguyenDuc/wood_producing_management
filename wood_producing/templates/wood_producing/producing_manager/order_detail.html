@@ -212,15 +212,9 @@
                   Not Be Assigned
                 </div>
                 {% endif %}
-                {% if task.progress.id == 1 %}
                 <div class = "task_column current_progress">
-                  Done
+                  {{task.progress.name}}
                 </div>
-                {% elif task.progress.id == 2 %}
-                <div class = "task_column current_progress">
-                  Phase 1
-                </div>
-                {% endif%}
                 <div class = "task_column quantity">
                   {{task.quantity}}
                 </div>
