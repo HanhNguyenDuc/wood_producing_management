@@ -44,39 +44,15 @@
         <div class="menu-left text-left">
           <ul>
               <li class= 'active' >
-                <a href="#">
+                <a href="/producing_manager">
                   <span><i class="fa fa-key center"></i></span> Order List
                 </a>
               </li>
               <li>
-                <a href="#">
-                  <span><i class="fa fa-user center"></i></span> Task
+                <a href="/statistic/production">
+                  <span><i class="fa fa-user center"></i></span> Statistic
                 </a>
               </li>
-              <li>
-                <a href="#">
-                  <span><i class="fas fa-chart-line center"></i></span>ユーザー分析
-                </a>
-              </li>
-            <li>
-              <a href="#">
-                <span><i class="fas fa-file-csv center"></i></span>CSV分析
-              </a>
-            </li>
-              <li class="general-export-csv">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16.002" height="16" viewBox="0 0 16.002 16">
-                    <path id="Union_1" data-name="Union 1" d="M.938,16a3.272,3.272,0,0,1-.394-.17,1.2,1.2,0,0,1-.544-.8V.941A1.148,1.148,0,0,1,.6.149a1.452,1.452,0,0,1,.551-.14C2.287,0,3.422,0,4.557,0a1.141,1.141,0,1,1,.007,2.282c-.7.008-1.4,0-2.093,0H2.293V13.705H13.714v-.17q0-1.048,0-2.093a1.139,1.139,0,0,1,2.277-.049c.015,1.177.013,2.353,0,3.53a1.119,1.119,0,0,1-.877,1.048c-.03.007-.058.021-.086.031Zm12.79-8.213a1.706,1.706,0,0,1-.014-.28v-3.6c-.068.065-.109.1-.148.141q-1.76,1.763-3.522,3.526a1.112,1.112,0,0,1-1.258.292A1.134,1.134,0,0,1,8.39,6c.7-.716,1.42-1.422,2.131-2.133l1.447-1.446c.033-.032.064-.067.123-.13H11.9c-1.156,0-2.312,0-3.468,0A1.141,1.141,0,1,1,8.351.005c.255-.009.51,0,.765,0h5.718A1.139,1.139,0,0,1,16,1.143Q16,4.376,16,7.61a1.139,1.139,0,0,1-1.053,1.137q-.046,0-.092,0A1.149,1.149,0,0,1,13.728,7.788Z" transform="translate(0 0)" />
-                  </svg>
-                  エクスポート
-                 </a>
-              </li>
-      
-            <li class="rdb-settings">
-              <a href="#">
-                <span><i class="fas fa-cog"></i></span>設定
-              </a>
-            </li>
           </ul>
         </div>
       </div>
@@ -88,7 +64,6 @@
             <div class="title-header">
       
             </div>
-
             <div class="navbar-right">
               <a href="#">
                 <i class="fa fa-list-ul"></i>
@@ -97,19 +72,14 @@
                 <i class="far fa-user-circle"></i>
               </a>
               <ul class="cusdropdown">
-                <li>
-                  <a class="dropdown-item"  >
-                    <span><i class="far fa-user"></i></span> fasdfasd
-                  </a>
-                </li>
                   <li>
-                    <a class="dropdown-item">
-                      <span><i class="far fa-address-book"></i></span> asd
+                    <a class="dropdown-item" href="/user/change_password">
+                      <span><i class="far fa-address-book"></i></span> Change password
                     </a>
                   </li>
                 <li>
-                  <a class="dropdown-item">
-                    <span><i class="fas fa-sign-out-alt" id="current-account"></i>asdfasd
+                  <a class="dropdown-item" href="/user/logout">
+                    <span><i class="fas fa-sign-out-alt" id="current-account"></i> Logout
                     </span> 
                   </a>
                 </li>
@@ -148,12 +118,6 @@
                   </h4>
                   <h4 class="due"> {{order.duedate}} </h4>
                 </div>
-                <div class="detail line">
-                  <h4>
-                    Billing:
-                  </h4>
-                  <h4 class="order_name"> Xuan Duc, Yen Thuong, Gia Lam, Ha Noi </h4>
-                </div>
               </div>
             </div>
 
@@ -161,7 +125,7 @@
             <div class="detail_task_table">
               <div class="detail_task_table_row header">
                 <div class = "task_column name">
-                  {{ordered_product.product.name}} {{ordered_product.quantity}} cái <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
+                  {{ordered_product.product.name}} - Số lượng: {{ordered_product.quantity}} cái <i class="fas fa-arrow-alt-circle-down" onclick="toggleDetail(this)"></i>
                 </div>
                 <div class = "task_column foreman">
                   Foreman
@@ -272,6 +236,7 @@
       url: "/api/task/delete_task",
       success: function (data) {
         $(elem).parent().parent().parent().remove();
+        location.reload();
       }
     })
   }

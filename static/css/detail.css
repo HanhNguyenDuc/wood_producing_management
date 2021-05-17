@@ -86,6 +86,15 @@
   background-color: #5ac47d;
   color: white
 }
+
+.detail_task_table_row .task_column.priority.normal {
+  background-color: blue;
+  color: white
+}
+.detail_task_table_row .task_column.priority.high{
+  background-color: red;
+  color: white
+}
 .detail_task_table_row .add{
   flex-basis: 90%;
   display: flex;
