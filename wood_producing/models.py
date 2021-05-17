@@ -167,7 +167,7 @@ class Task(models.Model):
     estimated = models.DateTimeField(db_column='estimated')
     create_at = models.DateTimeField(db_column="create_at", auto_now_add=True)
     update_at = models.DateTimeField(db_column="update_at", auto_now=True)
-    status = models.CharField(db_column='status', default="doing", max_length=100)
+    status = models.CharField(db_column='status', default="pending", max_length=100)
 
 
 class Taskprogress(models.Model):
