@@ -55,28 +55,28 @@
                         <span class="company-logo">
                             Hợp đồng mua bán
                         </span>
-                        <span class="invoice-number">Mã hợp đồng #23543</span>
+                        <span class="invoice-number">Mã hợp đồng #{{order.id}}</span>
                     </div>
                     <div class="addresses">
                         <div class="for">
                             <h3>Bên mua</h3>
                             <p>
-                                Tên<br />
-                                Số điện thoại<br />
-                                Địa chỉ
+                                Tên: {{customer.name}}<br />
+                                Số điện thoại: {{customer.phone}}<br />
+                                Địa chỉ: {{customer.address}}
                             </p>
                         </div>
 
                         <div class="from">
                             <h3>Bên bán</h3>
                             <p>
-                                Tên<br />
-                                Số điện thoại<br />
-                                Địa chỉ
+                                Công ty: Sản xuất Gỗ ALT F4<br />
+                                Số điện thoại: 09899999<br />
+                                Địa chỉ: Km10, Đường Nguyễn Trãi, Q.Hà Đông, Hà Nội 
                             </p>
                             <p>
-                                Mã đơn hàng: 23543<br />
-                                Thời gian: 12.03.2014<br />
+                                Mã đơn hàng: {{order.id}}<br />
+                                Thời gian: {{order.duedate}}<br />
                             </p>
                         </div>
                     </div>
@@ -84,48 +84,34 @@
                         <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
                                 <th scope="col" style="font-size: smaller;">Tên mặt hàng</th>
-                                <th scope="col " style="font-size: smaller;">Mã đơn hàng</th>
                                 <th scope="col" style="font-size: smaller;">Số lượng</th>
+                                <th scope="col" style="font-size: smaller;">Mã thiết kế</th>
                                 <th scope="col" style="font-size: smaller;">Đơn giá</th>
                                 <th scope="col" style="font-size: smaller;">Tổng tiền</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                                <td></td>
-                                <td></td>
-                              </tr>
+                                {% for product in ordered_products %}
+                                <tr>
+                                    <th scope="row">{{product.product.id}}</th>
+                                    <td>{{product.product.name}}</td>
+                                    <td>{{product.quantity}}</td>
+                                    <td>{{product.product.iddesign}}</td>
+                                    <td>{{product.price}}</td>
+                                    <td>{{product.total_price}}</td>
+                                </tr>
+                                {% endfor %}
                               <tr>
                                   <th colspan="5"> Tổng </th>
-                                  <td>1234123423</td>
+                                  <td>{{order_sum}}</td>
                               </tr>
                             </tbody>
                           </table>
                         <p class="signature">
                             Signature: ________________ <br /><br />
-                            Date: 12.03.2014
+                            Date: {{order.create_at}}
                         </p>
                     </div>
                 </div>

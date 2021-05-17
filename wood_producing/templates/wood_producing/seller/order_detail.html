@@ -86,28 +86,37 @@
     <div class="main">
       <div class="order_list">
         <h2 class="header">Order Detail</h2>
-        <h5> Thông tin khách hàng</h5>
+        <div class="detail line">
+          <div class="left">
+            <h5> Customer Info</h5>
+          </div>
+          <div class="right">
+            <a href="publish">
+              <button class="btn btn-success">Export PDF</button>
+            </a>
+          </div>
+        </div>
         <div class="modal-body">
           <table class="table">
             <tbody>
               <tr>
-                <td>Tên khách hàng</td>
+                <td>Customer's Name</td>
                 <td>
                   <p>{{customer.name}}</p>
                 </td>
               </tr>
               <tr>
-                <td>Số điện thoại</td>
+                <td>Customer's Phone</td>
                 <td> {{customer.phone}}</td>
               </tr>
               <tr>
-                <td>Địa chỉ</td>
+                <td>Customer's Address</td>
                 <td> {{customer.address}}</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <h5> Thông tin sản phẩm</h5>
+        <h5> Product Info</h5>
         <div class="detail_task_table">
           <div class="detail_task_table_row header">
             <div class = "task_column name">
