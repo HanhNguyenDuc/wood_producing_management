@@ -19,9 +19,10 @@ class User(AbstractUser):
         default=UserRole.FOREMAN.value,
         choices=[
             (UserRole.FOREMAN.value, UserRole.FOREMAN.name),
-            (UserRole.PRODUCING_MANAGER, UserRole.PRODUCING_MANAGER.name),
+            (UserRole.PRODUCING_MANAGER.value, UserRole.PRODUCING_MANAGER.name),
             (UserRole.STORAGE_MANAGER.value, UserRole.STORAGE_MANAGER.name),
             (UserRole.DIRECTOR.value, UserRole.DIRECTOR.name),
+            (UserRole.SELLER.value, UserRole.SELLER.name),
         ]
     )
     status = models.CharField(db_column='status', max_length=100, default="Available")
