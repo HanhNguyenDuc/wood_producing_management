@@ -138,22 +138,22 @@
                   Status:
                 </label>
                 <select class="field_input" name="status" disabled>
-                  {% if task.status == 'low' %}
+                  {% if task.status == 'pending' %}
                   <option value="pending" selected>Pending</option>
                   {% else %}
                   <option value="pending">Pending</option>
                   {% endif %}
-                  {% if task.status == 'normal' %}
+                  {% if task.status == 'holding' %}
                   <option value="holding" selected>Holding</option>
                   {% else %}
                   <option value="holding">Holding</option>
                   {% endif %}
-                  {% if task.status == 'high' %}
+                  {% if task.status == 'hold' %}
                   <option value="hold" selected>Hold</option>
                   {% else %}
                   <option value="hold">Hold</option>
                   {% endif %}
-                  {% if task.status == 'urgent'%}
+                  {% if task.status == 'done'%}
                   <option value="done" selected>Done</option>
                   {% else %}
                   <option value="done">Done</option>
