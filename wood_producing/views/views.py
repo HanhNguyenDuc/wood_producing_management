@@ -33,6 +33,8 @@ class RoleRequiredView(View):
                         "msg": self.error_messages.get("anon_user"),
                     })
                 else:
+                    if request.user.role == 4:
+                        return func(self, request, *args, **kwargs)
                     if request.user.role != self.user_role:
                         return JsonResponse({
                             "status": "Error",
@@ -105,11 +107,11 @@ def get_user_role_root_path(user):
     if user.role == 1:
         return "/producing_manager"
     if user.role == 2:
-        return "/storage_manager"
+        return "/storage_manager/manage_material"
     if user.role == 3:
         return "/foreman"
     if user.role == 4:
-        return "/director"
+        return "/producing_manager"
     if user.role == 5:
         return "/seller"        
     return None
