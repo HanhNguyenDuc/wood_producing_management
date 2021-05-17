@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Production Statistic</title>
+    <title>Profit Statistic</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -34,7 +34,7 @@
 <body>
     <h2 class="text-center" style="margin-top: 5%;"><span>Thống kê doanh thu</span></h2>
     <div class="container">
-        <div class="row">
+        <div class="row" id="customize_row">
             <div class="form-group row col-sm">
                 <label for="example-date-input" class="col-3 col-form-label">Ngày bắt đầu</label>
                 <div class="col-9">
@@ -48,78 +48,22 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="customize_row">
             <button class="col-sm btn btn-light" id="btnBack"> Back </button>
             <button class="col-sm btn btn-success" id="btnStatistic"> Statistic </button>
         </div>
         <div id="content" style="display: None;">
-            <div class="row">
+            <div class="row" id="customize_row">
                 <canvas id="TotalProfitChart" width="200" height="100"></canvas>
             </div>
-            <!-- <div class="row">
-                <table class="table" style="margin-top:5.72%;">
-                    <thead>
-                        <tr>
-                            <th scope="col">TT</th>
-                            <th scope="col">Mốc thời gian</th>
-                            <th scope="col">Doanh thu</th>
-                            <th scope="col">Lợi nhuận</th>
-                            <th scope="col">Chi phí</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>04/2021 - 05/2021</td>
-                            <td>100 tỉ</td>
-                            <td>80 tỉ</td>
-                            <td>20 tỉ</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> -->
-            <div class="row">
+            <div class="row" id="customize_row">
                 <div class="col-sm">
                     <canvas id="ProductsChart" width="200" height="100"></canvas>
                 </div>
-
-                <!-- <div class="col-7">
-                    <table class="table" style="margin-top:5.72%; font-size: 15px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">TT</th>
-                                <th scope="col">Loại mặt hàng</th>
-                                <th scope="col">Mặt hàng</th>
-                                <th scope="col">Doanh thu</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Đồ gỗ gia dụng</td>
-                                <td>Bàn gỗ</td>
-                                <td>8 tỉ</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> -->
             </div>
         </div>
     </div>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <script>
     var ctx_profit = document.getElementById('TotalProfitChart').getContext("2d");
@@ -234,7 +178,7 @@
 
 </script>
 <style>
-    .row {
+    #customize_row {
         margin-top: 5%;
     }
 </style>

@@ -38,7 +38,7 @@
     <div class="main">
         <h2 class="text-center" style="margin-top: 5%;"><span>Thống kê nguyên liệu</span></h2>
         <div class="container">
-            <div class="row">
+            <div class="row" id="customize_row">
                 <div class="form-group row col-sm">
                     <label for="example-date-input" class="col-3 col-form-label">Ngày bắt đầu</label>
                     <div class="col-9">
@@ -52,23 +52,23 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="customize_row">
                 <button class="col-sm btn btn-light" id="btnBack"> Back </button>
                 <button class="col-sm btn btn-success" id="btnStatistic"> Statistic </button>
             </div>
             <div id="content" style="display: None;">
-                <div class="row">
+                <div class="row" id="customize_row">
                     <div class="col-sm">
                         <canvas id="TotalProfitChart" width="200" height="100"></canvas>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="customize_row">
                     <div class="col-sm">
                         <canvas id="ProductsChart" width="200" height="100"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="customize_row">
                 <div class="col-sm">
                     <canvas id="CostChart" width="200" height="100"></canvas>
                 </div>
@@ -206,7 +206,7 @@
 
 </script>
 <style>
-    .row {
+    #customize_row {
         margin-top: 5%;
     }
 </style>
