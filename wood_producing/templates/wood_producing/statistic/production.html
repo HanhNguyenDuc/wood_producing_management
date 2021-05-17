@@ -53,38 +53,12 @@
                 <ul>
                     <li class='active'>
                         <a href="#">
-                            <span><i class="fa fa-key center"></i></span> Order List
+                            <span><i class="fa fa-key center"></i></span> Thống kê
                         </a>
                     </li>
                     <li>
-                        <a href="#">
-                            <span><i class="fa fa-user center"></i></span> Task
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span><i class="fas fa-chart-line center"></i></span>ユーザー分析
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span><i class="fas fa-file-csv center"></i></span>CSV分析
-                        </a>
-                    </li>
-                    <li class="general-export-csv">
-                        <a href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16.002" height="16" viewBox="0 0 16.002 16">
-                                <path id="Union_1" data-name="Union 1"
-                                    d="M.938,16a3.272,3.272,0,0,1-.394-.17,1.2,1.2,0,0,1-.544-.8V.941A1.148,1.148,0,0,1,.6.149a1.452,1.452,0,0,1,.551-.14C2.287,0,3.422,0,4.557,0a1.141,1.141,0,1,1,.007,2.282c-.7.008-1.4,0-2.093,0H2.293V13.705H13.714v-.17q0-1.048,0-2.093a1.139,1.139,0,0,1,2.277-.049c.015,1.177.013,2.353,0,3.53a1.119,1.119,0,0,1-.877,1.048c-.03.007-.058.021-.086.031Zm12.79-8.213a1.706,1.706,0,0,1-.014-.28v-3.6c-.068.065-.109.1-.148.141q-1.76,1.763-3.522,3.526a1.112,1.112,0,0,1-1.258.292A1.134,1.134,0,0,1,8.39,6c.7-.716,1.42-1.422,2.131-2.133l1.447-1.446c.033-.032.064-.067.123-.13H11.9c-1.156,0-2.312,0-3.468,0A1.141,1.141,0,1,1,8.351.005c.255-.009.51,0,.765,0h5.718A1.139,1.139,0,0,1,16,1.143Q16,4.376,16,7.61a1.139,1.139,0,0,1-1.053,1.137q-.046,0-.092,0A1.149,1.149,0,0,1,13.728,7.788Z"
-                                    transform="translate(0 0)" />
-                            </svg>
-                            エクスポート
-                        </a>
-                    </li>
-
-                    <li class="rdb-settings">
-                        <a href="#">
-                            <span><i class="fas fa-cog"></i></span>設定
+                        <a href="#" onclick="goBack()">
+                            <span><i class="fa fa-user center"></i></span> Quay lại
                         </a>
                     </li>
                 </ul>
@@ -108,19 +82,8 @@
                         </a>
                         <ul class="cusdropdown">
                             <li>
-                                <a class="dropdown-item">
-                                    <span><i class="far fa-user"></i></span> fasdfasd
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item">
-                                    <span><i class="far fa-address-book"></i></span> asd
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item">
-                                    <span><i class="fas fa-sign-out-alt" id="current-account"></i>asdfasd
-                                    </span>
+                                <a class="dropdown-item" href="/user/logout">
+                                    <span><i class="far fa-user"></i></span> Logout
                                 </a>
                             </li>
                         </ul>
@@ -279,6 +242,30 @@
         var x = document.getElementById("content");
         x.style.display = "block";
     });
+    $(".datepicker").datepicker({
+        orientation: "bottom left",
+        autoclose: true
+    });
+    $(".esimatepicker").datepicker({
+        orientation: "bottom left",
+        autoclose: true
+    });
+    $('.dropdown-custoggle').click(function () {
+        $('.cusdropdown').toggle();
+    });
+    function toggleDetail(elem) {
+        var array = $(elem).parent().parent().parent().find(".detail_task_table_row");
+        for (let index = 1; index < array.length; index++) {
+            const element = array[index];
+            $(element).toggle();
+        }
+    }
+    function toggleFilter(elem) {
+        $(".filter").toggle();
+    }
+    function goBack() {
+        window.history.back();
+    }
 </script>
 <style>
     .customize_row {
