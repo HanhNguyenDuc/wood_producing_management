@@ -103,9 +103,10 @@ class AddTaskView(RoleRequiredView):
     }
 
     def update_get_context(self, request, *args, **kwargs):
+        
         foremen = User.objects.filter(role=3)
         ordered_product = Orderedproduct.objects.get(id=int(kwargs.get('ordered_product_id')))
-        
+        order = ordered_product.order
         assigned_product = 0
         tasks = Task.objects.filter(orderedproductid=ordered_product)
         for task in tasks:
@@ -117,6 +118,7 @@ class AddTaskView(RoleRequiredView):
 
         self.context['foremen'] = foremen
         self.context['ordered_product'] = ordered_product
+        self.context['order'] = order
         return None
     
     def update_post_context(self, request, *args, **kwargs):
