@@ -1,4 +1,5 @@
 from wood_producing.views.api_duc import add_provider, import_material
+from wood_producing.views.foreman import TaskDetailView
 from wood_producing.views.approve_material_request import ApproveMaterialRequest
 from wood_producing.views.api import delete_product, delete_task
 from wood_producing.views.storage_manager import AddProduct, EditMaterial, EditProduct, ImportChooseMaterial, ImportMaterialFromProvider, AddMaterial, MaterialBase, ProductManagement
@@ -36,6 +37,7 @@ urlpatterns = [
     path('api/product/delete_product',views.delete_product, name='delete_product'),
     path('foreman', views.ForemanMainView.as_view(), name="foreman_main_view"),
     path('foreman/edit_task/<int:task_id>', views.EditTaskView.as_view()),
+    path('foreman/view_task/<int:task_id>', views.TaskDetailView.as_view()),
     path('api/task/delete_task', views.delete_task, name='delete_task'),
     path('storage_manager/import_material/choose_provider', views.ImportChooseProvider.as_view(), name='choose_provider'),
     path('api_duc/provider/add_provider', views.add_provider, name = 'add_provider'),
