@@ -2,9 +2,11 @@ from .views import *
 import logging
 from datetime import datetime
 
+class SearchOrderForm(forms.Form):
+    order_name = forms.CharField()
 class ListOrder(RoleRequiredView):
     user_role = 5
-    form = None
+    form = SearchOrderForm
     template_path = "wood_producing/seller/list_order.html"
     direct_url = {
         "order_detail": "seller/order_detail",
@@ -17,7 +19,12 @@ class ListOrder(RoleRequiredView):
         page_size = settings.PAGE_SIZE
         page_num = request.GET.get("page_num")
         user_id = request.user.id
-        orders = Order.objects.all().filter(userid=user_id)
+        order_name = request.GET.get("order_name")
+        if order_name is not None:
+            orders = Order.objects.all().filter(userid=user_id,name__contains=order_name)
+        else:
+            orders = Order.objects.all().filter(userid=user_id)
+
         p = Paginator(orders, page_size)
         cur_page = p.page(1)
         if page_num is not None:
@@ -77,20 +84,36 @@ class CreateOrder(RoleRequiredView):
         duedate.strftime('%Y-%m-%d')
         order = Order(name=name,duedate=duedate,userid=user,customerid=customer,create_at=create_at)
         order.save()
-        for index, item in enumerate(products):
-            if item == ";":
-                continue
+        for index, item in enumerate(product_arr):
             temp = Product.objects.get(id=item)
             price = temp.price
             storage = Storage.objects.get(id=2)
             orderproduct = Orderedproduct(price=price, product=temp, quantity=quantity_arr[index], order_id=order.id)
             orderproduct.save()
 
-        return HttpResponseRedirect("/seller/")
+        return HttpResponseRedirect(f"/seller/order_detail/{order.id}")
+
+
 
 class PublishOrder(RoleRequiredView):
+    user_role = 5
+    form = None
+    template_path = "wood_producing/seller/publish.html"
     def update_get_context(self, request, *args, **kwargs):
-        return super().update_get_context(request, *args, **kwargs)
+        order_id = kwargs['order_id']
+        order = Order.objects.get(id=order_id)
+        ordered_products = Orderedproduct.objects.filter(order=order)
+        order_sum = 0
+        for ordered_product in ordered_products:
+            total_price = ordered_product.price * ordered_product.quantity
+            order_sum += total_price
+            setattr(ordered_product, 'total_price', total_price)
+            setattr(ordered_product, 'design_id', ordered_product.product.iddesign)
+        self.context["order"] = order
+        self.context["customer"] = order.customerid
+        self.context["ordered_products"] = ordered_products
+        self.context["order_sum"] = order_sum
+        return None
     
     def update_post_context(self, request, *args, **kwargs):
         return super().update_post_context(request, *args, **kwargs)

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 <html lang="en">
   <head>
     <title>ALT F4</title>
@@ -92,16 +95,17 @@
             <h3 class = "title">
               Order List
             </h3>
-            <div class="search-form">
-              <form action="" accept-charset="UTF-8" data-remote="true" method="get">
-                <div class="form-group">
-                  <input class="search-field-project" type="search" name="order_name" id="q_name_or_description_cont" />
-                  <button name="button" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </form>
-            </div>
+              <div class="search-form">
+                <form action="" accept-charset="UTF-8" method="GET">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    {{form.order_name|attr:"type:search"|attr:"class:search-field-project"|attr:"id:q_name_or_description_cont"}}
+                    <button type="submit">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
           </div>
           <div class = "list_body">
             <div class="table_row header">
