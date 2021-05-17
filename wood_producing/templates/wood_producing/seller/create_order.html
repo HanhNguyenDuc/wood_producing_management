@@ -52,7 +52,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/seller/create_order">
               <span><i class="fa fa-user center"></i></span> Create Order
             </a>
           </li>
@@ -155,7 +155,7 @@
           <h5> Product </h5>
           <div class="detail_task_table" id="order_product_table">
             <div class="detail_task_table_row header">
-              <div class = "task_column name">
+              <div class = "task_column name" >
                 Name
               </div>
               <div class = "task_column foreman">
@@ -448,8 +448,7 @@
         $("#customer_display_name").text(cus_name);
         $("#customer_display_phone").text(cus_phone);
         $("#customer_display_address").text(cus_address);
-        $("#customer_id").val(data.id);
-        $('#add_customer_modal').modal('hide');
+        $("#customer_id").val(data.material_request.id);
       }
     })
   }
@@ -460,7 +459,6 @@
     for (let index = 1; index < array.length; index++) {
         const element = array[index];
         var check = $(element).find(".material_checkbox").first().prop("checked")
-        console.log(check);
         if(check){
           var name = $(element).find(".name").first().text().trim();
           var phone = $(element).find(".status").first().text().trim();
@@ -477,8 +475,6 @@
 
   function addProduct(elem) {
     var array = $("#add_product_table").find(".detail_task_table_row");
-    var quantity_str = "";
-    var product_str = "";
     for (let index = 1; index < array.length; index++) {
           const element = array[index];
           var check = $(element).find(".material_checkbox").first().prop("checked")
@@ -491,7 +487,7 @@
             var id = $(element).find(".stt").first().text().trim();
             var total = parseInt(price) * parseInt(quantity)
             var item = '<div class="detail_task_table_row">'+
-    '              <div class = "task_column name">'+
+    `              <div class = "task_column name" data-id="${id}">`+
     `                ${name} <i class="far fa-trash-alt" onclick="deleteProduct(this)" style="color: #007bff;cursor: pointer;"></i>`+
     '              </div>'+
     '              <div class = "task_column foreman">'+
@@ -507,24 +503,31 @@
     `                ${total}`+
     '              </div>'+
     '            </div>';
-          quantity_str +=  quantity+";" ;
-          product_str += id + ";";
 
         $("#add_modal").before(item)
       }
     }
     $('#product_modal_dismiss').click();
-    console.log(quantity_str);
-    console.log(product_str);
-    var form_quantity =  $("#form_quantity").val();
-    var form_product =  $("#form_product").val();
-    console.log(form_quantity);
-    console.log(form_product);
-    $("#form_product").val(product_str + form_product);
-    $("#form_quantity").val(quantity_str + form_quantity);
-
   }
   function create_order(elem) {
+    var array = $("#order_product_table").find(".detail_task_table_row");
+    var product_str = ""
+    var quantity_str = ""
+    var hash = {}
+    for (let index = 1; index < array.length - 1; index++) {
+      const element = array[index];
+      var quantity = parseInt($(element).find(".priority").first().text().trim());
+      var id = $(element).find(".name").first().attr("data-id");
+      if(hash.hasOwnProperty(`${id}`)){
+        hash[`${id}`] += quantity
+      }else{
+        hash[`${id}`] = quantity
+      }
+    }
+    product_str = Object.keys(hash).join(";")
+    quantity_str = Object.values(hash).join(";")
+    $("#form_product").val(product_str);
+    $("#form_quantity").val(quantity_str);
     $("#submit_form").click();
   }
   function deleteProduct(elem) {

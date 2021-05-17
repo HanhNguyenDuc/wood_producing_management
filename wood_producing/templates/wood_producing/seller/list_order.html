@@ -96,7 +96,7 @@
               Order List
             </h3>
               <div class="search-form">
-                <form action="" accept-charset="UTF-8" method="POST">
+                <form action="" accept-charset="UTF-8" method="GET">
                   {% csrf_token %}
                   <div class="form-group">
                     {{form.order_name|attr:"type:search"|attr:"class:search-field-project"|attr:"id:q_name_or_description_cont"}}

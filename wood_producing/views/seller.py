@@ -20,7 +20,11 @@ class ListOrder(RoleRequiredView):
         page_num = request.GET.get("page_num")
         user_id = request.user.id
         order_name = request.GET.get("order_name")
-        orders = Order.objects.all().filter(userid=user_id)
+        if order_name is not None:
+            orders = Order.objects.all().filter(userid=user_id,name__contains=order_name)
+        else:
+            orders = Order.objects.all().filter(userid=user_id)
+
         p = Paginator(orders, page_size)
         cur_page = p.page(1)
         if page_num is not None:
@@ -31,19 +35,7 @@ class ListOrder(RoleRequiredView):
         return None
 
     def update_post_context(self, request, *args, **kwargs):
-        user_id = request.user.id
-        page_num = request.POST.get("page_num")
-        page_size = settings.PAGE_SIZE
-        order_name = request.POST.get("order_name")
-        orders = Order.objects.all().filter(userid=user_id,name__contains=order_name)
-        p = Paginator(orders, page_size)
-        cur_page = p.page(1)
-        if page_num is not None:
-            cur_page = p.page(page_num)
-        self.context["num_pages"] = p.num_pages
-        self.context["pages"] = range(1, p.num_pages+1)
-        self.context["orders"] = cur_page.object_list
-        return None
+        return super().update_post_context(request, *args, **kwargs)
 
 class OrderDetail(RoleRequiredView):
     user_role = 5
@@ -81,8 +73,6 @@ class CreateOrder(RoleRequiredView):
         customer_id = request.POST.get("customer_id")
         products = request.POST.get("product")
         quantity = request.POST.get("quantity")
-        print(products)
-        print(quantity)
         product_arr = products.split(";")
         quantity_arr = quantity.split(";")
         customer = Customer.objects.get(id=customer_id)
@@ -94,15 +84,10 @@ class CreateOrder(RoleRequiredView):
         duedate.strftime('%Y-%m-%d')
         order = Order(name=name,duedate=duedate,userid=user,customerid=customer,create_at=create_at)
         order.save()
-        product_arr.pop()
-        quantity_arr.pop()
         for index, item in enumerate(product_arr):
             temp = Product.objects.get(id=item)
             price = temp.price
             storage = Storage.objects.get(id=2)
-            print(index)
-            print(item)
-            print(quantity_arr[index])
             orderproduct = Orderedproduct(price=price, product=temp, quantity=quantity_arr[index], order_id=order.id)
             orderproduct.save()
 
