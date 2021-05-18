@@ -53,12 +53,12 @@
                 <ul>
                     <li class='active'>
                         <a href="#">
-                            <span><i class="fa fa-key center"></i></span> Thống kê
+                            <span><i class="fa fa-key center"></i></span> Statistic
                         </a>
                     </li>
                     <li>
                         <a href="#" onclick="goBack()">
-                            <span><i class="fa fa-user center"></i></span> Quay lại
+                            <span><i class="fa fa-user center"></i></span> Back
                         </a>
                     </li>
                 </ul>
@@ -93,16 +93,16 @@
         </header>
         <div class="main" style="height: auto; width: auto;">
             <div class="overflow:auto;">
-                <h2 class="text-center"><span>Thống kê doanh thu</span></h2>
+                <h2 class="text-center"><span>Revenue statistics</span></h2>
                 <div class="row customize_row">
                     <div class="form-group row col-sm">
-                        <label for="example-date-input" class="col-3 col-form-label">Ngày bắt đầu</label>
+                        <label for="example-date-input" class="col-3 col-form-label">Start date</label>
                         <div class="col-9">
                             <input class="form-control" type="date" value="2021-04-01" id="date-input-1">
                         </div>
                     </div>
                     <div class="form-group row col-sm">
-                        <label for="example-date-input" class="col-3 col-form-label">Ngày kết thúc</label>
+                        <label for="example-date-input" class="col-3 col-form-label">End date</label>
                         <div class="col-9">
                             <input class="form-control" type="date" value="2021-05-01" id="date-input-2">
                         </div>
@@ -161,14 +161,14 @@
                                 y: {
                                     display: true,
                                     title: {
-                                        text: "Giá trị"
+                                        text: "Revenue"
                                     },
                                     beginAtZero: true
                                 },
                                 x: {
                                     display: true,
                                     title: {
-                                        text: "Thời gian"
+                                        text: "Time"
                                     }
                                 }
                             },
@@ -178,7 +178,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Biểu đồ doanh thu tổng quát'
+                                    text: 'Chart of general revenue'
                                 }
                             }
                         }
@@ -213,7 +213,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Biểu đồ doanh thu theo sản phẩm'
+                                    text: 'Graph of revenue by product'
                                 }
                             }
                         }
