@@ -128,7 +128,7 @@ class AddTaskView(RoleRequiredView):
             estimated=self.cleaned_data.get("due_date"), 
             priority=self.cleaned_data.get("priority"),
             orderedproductid_id=kwargs.get('ordered_product_id'),
-            progress_id=2,
+            progress_id=1,
         )
         if self.cleaned_data.get("foreman_id") is not None:
             task.userid_id=self.cleaned_data.get("foreman_id")
