@@ -29,7 +29,7 @@ def choose_provider(request):
     })
 
 @csrf_exempt
-def import_material(request, id, quantity, price):
+def import_material(request, id, quantity, price, storage_id):
     provider_id = request.session['provider_id']
     print("Provier id: {}".format(provider_id))
     provider = Provider.objects.get(id=provider_id)
@@ -55,6 +55,14 @@ def import_material(request, id, quantity, price):
         importbillid=bill
     )
     imported_material.save()
+    storage = Storage.objects.get(id=storage_id)
+    material_of_provider_in_storage = Materialofproviderinstorage.objects.get_or_create(
+        materialofproviderid= material_of_provider,
+        storageid= storage,
+        defaults={'quantity':0}
+    )
+    material_of_provider_in_storage[0].quantity += quantity
+    material_of_provider_in_storage[0].save()
     return JsonResponse({
         "msg":"Sucess",
         "name": material.name,

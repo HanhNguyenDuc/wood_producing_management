@@ -251,6 +251,18 @@
                                 <td>Price</td>
                                 <td><input type="text" id="" class="modal_price" name="price"></td>
                               </tr>
+                              <tr>
+                                <td>
+                                  Storage
+                                </td>
+                                <td>
+                                  <select id="" class="modal_select">
+                                    {% for storage in storages %}
+                                      <option value="{{storeage.id}}">{{storeage.name}}</optio>
+                                    {% endfor %}
+                                  </select>
+                                </td>
+                              </tr>
                             </tbody>
                           </table>
                         </div>
@@ -269,12 +281,13 @@
     var id = $(elem).attr('id')
     var quantity = $("#quantity"+id).val()
     var price = $("#price"+id).val()
+    var storage = $("#storage"+id).val()
     console.log(id)
     console.log(quantity)
     console.log(price)
     $.ajax({
       type: "POST",
-      url: "/api_duc/material/import_material/" + id + "/" +quantity +"/" + price,
+      url: "/api_duc/material/import_material/" + id + "/" +quantity +"/" + price+"/"+storage,
       success: function (data) {
 
       var item = '<div class="material_table_row">'+
@@ -306,6 +319,7 @@
     $(".modal_id").attr("id","id"+id.toString());
     $(".modal_quantity").attr("id","quantity"+id.toString());
     $(".modal_price").attr("id","price"+id.toString());
+    $(".modal_select").attr("id","storage"+id.toString());
     $(".modal_save").attr("id",id)
     $(".modal_close").attr("id","close"+id.toString())
   }
