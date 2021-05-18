@@ -193,6 +193,7 @@ class ImportChooseMaterial(RoleRequiredView):
         # page_num = request.GET.get("page_num")
         kw = request.GET.get('search')
         materials = []
+        storages = Storage.objects.all()
         if kw is not None :
             materials = Material.objects.all().filter(name__contains=kw)
         # p = Paginator(materials,page_size)
@@ -202,6 +203,7 @@ class ImportChooseMaterial(RoleRequiredView):
         # self.context['num_page'] = p.num_pages
         # self.context['page'] = range(1,p.num_pages+1)
         self.context['materials'] = materials
+        self.context['storages'] = storages
         return None
     def update_post_context(self, request, *args, **kwargs):
         return None
