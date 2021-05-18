@@ -53,7 +53,7 @@ class EditTaskView(RoleRequiredView):
         newest_progress = None
         material_in_product = Materialinproduct.objects.filter(productid=task.orderedproductid.product)
         for material in material_in_product:
-            taken_material = Materialrequest.objects.filter(taskid=task, is_approved=True)
+            taken_material = Materialrequest.objects.filter(taskid=task, is_approved=True, material=material.materialid)
             taken_material_ammount = 0
             if taken_material.first() is not None:
                 for tm in taken_material:
