@@ -36,7 +36,7 @@ def import_material(request, id, quantity, price, storage_id):
     material_id = id
     print("Material id: {}".format(request.session.get("bill")))
     material = Material.objects.get(id=material_id)
-# ben tren chay ok
+    # ben tren chay ok
     material_of_provider = Materialofprovider.objects.get_or_create(
         providerid= provider,
         materialid= material,

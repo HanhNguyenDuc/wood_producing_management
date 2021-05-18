@@ -62,12 +62,12 @@ class Importbill(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     date = models.DateField(db_column='Date', blank=True, null=True)  # Field name made lowercase.
     manager = models.ForeignKey(User, db_column='Manager', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
-    providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
+    providerid = models.ForeignKey('Provider', models.CASCADE, db_column='ProviderID')  # Field name made lowercase.
 
 class Materialinproduct(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    materialid = models.ForeignKey(Material, models.DO_NOTHING, db_column='MaterialID')  # Field name made lowercase.
-    productid = models.ForeignKey('Product', models.DO_NOTHING, db_column='ProductID')  # Field name made lowercase.
+    materialid = models.ForeignKey(Material, models.CASCADE, db_column='MaterialID')  # Field name made lowercase.
+    productid = models.ForeignKey('Product', models.CASCADE, db_column='ProductID')  # Field name made lowercase.
     quantity = models.IntegerField(default=2)
     description = models.CharField(max_length=300, default="is a main material")
 
@@ -76,8 +76,8 @@ class Materialofprovider(models.Model):
     # material = models.ForeignKey(Material, models.CASCADE, db_column='Material')  # Field name made lowercase.
     price = models.FloatField(db_column='Price')  # Field name made lowercase.
     # provider = models.ForeignKey(Provider, db_column='Provider', blank=True, null=True)  # Field name made lowercase.
-    providerid = models.ForeignKey('Provider', models.DO_NOTHING, db_column='ProviderID')  # Field name made lowercase.
-    materialid = models.ForeignKey(Material, models.DO_NOTHING, db_column='MaterialID')  # Field name made lowercase.
+    providerid = models.ForeignKey('Provider', models.CASCADE, db_column='ProviderID')  # Field name made lowercase.
+    materialid = models.ForeignKey(Material, models.CASCADE, db_column='MaterialID')  # Field name made lowercase.
 
 
 class Importedmaterial(models.Model):
@@ -85,15 +85,15 @@ class Importedmaterial(models.Model):
     materialofprovider = models.ForeignKey(Materialofprovider, db_column='Materialofprovider', blank=True, null=True, on_delete=models.CASCADE)  # Field name made lowercase.
     quantity = models.IntegerField(default=10)
     price = models.FloatField(db_column='Price')  # Field name made lowercase.
-    importbillid = models.ForeignKey(Importbill, models.DO_NOTHING, db_column='ImportBillID')  # Field name made lowercase.
+    importbillid = models.ForeignKey(Importbill, models.CASCADE, db_column='ImportBillID')  # Field name made lowercase.
 
 
 
 class Materialofproviderinstorage(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     quantity = models.FloatField(db_column='Quantity')  # Field name made lowercase.
-    storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID')  # Field name made lowercase.
-    materialofproviderid = models.ForeignKey(Materialofprovider, models.DO_NOTHING, db_column='MaterialOfProviderID')  # Field name made lowercase.
+    storageid = models.ForeignKey('Storage', models.CASCADE, db_column='StorageID')  # Field name made lowercase.
+    materialofproviderid = models.ForeignKey(Materialofprovider, models.CASCADE, db_column='MaterialOfProviderID')  # Field name made lowercase.
 
 
 
@@ -101,7 +101,7 @@ class Materialrequest(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     material = models.ForeignKey('Material', models.CASCADE, db_column='material')
     taskid = models.ForeignKey('Task', models.CASCADE, db_column='TaskID')  # Field name made lowercase.
-    storageid = models.ForeignKey('Storage', models.DO_NOTHING, db_column='StorageID', null=True)  # Field name made lowercase.
+    storageid = models.ForeignKey('Storage', models.CASCADE, db_column='StorageID', null=True)  # Field name made lowercase.
     is_approved = models.BooleanField(db_column='is_approve', default=False)
     quantity = models.IntegerField(default=10)
     create_at = models.DateTimeField(db_column="create_at", auto_now=True)
@@ -109,8 +109,8 @@ class Materialrequest(models.Model):
 
 class Order(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerID')  # Field name made lowercase.
-    userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID', null=True)  # Field name made lowercase.
+    customerid = models.ForeignKey(Customer, models.CASCADE, db_column='CustomerID')  # Field name made lowercase.
+    userid = models.ForeignKey('User', models.CASCADE, db_column='UserID', null=True)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=255, default="")
     duedate = models.DateTimeField(db_column='duedate', max_length=255)
     create_at = models.DateTimeField(db_column='create_at', auto_now=True)
@@ -141,7 +141,7 @@ class Requestedmaterial(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     materialofproviderinstorageid = models.ForeignKey(Materialofproviderinstorage, models.CASCADE, null=True)
     quantity = models.FloatField(db_column='Quantity')  # Field name made lowercase.
-    materialrequestid = models.ForeignKey(Materialrequest, models.DO_NOTHING, db_column='MaterialRequestID')  # Field name made lowercase.
+    materialrequestid = models.ForeignKey(Materialrequest, models.CASCADE, db_column='MaterialRequestID')  # Field name made lowercase.
 
 
 
@@ -151,7 +151,7 @@ class Storage(models.Model):
     address = models.CharField(db_column='Address', max_length=255, blank=True, null=True)  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
     manager = models.ForeignKey(User, db_column='Manager', null=True, on_delete=models.CASCADE)  # Field name made lowercase.
-    companyid = models.ForeignKey(Company, models.DO_NOTHING, db_column='CompanyID')  # Field name made lowercase.
+    companyid = models.ForeignKey(Company, models.CASCADE, db_column='CompanyID')  # Field name made lowercase.
 
 
 
@@ -159,8 +159,8 @@ class Storage(models.Model):
 class Task(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     name = models.CharField(db_column='name', max_length=255)
-    orderedproductid = models.ForeignKey(Orderedproduct, models.DO_NOTHING, db_column='OrderedProductID')  # Field name made lowercase.
-    userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID', null=True)  # Field name made lowercase.
+    orderedproductid = models.ForeignKey(Orderedproduct, models.CASCADE, db_column='OrderedProductID')  # Field name made lowercase.
+    userid = models.ForeignKey('User', models.CASCADE, db_column='UserID', null=True)  # Field name made lowercase.
     progress = models.ForeignKey('Progress', models.CASCADE, db_column='progress', null=True)
     priority = models.CharField(db_column='priority', max_length=10, default="low")
     quantity = models.IntegerField(db_column='quantity', default=0)
@@ -184,4 +184,4 @@ class Workshop(models.Model):
     name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
     address = models.CharField(db_column='Address', max_length=255, blank=True, null=True)  # Field name made lowercase.
     desc = models.CharField(db_column='Desc', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    companyid = models.ForeignKey(Company, models.DO_NOTHING, db_column='CompanyID')  # Field name made lowercase.
+    companyid = models.ForeignKey(Company, models.CASCADE, db_column='CompanyID')  # Field name made lowercase.
