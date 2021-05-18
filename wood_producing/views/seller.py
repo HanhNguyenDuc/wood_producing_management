@@ -87,7 +87,6 @@ class CreateOrder(RoleRequiredView):
         for index, item in enumerate(product_arr):
             temp = Product.objects.get(id=item)
             price = temp.price
-            storage = Storage.objects.get(id=2)
             orderproduct = Orderedproduct(price=price, product=temp, quantity=quantity_arr[index], order_id=order.id)
             orderproduct.save()
 
