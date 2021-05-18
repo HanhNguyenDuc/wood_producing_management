@@ -417,10 +417,10 @@
                 <label> Quantity </label>
                 <input
                 class="field_input"
-                id="material_input"
+                id="material_quantity"
                 type="number"
                 value=""
-                name=""
+                name="material_quantity"
               />
               </div>
             </div>
@@ -454,14 +454,14 @@
               {% endfor %}
             </div>
           </div>
-        </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" onclick="createMaterialRequest(this)">Save changes</button>
         </div>
+        </div>
         <form action="/create_material">
           <input type="hidden" name="material_id" id ="material_id">
-          <input type="hidden" name="material_quantity"  id ="material_quantity">
         </form>
       </div>
     </div>
@@ -507,6 +507,7 @@
     }
   }
   function createMaterialRequest(elem) {
+    console.log("reached createMaterialRequest");
     var material_id = $("#material_id").val()
     var quantity = $("#material_quantity").val();
     var task_id = $("#task_id").val();
@@ -515,10 +516,12 @@
       data: {task_id: task_id, material_id: material_id, quantity: quantity},
       url: "/api/material/request_material",
       success: function (data) {
-        //location.reload();
+        location.reload();
       }
     })
   }
+
+
   function updateTask(elem) {
     $("#update_task").click();
   }

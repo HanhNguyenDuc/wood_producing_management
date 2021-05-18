@@ -273,11 +273,14 @@ def statistic_material(request):
     logging.info(response)
     return JsonResponse(merge({"msg": "Success"},response))
 
+@csrf_exempt
 def create_material_request(request):
     if request.method != 'POST':
         return JsonResponse({
             "msg": "Method is not allowed",
         })
+
+    print(request.POST)
     material_id = request.POST.get('material_id')
     task_id = request.POST.get('task_id')
     quantity = request.POST.get('quantity')
