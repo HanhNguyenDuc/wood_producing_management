@@ -57,7 +57,7 @@ def import_material(request, id, quantity, price, storage_id):
     imported_material.save()
     storage = Storage.objects.get(id=storage_id)
     material_of_provider_in_storage = Materialofproviderinstorage.objects.get_or_create(
-        materialofproviderid= material_of_provider,
+        materialofproviderid= material_of_provider[0],
         storageid= storage,
         defaults={'quantity':0}
     )
