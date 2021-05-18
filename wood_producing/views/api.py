@@ -39,14 +39,17 @@ def statistic_profit(request):
     }
     temp_date = start_date
     while temp_date <= end_date:
-        sql = "SELECT TotalIncome FROM wood_producing_exportbill WHERE NOT (Date > \'2021-%s-30\' OR Date < \'2021-%s-01\')"
+        sql = "SELECT wood_producing_orderedproduct.Price, wood_producing_orderedproduct.Quantity FROM wood_producing_orderedproduct, wood_producing_order WHERE wood_producing_order.ID = wood_producing_orderedproduct.order_id AND NOT (wood_producing_order.duedate > \'2021-%s-30\' OR wood_producing_order.duedate < \'2021-%s-01\')"
         with connection.cursor() as cursor:
             cursor.execute(sql,[temp_date, temp_date])
             result = dictfetchall(cursor)
             logging.info("result: ")
             logging.info(result)
+        count = 0
         if len(result) > 0:
-            response["income"].append(int(result[0]["TotalIncome"]))
+            for temp_result in result:
+                count += (int(temp_result["Price"] * int(temp_result["Quantity"])))
+            response["income"].append(count)
             response["labels"].append("Tháng "+str(temp_date))
         else:
             response["income"].append(0)
