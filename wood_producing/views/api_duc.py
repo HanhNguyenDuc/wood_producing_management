@@ -1,6 +1,7 @@
 from .views import *
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
+from datetime import datetime
 
 @csrf_exempt
 def add_provider(request):
@@ -22,7 +23,10 @@ def choose_provider(request):
     request.session['provider_id']=provider.id
     request.session['provider_id'] = provider_id
     bill = Importbill(providerid=Provider.objects.get(id=provider_id))
+    today = datetime.now()
+    bill.date = today
     bill.save()
+    print(today)
     request.session['bill_id']=bill.id
     return JsonResponse({
         "msg":"sucess"

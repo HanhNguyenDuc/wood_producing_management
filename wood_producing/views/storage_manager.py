@@ -114,7 +114,7 @@ class ProductManagement(RoleRequiredView):
 
 class AddProductForm(forms.Form):
     name = forms.CharField()
-    id = forms.CharField()
+    iddesign = forms.CharField()
     type = forms.CharField()
     price = forms.CharField()
     desc = forms.CharField()
@@ -130,7 +130,7 @@ class AddProduct(RoleRequiredView):
     def update_post_context(self, request, *args, **kwargs):
         product = Product.objects.create(
             name = self.cleaned_data.get('name'),
-            id = self.cleaned_data.get('id'),
+            iddesign = self.cleaned_data.get('iddesign'),
             type = self.cleaned_data.get('type'),
             price = self.cleaned_data.get('price'),
             desc = self.cleaned_data.get('desc')
@@ -142,7 +142,7 @@ class AddProduct(RoleRequiredView):
 class EditProductForm(forms.Form):
     name = forms.CharField()
     type = forms.CharField()
-    id = forms.CharField()
+    iddesign = forms.CharField()
     price = forms.CharField()
     desc = forms.CharField()
 
@@ -159,12 +159,19 @@ class EditProduct(RoleRequiredView):
 
     def update_post_context(self, request, *args, **kwargs):
         id = kwargs['product_id']
+        print("ID : ".format(id))
         product = Product.objects.get(pk=id)
         product.name = self.cleaned_data.get('name')
         product.type = self.cleaned_data.get("type")
-        product.id = self.cleaned_data.get('id')
         product.price = self.cleaned_data.get('price')
         product.desc = self.cleaned_data.get('desc')
+        product.iddesign = self.cleaned_data.get('iddesign')
+        print("name : ".format(self.cleaned_data.get('name')))
+        print("type : ".format(self.cleaned_data.get('type')))
+        print("price : ".format(self.cleaned_data.get('price')))
+        print("desc : ".format(self.cleaned_data.get('desc')))
+        print("iddesign : ".format(self.cleaned_data.get('iddesign')))
+        print(product)
         product.save()
         return None
 

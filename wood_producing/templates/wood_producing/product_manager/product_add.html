@@ -116,27 +116,27 @@
             <form class="add" action="" method="POST">
               {% csrf_token %}
               <div class = "product_name">
-                <label for="id">Product Name:</label>
+                <label for="name">Product Name:</label>
                 {{form.name|attr:"type:text"}}
               </div>
               <br>
               <div class = "iddesign">
-                <label for="id">ID Design:</label>
-                {{form.id|attr:"type:text"}}
+                <label for="iddesign">ID Design:</label>
+                {{form.iddesign|attr:"type:text"}}
               </div>
               <br>
               <div class = "type">
-               <label for="id">Type:</label>
+               <label for="type">Type:</label>
                 {{form.type|attr:"type:text"}}
               </div>
               <br>
               <div class = "price">
-                <label for="id">Price:</label>
+                <label for="price">Price:</label>
                 {{form.price|attr:"type:text"}}
               </div>
               <br>
               <div class = "desc">
-                <label for="id">Descption:</label>
+                <label for="desc">Descption:</label>
                 {{form.desc|attr:"type:text"}}
               </div>
               <div class = "list_footer">
