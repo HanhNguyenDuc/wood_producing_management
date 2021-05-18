@@ -107,7 +107,7 @@ def statistic_production(request):
         "workshop_quantity_detail": [],
     }
     temp_date = start_date
-    while temp_date < end_date:
+    while temp_date <= end_date:
         sql = "SELECT wood_producing_orderedproduct.Quantity FROM wood_producing_order, wood_producing_orderedproduct WHERE wood_producing_orderedproduct.order_id = wood_producing_order.ID AND NOT (wood_producing_order.duedate > \'2021-%s-30\' OR wood_producing_order.duedate < \'2021-%s-01\')"
         with connection.cursor() as cursor:
             cursor.execute(sql,[temp_date, temp_date])
@@ -133,7 +133,7 @@ def statistic_production(request):
             })
 
     temp_date = start_date        
-    while temp_date < end_date:
+    while temp_date <= end_date:
         sql = "SELECT wood_producing_product.Name, wood_producing_orderedproduct.Quantity FROM wood_producing_order, wood_producing_orderedproduct, wood_producing_product WHERE wood_producing_orderedproduct.Product = wood_producing_product.ID AND wood_producing_orderedproduct.order_id = wood_producing_order.ID AND NOT (wood_producing_order.duedate > \'2021-%s-30\' OR wood_producing_order.duedate < \'2021-%s-01\')"
         with connection.cursor() as cursor:
             cursor.execute(sql,[temp_date, temp_date])
@@ -162,7 +162,7 @@ def statistic_production(request):
                     'temp':0
                 })
     temp_date = start_date  
-    while temp_date < end_date:
+    while temp_date <= end_date:
         sql = "SELECT UserID, quantity FROM wood_producing_task WHERE NOT (estimated > \'2021-%s-30\' OR estimated < \'2021-%s-01\')"
         with connection.cursor() as cursor:
             cursor.execute(sql,[temp_date, temp_date])
