@@ -56,7 +56,7 @@
               </a>
             </li>
             <li class= 'active' >
-              <a href="choose_provider">
+              <a href="import_material/choose_provider">
                 <span><i class="fa fa-key center"></i></span> Import Material
               </a>
             </li>
@@ -132,16 +132,13 @@
                 {{form.desc|attr:"type:text"}}
               </div>
               <br>           
-          </div>
-          <div class = "list_footer">            
-            <form method="get" action="/storage_manager/manage_material">
-              <button class="btn btn-success" type="submit">Add</button>
-            </form>
-            <form method="get" action="/storage_manager/manage_material">
-              <button class="btn btn-primary">Back</button>
-            </form>
-          </div>
-          </form>
+              <div class = "list_footer">
+              <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <button class="btn btn-success" type="submit">Add</button>
+                <a class="link-active btn btn-primary" href="manage_material">Back</a>               
+              </ul>          
+            </div>
         </div>
       </div>
     </div>
