@@ -55,12 +55,12 @@
                 <ul>
                     <li class='active'>
                         <a href="#">
-                            <span><i class="fa fa-key center"></i></span> Thống kê
+                            <span><i class="fa fa-key center"></i></span> Statistic
                         </a>
                     </li>
                     <li>
                         <a href="#" onclick="goBack()">
-                            <span><i class="fa fa-user center"></i></span> Quay lại
+                            <span><i class="fa fa-user center"></i></span> Back
                         </a>
                     </li>
                 </ul>
@@ -95,16 +95,16 @@
         </header>
         <div class="main" style="height: auto; width: auto;">
             <div class="overflow:auto;">
-                <h2 class="text-center"><span>Thống kê nguyên liệu</span></h2>
+                <h2 class="text-center"><span>Raw material statistics</span></h2>
                 <div class="row customize_row">
                     <div class="form-group row col-sm">
-                        <label for="example-date-input" class="col-3 col-form-label">Ngày bắt đầu</label>
+                        <label for="example-date-input" class="col-3 col-form-label">Start date</label>
                         <div class="col-9">
                             <input class="form-control" type="date" value="2021-04-01" id="date-input-1">
                         </div>
                     </div>
                     <div class="form-group row col-sm">
-                        <label for="example-date-input" class="col-3 col-form-label">Ngày kết thúc</label>
+                        <label for="example-date-input" class="col-3 col-form-label">End date</label>
                         <div class="col-9">
                             <input class="form-control" type="date" value="2021-05-01" id="date-input-2">
                         </div>
@@ -153,7 +153,7 @@
                     data: {
                         labels: data["labels"],
                         datasets: [{
-                            label: 'Số lượng nhập',
+                            label: 'Import quantity',
                             data: data["material_quantity_total"],
                             fill: false,
                             borderColor: 'rgb(75, 192, 192)',
@@ -167,7 +167,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Biểu đồ thống kê nhập liệu'
+                                    text: 'Statistical chart of material import'
                                 }
                             }
                         }
@@ -199,7 +199,7 @@
                             },
                             title: {
                                 display: true,
-                                text: 'Biểu đồ thống kê nhập liệu chi tiết'
+                                text: 'Statistical chart of detail material import'
                             }
                         }
                     }
@@ -228,7 +228,7 @@
                             },
                             title: {
                                 display: true,
-                                text: 'Biểu đồ thống kê nhập liệu theo nhà cung cấp'
+                                text: 'Statistical chart of material import by supplier'
                             }
                         }
                     }
