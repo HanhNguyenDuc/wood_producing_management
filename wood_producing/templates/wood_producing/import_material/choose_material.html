@@ -169,7 +169,7 @@
             <div class="detail line">
               <h3> Imported Material</h3>
             </div>
-            <div class="material_table">
+            <div class="material_table" id="import_material_table">
               <div class="material_table_row header">
                 <div class = "material_column id">
                   ID 
@@ -274,12 +274,30 @@
     console.log(price)
     $.ajax({
       type: "POST",
-      data:{
-        quantity:quantity,
-        price:price
-      },
-      url: "/api_duc/material/import_material/" + id,
+      url: "/api_duc/material/import_material/" + id + "/" +quantity +"/" + price,
       success: function (data) {
+
+      var item = '<div class="material_table_row">'+
+      '                <div class = "material_column id">'+
+      `                  ${id}`+
+      '                </div>'+
+      '                <div class = "material_column name">'+
+      `                  ${data.name}`+
+      '                </div>'+
+      '                <div class = "material_column type">'+
+      `                  ${data.type}`+
+      '                </div>'+
+      '                <div class = "material_column price">'+
+      `                  ${price}`+
+      '                </div>'+
+      '                <div class = "material_column quantity">'+
+      `                  ${quantity}`+
+      '                </div>'+
+      '                <div class = "material_column total">'+
+      `                  ${parseInt(quantity) * parseInt(price)}`+
+      '                </div>'+
+      '              </div>';
+        $("#import_material_table").append(item)
         $('#close'+id).click();
       }
     })

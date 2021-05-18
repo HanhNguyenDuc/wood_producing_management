@@ -20,25 +20,22 @@ def choose_provider(request):
     provider_id = request.POST.get('provider_id')
     provider = Provider.objects.get(pk=provider_id)
     request.session['provider_id']=provider.id
-    list_material = []
-    request.session['list_material'] = list_material
-    import_bill = Importbill.objects.create()
-    request.session['bill']=import_bill
+    request.session['provider_id'] = provider_id
+    bill = Importbill(providerid=Provider.objects.get(id=provider_id))
+    bill.save()
+    request.session['bill_id']=bill.id
     return JsonResponse({
         "msg":"sucess"
     })
 
 @csrf_exempt
-def import_material(request, id):
+def import_material(request, id, quantity, price):
     provider_id = request.session['provider_id']
-    print("Provider id: {}".format(provider_id))
+    print("Provier id: {}".format(provider_id))
     provider = Provider.objects.get(id=provider_id)
     material_id = id
-    print("Material id: {}".format(material_id))
+    print("Material id: {}".format(request.session.get("bill")))
     material = Material.objects.get(id=material_id)
-    quantity = request.POST.get('quantity')
-    price = request.POST.get('price')
-    print("request.POST: {}".format(request.POST))
 # ben tren chay ok
     material_of_provider = Materialofprovider.objects.get_or_create(
         providerid= provider,
@@ -48,13 +45,18 @@ def import_material(request, id):
     print(material_of_provider[0])
     material_of_provider[0].price = price
     material_of_provider[0].save()
+    # bill = Importbill(providerid=Provider.objects.get(id=provider_id))
+    # bill.save()
+    bill = Importbill.objects.get(id=request.session['bill_id'])
     imported_material = Importedmaterial.objects.create(
         materialofprovider=material_of_provider[0],
         quantity=quantity,
         price=price,
-        importbillid=request.session['bill']
+        importbillid=bill
     )
-    print(import_material)
+    imported_material.save()
     return JsonResponse({
-        "msg":"Sucess"
+        "msg":"Sucess",
+        "name": material.name,
+        "type": material.type
     })
