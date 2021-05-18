@@ -187,8 +187,9 @@ body.authenticate {
     width: 80%;
     position: absolute;
     bottom: 0;
-    padding-bottom: 25px;
+    padding-bottom: 25px;    
   }
   .pagination{
     justify-content: center;
   }
+
