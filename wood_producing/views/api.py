@@ -209,7 +209,7 @@ def statistic_material(request):
             for temp_result in result:
                 temp += temp_result["quantity"]
             response["material_quantity_total"].append(temp)
-            response["labels"].append("Tháng "+str(temp_date))
+        response["labels"].append("Tháng "+str(temp_date))
         temp_date += 1
 
     sql = "SELECT Name FROM wood_producing_material"
